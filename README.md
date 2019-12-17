@@ -2,6 +2,11 @@
 
 Hey Zhenyang
 
+Todo:
+- Fix rotation code
+- Fix movement code
+- Make gun actually shoot
+
 List of useful commands:
 - git status
 - git add .
