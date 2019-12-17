@@ -26,16 +26,17 @@ public class rotate {
 		System.out.println(x);
 		System.out.println(y);
 		
-		//TODO: The rotation code does not work properly yet, the commented line is another version that also doesn't work
-//		double angle = -(Math.atan2(playerCenterY - x, playerCenterX - y) - Math.PI / 2);
+		//TODO: The commented stuff is Daniel's old code
+		double angle = -(Math.atan2(playerCenterY - x, playerCenterX - y) - Math.PI / 2);
 		
-		double first = (x - playerCenterX) * Math.sin(90);
-		double second = Math.sqrt(Math.pow(x - playerCenterX, 2) + (Math.pow(y - playerCenterY, 2)));
+		// double first = (x - playerCenterX) * Math.sin(90);
+		// double second = Math.sqrt(Math.pow(x - playerCenterX, 2) + (Math.pow(y - playerCenterY, 2)));
 		
-		double angle = Math.asin(first/second);
+		// double angle = Math.asin(first/second);
+		System.out.println(angle);
 		
 		if(y > playerCenterY)
-			angle = -angle;
+			angle = angle + (2 * Math.PI);
 		
 		g2.rotate(angle, playerCenterX, playerCenterY);
 	}
