@@ -4,7 +4,8 @@ List of useful commands:
 - git status - Gives information on the differences between a local copy and the remote repo
 - git add . - Adds all changed files
 - git commit -m "name of commit" - Puts all added files into a commit
-- git push -u origin "branch name" - Pushes to the specified branch/creates a new branch and pushes to it
+- git checkout -b "name of branch" Switches to/creates the specified branch on your local repo
+- git push origin "branch name" - Pushes the specified local branch to the remote repo
 
 Todo:
 - ~~Fix rotation code~~
