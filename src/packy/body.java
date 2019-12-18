@@ -57,10 +57,6 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		System.out.println(playerCenterX);
-		System.out.println(playerCenterY);
-		System.out.println(mouseX);
-		System.out.println(mouseY);
 		xPew = e.getX();
 		yPew = e.getY();
 		panel.repaint();
