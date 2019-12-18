@@ -43,7 +43,7 @@ public class player {
 		g2.rotate(angle, body.playerCenterX, body.playerCenterY);
 	}
 	
-	public static void shootLaser(Graphics g) {
+	public static void shoot(Graphics g) {
 
 		Graphics2D g2 = (Graphics2D) g;
 		g2.fillRect(body.xPew, body.yPew, 10, 10);
