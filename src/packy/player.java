@@ -5,9 +5,26 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class rotate {
+public class player {
+
+	public static void move() {
+		
+		if(body.left)
+			
+			body.playerOffsetX -= body.playerSpeed;
+		else if(body.right)
+			
+			body.playerOffsetX += body.playerSpeed;
+		
+		if(body.up)
+			body
+			.playerOffsetY -= body.playerSpeed;
+		else if(body.down)
+			
+			body.playerOffsetY += body.playerSpeed;
+	}
 	
-	public static void rotatePlayer(Graphics g) {
+	public static void rotate(Graphics g) {
 		
 		Graphics2D g2 = (Graphics2D) g;
 		
@@ -24,5 +41,11 @@ public class rotate {
 		double angle = -(Math.atan2(body.playerCenterX - body.mouseX, body.playerCenterY - body.mouseY) - Math.PI / 2);
 		
 		g2.rotate(angle, body.playerCenterX, body.playerCenterY);
+	}
+	
+	public static void shootLaser(Graphics g) {
+
+		Graphics2D g2 = (Graphics2D) g;
+		g2.fillRect(body.xPew, body.yPew, 10, 10);
 	}
 }
