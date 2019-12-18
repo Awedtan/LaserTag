@@ -9,5 +9,5 @@ List of useful commands:
 
 Todo:
 - ~~Fix rotation code~~
-- Fix movement code
+- ~~Fix movement code~~
 - Make gun actually shoot
