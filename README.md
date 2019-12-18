@@ -12,4 +12,5 @@ List of useful commands:
 - git add . - Adds all changed files
 - git commit -m "name of commit" - Puts all added files into a commit
 - git push - Pushes the commit to the remote repo
-- git checkout -b "branch name" - Changes the branch to push to
+- git checkout -b "branch name" - Creates a new branch
+- git push -u origin "branch name" - Pushes to the specified branch
