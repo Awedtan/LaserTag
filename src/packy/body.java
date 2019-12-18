@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 @SuppressWarnings("serial")
-public class body extends JPanel implements KeyListener, MouseListener{
+public class body extends JPanel implements KeyListener, MouseListener, MouseMotionListener{
 	
 	static int playerWidth = 50;
 	static int playerHeight = 50;
@@ -141,5 +141,17 @@ public class body extends JPanel implements KeyListener, MouseListener{
 			delay(1000/fps);
 			panel.repaint();
 		}
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+
 	}
 }

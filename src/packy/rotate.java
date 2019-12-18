@@ -14,8 +14,8 @@ public class rotate {
 		body.playerCenterY = (body.playerHeight/2) + body.playerOffsetY;
 		body.playerCenterX = (body.playerWidth/2) + body.playerOffsetX;
 		
-		body.panel.addMouseListener(new MouseAdapter() {
-		    public void mousePressed(MouseEvent e) {
+		body.panel.addMouseMotionListener(new MouseAdapter() {
+		    public void mouseMoved(MouseEvent e) {
 		        body.mouseX = (int) e.getX();
 		        body.mouseY = (int) e.getY();
 		    }
