@@ -2,47 +2,27 @@ package packy;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.PointerInfo;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class rotate {
-
-	static int playerCenterX;
-	static int playerCenterY;
 	
 	public static void rotatePlayer(Graphics g) {
 		
 		Graphics2D g2 = (Graphics2D) g;
 		
-		playerCenterX = body.playerWidth/2 + body.playerOffsetX;
-		playerCenterY = body.playerHeight/2 + body.playerOffsetY;
+		body.playerCenterY = (body.playerHeight/2) + body.playerOffsetY;
+		body.playerCenterX = (body.playerWidth/2) + body.playerOffsetX;
 		
-		PointerInfo a = MouseInfo.getPointerInfo();
-		Point b = a.getLocation();
+		body.panel.addMouseListener(new MouseAdapter() {
+		    public void mousePressed(MouseEvent e) {
+		        body.mouseX = (int) e.getX();
+		        body.mouseY = (int) e.getY();
+		    }
+		});
 		
-		int x = (int) b.getX();
-		int y = (int) b.getY();
-		System.out.println(x);
-		System.out.println(y);
+		double angle = -(Math.atan2(body.playerCenterX - body.mouseX, body.playerCenterY - body.mouseY) - Math.PI / 2);
 		
-		//TODO: The commented stuff is Daniel's old code
-		double angle = -(Math.atan2(playerCenterY - x, playerCenterX - y) - Math.PI / 2);
-		
-		// double first = (x - playerCenterX) * Math.sin(90);
-		// double second = Math.sqrt(Math.pow(x - playerCenterX, 2) + (Math.pow(y - playerCenterY, 2)));
-		
-		// double angle = Math.asin(first/second);
-		System.out.println(angle);
-		
-		if(y > playerCenterY)
-			angle = angle + (2 * Math.PI);
-		
-		g2.rotate(angle, playerCenterX, playerCenterY);
-	}
-	
-	public static void main(String[] args) {
-		
-		
+		g2.rotate(angle, body.playerCenterX, body.playerCenterY);
 	}
 }

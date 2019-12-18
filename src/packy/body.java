@@ -6,7 +6,6 @@ import java.awt.event.*;
 
 @SuppressWarnings("serial")
 public class body extends JPanel implements KeyListener, MouseListener{
-	//TODO: Fix the rotation code, fix the movement, add projectiles
 	
 	static int playerWidth = 50;
 	static int playerHeight = 50;
@@ -14,8 +13,17 @@ public class body extends JPanel implements KeyListener, MouseListener{
 	static int playerOffsetY = 300;
 	static int playerSpeed = 10;
 	
+	static int playerCenterX;
+	static int playerCenterY;
+	static int mouseX;
+	static int mouseY;
+	
+	static int xPew = -10;
+	static int yPew = -10;
+	
 	static int fps = 60;
 	static body panel = new body();
+	static JFrame frame;
 	
 	public body() {
 		
@@ -49,9 +57,12 @@ public class body extends JPanel implements KeyListener, MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-
-		shoot.xPew = e.getX();
-		shoot.yPew = e.getY();
+		System.out.println(playerCenterX);
+		System.out.println(playerCenterY);
+		System.out.println(mouseX);
+		System.out.println(mouseY);
+		xPew = e.getX();
+		yPew = e.getY();
 		panel.repaint();
 	}
 
@@ -81,7 +92,6 @@ public class body extends JPanel implements KeyListener, MouseListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		//TODO: Make the movement smoother and not behave like you're typing
 		
 		if(e.getKeyCode() == KeyEvent.VK_W) {
 			
@@ -119,7 +129,7 @@ public class body extends JPanel implements KeyListener, MouseListener{
 	
 	public static void main(String[] args) {
 		
-		JFrame frame = new JFrame();
+		frame = new JFrame();
 		
 		frame.add(panel);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
