@@ -1,7 +1,5 @@
 # LaserTag
 
-Hey Zhenyang
-
 List of useful commands:
 - git status - Gives information on the differences between a local copy and the remote repo
 - git add . - Adds all changed files
