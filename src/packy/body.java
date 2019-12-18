@@ -96,7 +96,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	public void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
-		shoot.shootLaser(g);
+		player.shoot(g);
 		drawMap(g);
 		
 		player.rotate(g);
