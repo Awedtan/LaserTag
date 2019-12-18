@@ -9,6 +9,6 @@ List of useful commands:
 - git push -u origin "branch name" - Pushes to the specified branch/creates a new branch and pushes to it
 
 Todo:
-- ~~Fix rotation code
+- ~~Fix rotation code~~
 - Fix movement code
 - Make gun actually shoot
