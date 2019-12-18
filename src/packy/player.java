@@ -1,35 +1,55 @@
 package packy;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.*;
+import java.awt.event.*;
 
 public class player {
 
+	static int width = 20;
+	static int height = width;
+	static int startPosX = 300;
+	static int startPosY = 300;
+	static int speed = 3;
+	static int centerX;
+	static int centerY;
+	
+	static Rectangle model = new Rectangle(startPosX, startPosY, width, height);
+	
+	static boolean moveLeft;
+	static boolean moveRight;
+	static boolean moveUp;
+	static boolean moveDown;
+	
+	public static void draw(Graphics g) {
+		
+		Graphics2D g2 = (Graphics2D) g;
+		g2.fillRect(player.model.x, player.model.y, player.width, player.height);
+		g2.fillRect((player.model.x-(int)(player.width-player.width*0.2)), player.model.y, player.height, (int)(player.width/5));
+	}
+	
 	public static void move() {
 		
-		if(body.left)
+		if(moveLeft)
 			
-			body.playerOffsetX -= body.playerSpeed;
-		else if(body.right)
+			model.x -= speed;
+		else if(moveRight)
 			
-			body.playerOffsetX += body.playerSpeed;
+			model.x += speed;
 		
-		if(body.up)
-			body
-			.playerOffsetY -= body.playerSpeed;
-		else if(body.down)
+		if(moveUp)
 			
-			body.playerOffsetY += body.playerSpeed;
+			model.y -= speed;
+		else if(moveDown)
+			
+			model.y += speed;
 	}
 	
 	public static void rotate(Graphics g) {
 		
 		Graphics2D g2 = (Graphics2D) g;
 		
-		body.playerCenterY = (body.playerHeight/2) + body.playerOffsetY;
-		body.playerCenterX = (body.playerWidth/2) + body.playerOffsetX;
+		centerY = (height/2) + model.y;
+		centerX = (width/2) + model.x;
 		
 		body.panel.addMouseMotionListener(new MouseAdapter() {
 		    public void mouseMoved(MouseEvent e) {
@@ -38,9 +58,9 @@ public class player {
 		    }
 		});
 		
-		double angle = -(Math.atan2(body.playerCenterX - body.mouseX, body.playerCenterY - body.mouseY) - Math.PI / 2);
+		double angle = -(Math.atan2(centerX - body.mouseX, centerY - body.mouseY) - Math.PI / 2);
 		
-		g2.rotate(angle, body.playerCenterX, body.playerCenterY);
+		g2.rotate(angle, centerX, centerY);
 	}
 	
 	public static void shoot(Graphics g) {
