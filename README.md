@@ -8,7 +8,8 @@ Todo:
 - Make gun actually shoot
 
 List of useful commands:
-- git status
-- git add .
-- git commit -m "name of commit"
-- git push
+- git status - Gives information on the differences between a local copy and the remote repo
+- git add . - Adds all changed files
+- git commit -m "name of commit" - Puts all added files into a commit
+- git push - Pushes the commit to the remote repo
+- git checkout -b "branch name" - Changes the branch to push to
