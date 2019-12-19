@@ -170,6 +170,7 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setResizable(false);
+		//frame.setUndecorated(false);
 		frame.setVisible(true);
 	}
 }
