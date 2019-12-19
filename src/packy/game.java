@@ -9,17 +9,16 @@ public class game {
 	static boolean wallsExist;
 	
 	static int[][] map = {
-			{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1},
-			{1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ,0},
-			{1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1 ,0},
-			{1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ,0},
-			{0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1 ,0},
-			{0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0 ,0},
-			{1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0 ,1},
-			{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,1},
-			{1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ,1},
-			{1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1 ,0},
-			{1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ,0}
+			{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+			{1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},
+			{1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1},
+			{1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+			{0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1},
+			{0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1},
+			{1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1},
+			{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+			{1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1},
+			{1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1}
 	};
 	
 	static int numRows = map[0].length;
@@ -79,5 +78,20 @@ public class game {
 	        else if(top1 < bottom2 && bottom1 > bottom2) 
 	        	player.model.y = wall.y + wall.height;
 		}
+	}
+	
+	public static void checkInBound() {
+		
+		if(player.model.x < 0)
+			player.model.x = 0;
+		
+		else if(player.model.x > body.screenWidth - player.model.width)
+			player.model.x = body.screenWidth - player.model.width;
+		
+		if(player.model.y < 0)
+			player.model.y = 0;
+		
+		else if(player.model.y > body.screenHeight - player.model.height)
+			player.model.y = body.screenHeight - player.model.height;
 	}
 }

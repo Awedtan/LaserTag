@@ -10,7 +10,7 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	Thread mainThread;
 	
 	static int screenWidth = 1920;
-	static int screenHeight = 1030;
+	static int screenHeight = 1020;
 	static int fps = 60;
 	static body panel = new body();
 	static JFrame frame;
@@ -56,6 +56,7 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	public void update() {
 		
 		player.move();
+		game.checkInBound();
 
 		if(game.wallsExist)
 			for(int i=0; i<game.walls.length; i++) 

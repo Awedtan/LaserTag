@@ -7,8 +7,8 @@ public class player {
 
 	static int width = 20;
 	static int height = width;
-	static int startPosX = 310;
-	static int startPosY = 310;
+	static int startPosX = 50;
+	static int startPosY = 500;
 	static int speed = 3;
 	static int centerX;
 	static int centerY;
