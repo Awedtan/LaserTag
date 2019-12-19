@@ -10,16 +10,14 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	Thread mainThread;
 	
 	static int screenWidth = 1920;
-	static int screenHeight = 1060;
+	static int screenHeight = 1080;
+	//The screen dimensions may need to be adjusted for different screens
 	static int fps = 60;
 	static body panel = new body();
 	static JFrame frame;
 	
 	static int mouseX;
 	static int mouseY;
-	
-	static int xPew = -10;
-	static int yPew = -10;
 	
 	@Override
 	public void run() {
@@ -57,10 +55,13 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 		
 		player.move();
 		game.checkInBound();
-
-		if(game.wallsExist)
-			for(int i=0; i<game.walls.length; i++) 
-				game.checkCollision(game.walls[i]);
+		
+		if(game.wallsExist && projectile.exists)
+			for(int i=0; i<game.walls.length; i++) {
+				
+				game.checkProjectileCollision(game.walls[i]);
+				game.checkPlayerCollision(game.walls[i]);
+			}
 	}
 	
 	public body() {
@@ -78,7 +79,8 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 		
 		super.paintComponent(g);
 		game.drawMap(g);
-		player.shoot(g);
+		projectile.move(g);
+		projectile.exists = true;
 		
 		player.rotate(g);
 		//Any graphics method called after the rotate method WILL BE ROTATED
@@ -93,9 +95,13 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	@Override
 	public void mousePressed(MouseEvent e) {
 		
-		xPew = e.getX();
-		yPew = e.getY();
+		projectile.mousePosX = e.getX();
+		projectile.mousePosY = e.getY();
 		panel.repaint();
+		
+		projectile.shoot(player.centerX, player.centerY,player.angle);
+		projectile.alive = true;
+		projectile.counter = 0;
 	}
 
 	@Override
@@ -117,22 +123,22 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	@Override
 	public void keyPressed(KeyEvent e) {
 
-		if(e.getKeyCode() == KeyEvent.VK_A) {
-			
+		if(e.getKeyCode() == KeyEvent.VK_A) 
 			player.moveLeft = true;
-		}
-		else if(e.getKeyCode() == KeyEvent.VK_D) {
-			
+		
+		else if(e.getKeyCode() == KeyEvent.VK_D) 
 			player.moveRight = true;
-		}
-		else if(e.getKeyCode() == KeyEvent.VK_W) {
-			
+		
+		else if(e.getKeyCode() == KeyEvent.VK_W) 
 			player.moveUp = true;
-		}
-		else if(e.getKeyCode() == KeyEvent.VK_S) {
-			
+		
+		else if(e.getKeyCode() == KeyEvent.VK_S) 
 			player.moveDown = true;
-		}
+		
+		
+		if(e.getKeyCode() == KeyEvent.VK_SHIFT)
+			player.sprint = true;
+		
 	}
 
 	@Override
@@ -149,6 +155,9 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 		
 		else if(e.getKeyCode() == KeyEvent.VK_S) 
 			player.moveDown = false;
+		
+		if(e.getKeyCode() == KeyEvent.VK_SHIFT)
+			player.sprint = false;
 	}
 	
 	public static void main(String[] args) {
