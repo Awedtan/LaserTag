@@ -10,5 +10,5 @@ List of useful commands:
 Todo:
 - ~~Fix rotation code~~
 - ~~Fix movement code~~
-- Implement collisions
+- ~~Implement collisions~~
 - Make gun actually shoot
