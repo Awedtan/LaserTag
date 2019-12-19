@@ -10,7 +10,7 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	Thread mainThread;
 	
 	static int screenWidth = 1920;
-	static int screenHeight = 1020;
+	static int screenHeight = 1060;
 	static int fps = 60;
 	static body panel = new body();
 	static JFrame frame;
@@ -168,7 +168,8 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 		frame.add(panel);
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.setResizable(false);
 		frame.setVisible(true);
 	}
 }
