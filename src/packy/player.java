@@ -7,8 +7,8 @@ public class player {
 
 	static int width = 20;
 	static int height = width;
-	static int startPosX = 300;
-	static int startPosY = 300;
+	static int startPosX = 310;
+	static int startPosY = 310;
 	static int speed = 3;
 	static int centerX;
 	static int centerY;
@@ -28,20 +28,46 @@ public class player {
 	}
 	
 	public static void move() {
+	
+		if(moveLeft && !moveRight)
+			if(moveUp) 
+				model.x -= speed/1.5;
+				
+			else if(moveDown)
+				model.x -= speed/1.5;
+				
+			else 
+				model.x -= speed;
 		
-		if(moveLeft)
-			
-			model.x -= speed;
-		else if(moveRight)
-			
-			model.x += speed;
+		else if(moveRight && !moveLeft)
+			if(moveUp) 
+				model.x += speed/1.5;
+				
+			else if(moveDown)
+				model.x += speed/1.5;
+				
+			else 
+				model.x += speed;
 		
-		if(moveUp)
-			
-			model.y -= speed;
-		else if(moveDown)
-			
-			model.y += speed;
+		if(moveUp && !moveDown)
+			if(moveLeft) 
+				model.y -= speed/1.5;
+				
+			else if(moveRight)
+				model.y -= speed/1.5;
+				
+			else 
+				model.y -= speed;
+		
+		else if(moveDown && !moveUp)
+			if(moveLeft) 
+				model.y += speed/1.5;
+				
+			else if(moveRight)
+				model.y += speed/1.5;
+				
+			else 
+				model.y += speed;
 	}
 	
 	public static void rotate(Graphics g) {
@@ -52,14 +78,20 @@ public class player {
 		centerX = (width/2) + model.x;
 		
 		body.panel.addMouseMotionListener(new MouseAdapter() {
+			
 		    public void mouseMoved(MouseEvent e) {
+		    	
 		        body.mouseX = (int) e.getX();
+		        body.mouseY = (int) e.getY();
+		    }
+		    public void mouseDragged(MouseEvent e) {
+		    	
+		    	body.mouseX = (int) e.getX();
 		        body.mouseY = (int) e.getY();
 		    }
 		});
 		
 		double angle = -(Math.atan2(centerX - body.mouseX, centerY - body.mouseY) - Math.PI / 2);
-		
 		g2.rotate(angle, centerX, centerY);
 	}
 	
