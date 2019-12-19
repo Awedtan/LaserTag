@@ -9,8 +9,8 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	
 	Thread mainThread;
 	
-	int screenWidth = 1000;
-	int screenHeight = 800;
+	static int screenWidth = 1920;
+	static int screenHeight = 1030;
 	static int fps = 60;
 	static body panel = new body();
 	static JFrame frame;
@@ -20,27 +20,6 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	
 	static int xPew = -10;
 	static int yPew = -10;
-	
-	int numRows = 10;
-	int numCols = 10;
-	int numWalls = 0;
-	int tileWidth = screenWidth/numCols;
-	int tileHeight = screenHeight/numRows;
-	
-	Rectangle[] walls;
-	
-	int[][] map = {
-			{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-			{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			{1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-			{1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-			{0, 0, 1, 0, 1, 1, 0, 0, 0, 1},
-			{0, 0, 0, 0, 1, 1, 0, 1, 1, 1},
-			{1, 0, 0, 0, 0, 0, 0, 1, 0, 1},
-			{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-	};
 	
 	@Override
 	public void run() {
@@ -64,20 +43,24 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	
 	public void initialize() {
 		
-		for(int i=0; i<map.length; i++) {
-			for(int j=0; j<map[i].length; j++) {
+		for(int i=0; i<game.map.length; i++) {
+			for(int j=0; j<game.map[i].length; j++) {
 				
-				if(map[i][j] == 1)
-					numWalls++;
+				if(game.map[i][j] == 1)
+					game.numWalls++;
 			}
 		}
-		
-		walls = new Rectangle[numWalls];
+		game.walls = new Rectangle[game.numWalls];
 	}
 	
 	public void update() {
 		
 		player.move();
+
+		if(game.wallsExist)
+			for(int i=0; i<game.walls.length; i++) 
+				game.checkCollision(game.walls[i]);
+		
 	}
 	
 	public body() {
@@ -94,30 +77,13 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	public void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
+		game.drawMap(g);
 		player.shoot(g);
-		drawMap(g);
 		
 		player.rotate(g);
 		//Any graphics method called after the rotate method WILL BE ROTATED
 		//If it should not be rotated, put it BEFORE the rotate method
 		player.draw(g);
-	}
-	
-	public void drawMap(Graphics g) {
-		
-		for(int row = 0; row < numRows; row++) {
-			for(int col = 0; col < numCols; col++) {
-				
-				int x = col * tileWidth;
-				int y = row * tileHeight;
-				
-				if(map[row][col] == 1) {
-					
-					g.setColor(Color.BLACK);
-					g.fillRect(x, y, tileWidth, tileHeight);
-				}
-			}
-		}
 	}
 	
 	@Override
@@ -164,22 +130,18 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 		if(e.getKeyCode() == KeyEvent.VK_A) {
 			
 			player.moveLeft = true;
-			player.moveRight = false;
 		}
 		else if(e.getKeyCode() == KeyEvent.VK_D) {
 			
 			player.moveRight = true;
-			player.moveLeft = false;
 		}
 		else if(e.getKeyCode() == KeyEvent.VK_W) {
 			
 			player.moveUp = true;
-			player.moveDown = false;
 		}
 		else if(e.getKeyCode() == KeyEvent.VK_S) {
 			
 			player.moveDown = true;
-			player.moveUp = false;
 		}
 	}
 
@@ -189,7 +151,7 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 		if(e.getKeyCode() == KeyEvent.VK_A) 
 			player.moveLeft = false;
 		
-		else if(e.getKeyCode() == KeyEvent.VK_D) 
+		else if(e.getKeyCode() == KeyEvent.VK_D)
 			player.moveRight = false;
 		
 		else if(e.getKeyCode() == KeyEvent.VK_W) 
@@ -203,9 +165,9 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 		
 		frame = new JFrame();
 		frame.add(panel);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
-		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		frame.setVisible(true);
 	}
 }
