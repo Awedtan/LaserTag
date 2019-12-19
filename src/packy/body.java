@@ -98,10 +98,12 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 		projectile.mousePosX = e.getX();
 		projectile.mousePosY = e.getY();
 		panel.repaint();
-		
+			
 		projectile.shoot(player.centerX, player.centerY,player.angle);
 		projectile.alive = true;
-		projectile.counter = 0;
+//		projectile.counter = 0;
+		projectile.projCountX = 0;
+		projectile.projCountY = 0;
 	}
 
 	@Override

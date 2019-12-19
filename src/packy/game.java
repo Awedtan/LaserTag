@@ -58,7 +58,8 @@ public class game {
 		if(projectile.shots[0].intersects(wall)) {
 			
 			projectile.alive = false;
-			projectile.counter = 0;
+			projectile.projCountX = 0;
+			projectile.projCountY = 0;
 		}
 	}
 	
