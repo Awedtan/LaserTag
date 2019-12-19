@@ -12,3 +12,4 @@ Todo:
 - ~~Fix movement code~~
 - ~~Implement collisions~~
 - Make gun actually shoot
+- Add menu options
