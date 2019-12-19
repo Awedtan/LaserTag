@@ -61,7 +61,6 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 		if(game.wallsExist)
 			for(int i=0; i<game.walls.length; i++) 
 				game.checkCollision(game.walls[i]);
-		
 	}
 	
 	public body() {
@@ -89,8 +88,6 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-
-		
 	}
 
 	@Override
@@ -103,26 +100,18 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-
-		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-
-		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-
-		
 	}
 	
 	@Override
 	public void keyTyped(KeyEvent e) {
-		
-		
 	}
 
 	@Override
