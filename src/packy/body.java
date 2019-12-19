@@ -165,12 +165,12 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	public static void main(String[] args) {
 		
 		frame = new JFrame();
+		frame.setUndecorated(false);
 		frame.add(panel);
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setResizable(false);
-		//frame.setUndecorated(false);
 		frame.setVisible(true);
 	}
 }
