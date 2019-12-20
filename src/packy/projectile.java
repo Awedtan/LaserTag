@@ -6,7 +6,7 @@ public class projectile {
 
 	static int size = 5;//Size of projectile
 	static int max = 10;//Max # of projectiles on screen
-	static int shotInaccuracy = 5;//Inaccuracy of shots
+	static int inaccuracy = 5;//Inaccuracy of shots
 	
 	static double speed = 30;//Speed of projectiles
 	
@@ -39,8 +39,8 @@ public class projectile {
 		posY[shot] = startY;
 		
 //		Note: this code will be slightly off since it's rounding
-		moveX[shot] = -(speed * Math.cos(Math.toRadians(Math.toDegrees(angle) + Math.random()*shotInaccuracy-shotInaccuracy/2)));
-		moveY[shot] = -(speed * Math.sin(Math.toRadians(Math.toDegrees(angle) + Math.random()*shotInaccuracy-shotInaccuracy/2)));
+		moveX[shot] = -(speed * Math.cos(Math.toRadians(Math.toDegrees(angle) + Math.random()*inaccuracy-inaccuracy/2)));
+		moveY[shot] = -(speed * Math.sin(Math.toRadians(Math.toDegrees(angle) + Math.random()*inaccuracy-inaccuracy/2)));
 	}
 	
 	public static void move(Graphics g, int shot) {
