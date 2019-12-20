@@ -37,37 +37,26 @@ public class player {
 	
 		if(sprint)
 			speed = (int)(STARTSPEED*2);
+<<<<<<< HEAD
+		else 
+=======
 		else {
+>>>>>>> master
 			speed = STARTSPEED;
-		}
 		
-		if(moveLeft && !moveRight)
-			if(moveUp || moveDown) 
-				model.x -= speed/1.5;
-				
-			else 
+		if((moveLeft || moveRight) && (moveUp || moveDown))
+			speed /= 1.2;
+		
+		if(moveLeft && !moveRight) 
 				model.x -= speed;
-		
-		else if(moveRight && !moveLeft)
-			if(moveUp || moveDown) 
-				model.x += speed/1.5;
-				
-			else 
+		else if(moveRight && !moveLeft) 
 				model.x += speed;
 		
-		if(moveUp && !moveDown)
-			if(moveLeft || moveRight) 
-				model.y -= speed/1.5;
-				
-			else 
+		if(moveUp && !moveDown) 
 				model.y -= speed;
-		
-		else if(moveDown && !moveUp)
-			if(moveLeft || moveRight) 
-				model.y += speed/1.5;
-				
-			else 
+		else if(moveDown && !moveUp) 
 				model.y += speed;
+		
 	}
 	
 	public static void rotate(Graphics g) {
