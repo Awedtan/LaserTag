@@ -5,36 +5,38 @@ import java.awt.event.*;
 
 public class player {
 
-	static final int STARTSPEED = 3;
+	static final int STARTSPEED = 4;//Default player speed
 	
-	static int width = 20;
+	static int width = 20;//Player dimensions
 	static int height = width;
-	static int startPosX = 100;
+	static int startPosX = 100;//Player start location
 	static int startPosY = 550;	
-	static int centerX;
+	static int centerX;//Player coordinates
 	static int centerY;
 	static int speed = STARTSPEED;
-	static double angle;
+	static double angle;//Angle to mouse cursor
 	
-	static Rectangle model = new Rectangle(startPosX, startPosY, width, height);
+	static Rectangle model = new Rectangle(startPosX, startPosY, width, height);//Player model
 	
-	static boolean moveLeft;
+	static boolean moveLeft;//Movement booleans
 	static boolean moveRight;
 	static boolean moveUp;
 	static boolean moveDown;
 	static boolean sprint;
 	
 	public static void draw(Graphics g) {
+		//Draws the player and gun sprite
 		
 		Graphics2D g2 = (Graphics2D) g;
-		g2.fillRect(player.model.x, player.model.y, player.width, player.height);
+		g2.fill(model);
 		g2.fillRect((player.model.x-(int)(player.width-player.width*0.2)), player.model.y, player.height, (int)(player.width/5));
 	}
 	
 	public static void move() {
+		//Moves the player model based on keys pressed
 	
 		if(sprint)
-			speed = (int)(2*STARTSPEED);
+			speed = (int)(STARTSPEED*2);
 		else {
 			speed = STARTSPEED;
 		}
@@ -69,6 +71,7 @@ public class player {
 	}
 	
 	public static void rotate(Graphics g) {
+		//Rotates the player model towards the mouse cursor
 		
 		Graphics2D g2 = (Graphics2D) g;
 		
@@ -79,17 +82,17 @@ public class player {
 			
 		    public void mouseMoved(MouseEvent e) {
 		    	
-		        body.mouseX = (int) e.getX();
-		        body.mouseY = (int) e.getY();
+		        body.mousePosX = (int) e.getX();
+		        body.mousePosY = (int) e.getY();
 		    }
 		    public void mouseDragged(MouseEvent e) {
 		    	
-		    	body.mouseX = (int) e.getX();
-		        body.mouseY = (int) e.getY();
+		    	body.mousePosX = (int) e.getX();
+		        body.mousePosY = (int) e.getY();
 		    }
 		});
 		
-		angle = -(Math.atan2(centerX - body.mouseX, centerY - body.mouseY) - Math.PI / 2);
+		angle = -(Math.atan2(centerX - body.mousePosX, centerY - body.mousePosY) - Math.PI / 2);
 		g2.rotate(angle, centerX, centerY);
 	}
 }
