@@ -13,5 +13,3 @@ Todo:
 - ~~Implement collisions~~
 - Make gun actually shoot
 - Add menu options
-
-testing testing
