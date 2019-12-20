@@ -56,11 +56,13 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 		player.move();
 		game.checkInBound();
 		
-		if(game.wallsExist && projectile.exists)
+		if(game.wallsInitialized && projectile.initialized)
 			for(int i=0; i<game.walls.length; i++) {
-				
-				game.checkProjectileCollision(game.walls[i]);
-				game.checkPlayerCollision(game.walls[i]);
+				for(int j=0; j<projectile.shots.length; j++) {
+					
+					game.checkProjectileCollision(game.walls[i], j);
+					game.checkPlayerCollision(game.walls[i]);
+				}
 			}
 	}
 	
@@ -79,8 +81,9 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 		
 		super.paintComponent(g);
 		game.drawMap(g);
-		projectile.move(g);
-		projectile.exists = true;
+		for(int i=0; i<projectile.shots.length; i++)
+			projectile.move(g, i);
+		projectile.initialized = true;
 		
 		player.rotate(g);
 		//Any graphics method called after the rotate method WILL BE ROTATED
@@ -98,12 +101,13 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 		projectile.mousePosX = e.getX();
 		projectile.mousePosY = e.getY();
 		panel.repaint();
-			
-		projectile.shoot(player.centerX, player.centerY,player.angle);
-		projectile.alive = true;
-//		projectile.counter = 0;
-		projectile.projCountX = 0;
-		projectile.projCountY = 0;
+		
+		projectile.shoot(player.centerX, player.centerY, player.angle, projectile.findNext(projectile.shots));
+		
+		projectile.shotCountX[projectile.findNext(projectile.shots)] = 0;
+		projectile.shotCountY[projectile.findNext(projectile.shots)] = 0;
+				
+		projectile.shotAlive[projectile.findNext(projectile.shots)] = true;
 	}
 
 	@Override
