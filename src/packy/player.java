@@ -37,11 +37,7 @@ public class player {
 	
 		if(sprint)
 			speed = (int)(STARTSPEED*2);
-<<<<<<< HEAD
 		else 
-=======
-		else {
->>>>>>> master
 			speed = STARTSPEED;
 		
 		if((moveLeft || moveRight) && (moveUp || moveDown))
