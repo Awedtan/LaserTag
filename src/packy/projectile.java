@@ -4,47 +4,60 @@ import java.awt.*;
 
 public class projectile {
 
-	static int size = 5;
-	static int mousePosX;
-	static int mousePosY;
-	static int projSpeed = 4;
-	static int projPosX;
-	static int projPosY;
-	static int projMovX;
-	static int projMovY;
-	static int projCountX = 0;
-	static int projCountY = 0;
-	static double projAngle;
-	static int counter = 0;
+	static int size = 5;//Size of projectile
+	static int shotMax = 50;//Max # of projectiles on screen
+	static int mousePosX;//X coord of mouse
+	static int mousePosY;//Y coord of mouse
+	static int shotInaccuracy = 10;
 	
-	static boolean exists;
-	static boolean alive;
+	static double shotSpeed = 11;//Speed of projectiles
 	
-	static Rectangle[] shots = new Rectangle[1];
+	static boolean initialized;
 	
-	public static void shoot(int startX, int startY, double angle){
-		projAngle = angle;
-		projPosX = startX;
-		projPosY = startY;
+	static Rectangle[] shots = new Rectangle[shotMax];
+	
+	static int[] shotPosX = new int[shotMax];
+	static int[] shotPosY = new int[shotMax];
+	static int[] shotCountX = new int[shotMax];
+	static int[] shotCountY = new int[shotMax];
+	static double[] shotMovX = new double[shotMax];
+	static double[] shotMovY = new double[shotMax];
+	static double[] shotAngle = new double[shotMax];
+	static boolean[] shotAlive = new boolean[shotMax];
+	
+	public static int findNext(Rectangle[] shots) {
 		
-//		Note: this code will be slightly off since it's truncating instead of rounding or leaving it as an int
-		projMovX = (int) -Math.round(projSpeed * Math.cos(angle));
-		projMovY = (int) -Math.round(projSpeed * Math.sin(angle));
-		
-//		if (mousePosY > startY) {
-//			projMovX = -projMovX;
-//			projMovY = -projMovY;
-//		}
+		for(int i=0; i<shots.length; i++) {
+			if(!shotAlive[i])
+				return i;
+		}
+		return -1;
 	}
 	
-	public static void move(Graphics g) {
+	public static void shoot(int startX, int startY, double angle, int shot){
 		
-		Graphics2D g2 = (Graphics2D) g;
-		shots[0] = new Rectangle(projPosX + projCountX, projPosY + projCountY, projectile.size, projectile.size);
+		shotAngle[shot] = angle;
+		shotPosX[shot] = startX;
+		shotPosY[shot] = startY;
 		
-		if(alive)
-			g2.fill(shots[0]);
-		projCountX += projMovX;
-		projCountY += projMovY;
+//		Note: this code will be slightly off since it's rounding
+		shotMovX[shot] = -(shotSpeed * Math.cos(Math.toRadians(Math.toDegrees(angle) + Math.random()*shotInaccuracy-shotInaccuracy/2)));
+		shotMovY[shot] = -(shotSpeed * Math.sin(Math.toRadians(Math.toDegrees(angle) + Math.random()*shotInaccuracy-shotInaccuracy/2)));
+	}
+	
+	public static void move(Graphics g, int shot) {
+		
+		if(!shotAlive[shot]) {
+			
+			shotPosX[shot] = 0;
+			shotPosY[shot] = 0;
+		}
+		
+			Graphics2D g2 = (Graphics2D) g;
+			shots[shot] = new Rectangle(shotPosX[shot] + shotCountX[shot], shotPosY[shot] + shotCountY[shot], projectile.size, projectile.size);
+			
+			g2.fill(shots[shot]);
+			shotCountX[shot] += shotMovX[shot];
+			shotCountY[shot] += shotMovY[shot];
 	}
 }
