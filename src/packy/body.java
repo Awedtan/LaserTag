@@ -6,21 +6,22 @@ import java.awt.event.*;
 
 @SuppressWarnings("serial")
 public class body extends JPanel implements KeyListener, MouseListener, Runnable{
+	//Daniel Su, Zhenyang Cai, 2D top-down shooter game
 	
 	Thread mainThread;
 	
-	static int screenWidth = 1920;
+	static int mousePosX;//Mouse cursor coordinates
+	static int mousePosY;
+	static int screenWidth = 1920;//Screen dimensions
 	static int screenHeight = 1080;
-	//The screen dimensions may need to be adjusted for different screens
 	static int fps = 60;
+	
 	static body panel = new body();
 	static JFrame frame;
 	
-	static int mouseX;
-	static int mouseY;
-	
 	@Override
 	public void run() {
+		//Runs first and forever
 		
 		initialize();
 		
@@ -40,6 +41,7 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	}
 	
 	public void initialize() {
+		//Sets up map creation
 		
 		for(int i=0; i<game.map.length; i++) {
 			for(int j=0; j<game.map[i].length; j++) {
@@ -52,6 +54,7 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	}
 	
 	public void update() {
+		//Updates object locations and checks for collisions
 		
 		player.move();
 		game.checkInBound();
@@ -67,6 +70,7 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	}
 	
 	public body() {
+		//Sets up the game window and other methods
 		
 		setPreferredSize(new Dimension(screenWidth, screenHeight));
 		setBackground(new Color(200, 200, 200));
@@ -78,6 +82,7 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	}
 	
 	public void paintComponent(Graphics g) {
+		//Draws all graphics
 		
 		super.paintComponent(g);
 		game.drawMap(g);
@@ -97,17 +102,22 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		//Shoots a projectile, if possible, on click
 		
-		projectile.mousePosX = e.getX();
-		projectile.mousePosY = e.getY();
-		panel.repaint();
+		int shotNum = projectile.findNext(projectile.shots);
 		
-		projectile.shoot(player.centerX, player.centerY, player.angle, projectile.findNext(projectile.shots));
-		
-		projectile.shotCountX[projectile.findNext(projectile.shots)] = 0;
-		projectile.shotCountY[projectile.findNext(projectile.shots)] = 0;
-				
-		projectile.shotAlive[projectile.findNext(projectile.shots)] = true;
+		if(shotNum != -1) {
+			
+			mousePosX = e.getX();
+			mousePosY = e.getY();
+			panel.repaint();
+			
+			projectile.shoot(player.centerX, player.centerY, player.angle, shotNum);
+			
+			projectile.countX[shotNum] = 0;
+			projectile.countY[shotNum] = 0;
+			projectile.alive[shotNum] = true;
+		}
 	}
 
 	@Override
@@ -128,6 +138,7 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		//Player movement keys
 
 		if(e.getKeyCode() == KeyEvent.VK_A) 
 			player.moveLeft = true;
@@ -149,6 +160,7 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		//Stopping player movement
 		
 		if(e.getKeyCode() == KeyEvent.VK_A) 
 			player.moveLeft = false;
@@ -167,6 +179,7 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	}
 	
 	public static void main(String[] args) {
+		//Creates and displays the game window
 		
 		frame = new JFrame();
 		frame.setUndecorated(true);
