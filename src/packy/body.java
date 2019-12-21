@@ -3,7 +3,7 @@ package packy;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.*;
 
 @SuppressWarnings("serial")
