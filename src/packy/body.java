@@ -3,6 +3,8 @@ package packy;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.*;
+import java.util.*;
 
 @SuppressWarnings("serial")
 public class body extends JPanel implements KeyListener, MouseListener, Runnable{
@@ -34,7 +36,6 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 				
 				Thread.sleep(1000/fps);
 			}catch(Exception e) {
-				
 				e.printStackTrace();
 			}
 		}
@@ -42,31 +43,69 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	
 	public void initialize() {
 		//Sets up map creation
+
+		try {
+			
+			game.input = new Scanner(game.file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		int mapRow = 0;
+		
+		while(game.input.hasNext()) {
+			
+			String line = game.input.nextLine();
+			int length = line.length();
+			
+			for(int i=0; i<length; i++) {
+				
+				game.map[mapRow][i] = line.charAt(i);
+			}
+			
+			mapRow++;
+		}
 		
 		for(int i=0; i<game.map.length; i++) {
 			for(int j=0; j<game.map[i].length; j++) {
 				
-				if(game.map[i][j] == 1)
+				if(game.map[i][j] == '#')
 					game.numWalls++;
+				else if(game.map[i][j] == '`')
+					game.numTiles++;
 			}
 		}
 		game.walls = new Rectangle[game.numWalls];
+		game.tiles = new Rectangle[game.numTiles];
+		game.tileIsVisible = new boolean[game.numTiles];
 	}
 	
 	public void update() {
-		//Updates object locations and checks for collisions
+		//Updates object locations, checks for collisions and visibility
 		
 		player.move();
 		game.checkInBound();
 		
-		if(game.wallsInitialized && projectile.initialized)
+		if(game.wallsInitialized && projectile.initialized && game.tilesInitialized) {
 			for(int i=0; i<game.walls.length; i++) {
-				for(int j=0; j<projectile.shots.length; j++) {
-					
+				
+				game.checkPlayerCollision(game.walls[i]);
+				
+				for(int j=0; j<projectile.shots.length; j++) 
 					game.checkProjectileCollision(game.walls[i], j);
-					game.checkPlayerCollision(game.walls[i]);
+			}
+			
+			for(int i=0; i<game.numTiles; i++) {
+
+				if(game.checkVisible(player.model, game.tiles[i])) 
+					game.tileIsVisible[i] = true;
+				else{
+					game.tileIsVisible[i] = false;
 				}
 			}
+		}
+		
+		
 	}
 	
 	public body() {
@@ -86,9 +125,12 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 		
 		super.paintComponent(g);
 		game.drawMap(g);
+		
 		for(int i=0; i<projectile.shots.length; i++)
 			projectile.move(g, i);
+		
 		projectile.initialized = true;
+		game.drawWalls(g);
 		
 		player.rotate(g);
 		//Any graphics method called after the rotate method WILL BE ROTATED

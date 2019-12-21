@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 public class player {
 
-	static final int STARTSPEED = 4;//Default player speed
+	static final int STARTSPEED = 3;//Default player speed
 	
 	static int width = 20;//Player dimensions
 	static int height = width;
@@ -36,7 +36,7 @@ public class player {
 		//Moves the player model based on keys pressed
 	
 		if(sprint)
-			speed = (int)(STARTSPEED*2);
+			speed = (int)(STARTSPEED*1.7);
 		else 
 			speed = STARTSPEED;
 		
