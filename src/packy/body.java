@@ -99,9 +99,8 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 
 				if(game.checkVisible(player.model, game.tiles[i])) 
 					game.tileIsVisible[i] = true;
-				else{
+				else
 					game.tileIsVisible[i] = false;
-				}
 			}
 		}
 		

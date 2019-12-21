@@ -79,7 +79,7 @@ public class game {
 		
 		for(int i=0; i<tiles.length; i++) {
 			if(tileIsVisible[i]) {
-				g2.setColor(Color.YELLOW);
+				g2.setColor(Color.WHITE);
 				g2.fill(tiles[i]);
 				g2.setColor(Color.BLACK);
 			}
