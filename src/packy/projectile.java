@@ -8,7 +8,7 @@ public class projectile {
 	static int max = 10;//Max # of projectiles on screen
 	static int inaccuracy = 5;//Inaccuracy of shots
 	
-	static double speed = 30;//Speed of projectiles
+	static double speed = 20;//Speed of projectiles
 	
 	static boolean initialized;
 	

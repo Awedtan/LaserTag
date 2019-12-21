@@ -1,61 +1,38 @@
 package packy;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.*;
+import java.awt.geom.*;
+import java.io.*;
+import java.util.*;
 
 public class game {
-
-	static boolean wallsInitialized;
+	
+	static File file = new File("map1.txt");
+	static Scanner input;
 	
 	//TODO: Maybe find a way to put maps into separate txt files and read them from there
 	//TODO: Make different types of map tiles, destructable, unpassable, etc.
-	static int[][] map = {
-			{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-			{1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
-			{1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
-			{1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
-			{1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1},
-			{1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1},
-			{1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1},
-			{1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1},
-			{1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1},
-			{1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1},
-			{1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1},
-			{1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1},
-			{1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1},
-			{1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
-			{1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
-			{1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
-			{1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
-			{1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1},
-			{1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1},
-			{1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1},
-			{1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1},
-			{1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1},
-			{1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1},
-			{1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1},
-			{1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1},
-			{1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1},
-			{1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
-			{1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
-			{1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
-			{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-	};
+	static char[][] map = new char[30][40];
 	
-	static int numRows = map[0].length;//Map dimensions
-	static int numCols = map.length;
+	static int numRows = map.length;//Map dimensions
+	static int numCols = map[0].length;
+	static int tileWidth = body.screenWidth/numCols;//Tile dimensions
+	static int tileHeight = body.screenHeight/numRows;
+	
+	static boolean wallsInitialized;
 	static int numWalls = 0;
-	static int tileWidth = body.screenWidth/numRows;//Tile dimensions
-	static int tileHeight = body.screenHeight/numCols;
-	
 	static Rectangle[] walls;//The walls
 	
-	public static void drawMap(Graphics g) {
-		//Updates and draws the map
+	static boolean tilesInitialized;
+	static int numTiles = 0;
+	static Rectangle[] tiles;
+	static boolean[] tileIsVisible;
+	
+	public static void drawWalls(Graphics g) {
+		//Draws walls
 		
 		Graphics2D g2 = (Graphics2D) g;
-		int counter = 0;
+		int wallCount = 0;
 		
 		for(int row = 0; row < Math.min(numRows, numCols); row++) {
 			for(int col = 0; col < Math.max(numRows, numCols); col++) {
@@ -63,16 +40,65 @@ public class game {
 				int x = col * tileWidth;
 				int y = row * tileHeight;
 				
-				if(map[row][col] == 1) {	
+				if(map[row][col] == '#') {	
 					
-					walls[counter] = new Rectangle (x, y, tileWidth, tileHeight);
-					counter++;
+					walls[wallCount] = new Rectangle (x, y, tileWidth, tileHeight);
+					wallCount++;
+				}
+				
+			}
+		}
+		
+		wallsInitialized = true;
+		
+		for(int i=0; i<walls.length; i++) 
+			g2.fill(walls[i]);
+		
+		
+	}
+	
+	public static void drawMap(Graphics g) {
+		//Draws all other tiles
+		
+		Graphics2D g2 = (Graphics2D) g;
+		int tileCount = 0;
+		
+		for(int row = 0; row < Math.min(numRows, numCols); row++) {
+			for(int col = 0; col < Math.max(numRows, numCols); col++) {
+				
+				int x = col * tileWidth;
+				int y = row * tileHeight;
+				
+				if(map[row][col] == '`') {
+					
+					tiles[tileCount] = new Rectangle (x, y, tileWidth, tileHeight);
+					tileCount++;
 				}
 			}
 		}
-		wallsInitialized = true;
+		
+		tilesInitialized = true;
+		
+		for(int i=0; i<tiles.length; i++) {
+			if(tileIsVisible[i]) {
+				g2.setColor(Color.YELLOW);
+				g2.fill(tiles[i]);
+				g2.setColor(Color.BLACK);
+			}
+		}
+	}
+	
+	public static boolean checkVisible(Rectangle model, Rectangle tile) {
+		//Checks whether the center of the selected model has a direct line of vision with the center of the selected tile
+		
+		Line2D view = new Line2D.Double();
+		view.setLine((model.width/2) + model.x, (model.height/2) + model.y, tile.x + tile.getWidth()/2, tile.y + tile.getHeight()/2);
+		
 		for(int i=0; i<walls.length; i++) 
-			g2.fill(walls[i]);
+			if(view.intersects(walls[i])) 
+				return false;
+		
+		return true;
 	}
 	
 	public static void checkProjectileCollision(Rectangle wall, int shot) {
@@ -81,7 +107,6 @@ public class game {
 		if(projectile.shots[shot].intersects(wall)) {
 		
 			projectile.alive[shot] = false;
-
 			projectile.countX[shot] = 0;
 			projectile.countY[shot] = 0;
 			projectile.moveX[shot] = 0;
