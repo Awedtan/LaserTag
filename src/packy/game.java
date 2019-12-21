@@ -7,11 +7,9 @@ import java.util.*;
 
 public class game {
 	
-	static File file = new File("map1.txt");
+	static File file = new File("map2.txt");
 	static Scanner input;
 	
-	//TODO: Maybe find a way to put maps into separate txt files and read them from there
-	//TODO: Make different types of map tiles, destructable, unpassable, etc.
 	static char[][] map = new char[30][40];
 	
 	static int numRows = map.length;//Map dimensions
@@ -21,12 +19,12 @@ public class game {
 	
 	static boolean wallsInitialized;
 	static int numWalls = 0;
-	static Rectangle[] walls;//The walls
+	static Rectangle[] walls;
 	
 	static boolean tilesInitialized;
+	static boolean[] tileIsVisible;
 	static int numTiles = 0;
 	static Rectangle[] tiles;
-	static boolean[] tileIsVisible;
 	
 	public static void drawWalls(Graphics g) {
 		//Draws walls
@@ -142,19 +140,19 @@ public class game {
 		}
 	}
 	
-	public static void checkInBound() {
-		//TODO: This isn't really necessary if all the maps are walled off
-		
-		if(player.model.x < 0)
-			player.model.x = 0;
-		
-		else if(player.model.x > body.screenWidth - player.model.width)
-			player.model.x = body.screenWidth - player.model.width;
-		
-		if(player.model.y < 0)
-			player.model.y = 0;
-		
-		else if(player.model.y > body.screenHeight - player.model.height)
-			player.model.y = body.screenHeight - player.model.height;
-	}
+//	TODO: This isn't really necessary if all the maps are walled off
+//	public static void checkInBound() {
+//		
+//		if(player.model.x < 0)
+//			player.model.x = 0;
+//		
+//		else if(player.model.x > body.screenWidth - player.model.width)
+//			player.model.x = body.screenWidth - player.model.width;
+//		
+//		if(player.model.y < 0)
+//			player.model.y = 0;
+//		
+//		else if(player.model.y > body.screenHeight - player.model.height)
+//			player.model.y = body.screenHeight - player.model.height;
+//	}
 }

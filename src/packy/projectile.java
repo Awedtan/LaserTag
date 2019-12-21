@@ -24,6 +24,7 @@ public class projectile {
 	static boolean[] alive = new boolean[max];
 	
 	public static int findNext(Rectangle[] shots) {
+		//Finds the next inactive/dead spot in the projectile array
 		
 		for(int i=0; i<shots.length; i++) {
 			if(!alive[i])
@@ -33,17 +34,18 @@ public class projectile {
 	}
 	
 	public static void shoot(int startX, int startY, double angle, int shot){
+		//Creates a projectile
 		
 		projectile.angle[shot] = angle;
 		posX[shot] = startX;
 		posY[shot] = startY;
 		
-//		Note: this code will be slightly off since it's rounding
 		moveX[shot] = -(speed * Math.cos(Math.toRadians(Math.toDegrees(angle) + Math.random()*inaccuracy-inaccuracy/2)));
 		moveY[shot] = -(speed * Math.sin(Math.toRadians(Math.toDegrees(angle) + Math.random()*inaccuracy-inaccuracy/2)));
 	}
 	
 	public static void move(Graphics g, int shot) {
+		//Moves the projectile
 		
 		if(!alive[shot]) {
 			

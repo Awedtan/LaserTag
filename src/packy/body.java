@@ -84,7 +84,7 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 		//Updates object locations, checks for collisions and visibility
 		
 		player.move();
-		game.checkInBound();
+//		game.checkInBound();
 		
 		if(game.wallsInitialized && projectile.initialized && game.tilesInitialized) {
 			for(int i=0; i<game.walls.length; i++) {
