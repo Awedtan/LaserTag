@@ -24,17 +24,17 @@ public class projectile {
 	static boolean[] alive = new boolean[max];
 	
 	public static int findNext(Rectangle[] shots) {
-		//Finds the next inactive/dead spot in the projectile array
+		//Finds the next inactive/dead slot in the projectile array
 		
-		for(int i=0; i<shots.length; i++) {
+		for(int i=0; i<shots.length; i++) 
 			if(!alive[i])
 				return i;
-		}
+		
 		return -1;
 	}
 	
 	public static void shoot(int startX, int startY, double angle, int shot){
-		//Creates a projectile
+		//Creates a projectile at the specified coordinates
 		
 		projectile.angle[shot] = angle;
 		posX[shot] = startX;
@@ -45,7 +45,7 @@ public class projectile {
 	}
 	
 	public static void move(Graphics g, int shot) {
-		//Moves the projectile
+		//Moves the specified projectile
 		
 		if(!alive[shot]) {
 			
