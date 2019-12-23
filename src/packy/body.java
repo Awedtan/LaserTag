@@ -16,7 +16,7 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	static int mousePosY;
 	static int screenWidth = 1920;//Screen dimensions
 	static int screenHeight = 1080;
-	static int fps = 60;
+	static int fps = 240;
 	
 	static body panel = new body();
 	static JFrame frame;
@@ -43,13 +43,21 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	
 	public void initialize() {
 		//Sets up map creation
-
+		
 		try {
 			
 			game.input = new Scanner(game.file);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		
+		game.numCols = Integer.parseInt(game.input.nextLine());
+		game.numRows = Integer.parseInt(game.input.nextLine());
+		
+		game.map  = new char[game.numRows][game.numCols];
+		
+		game.tileWidth = screenWidth/game.numCols;
+		game.tileHeight = screenHeight/game.numRows;
 		
 		int mapRow = 0;
 		
@@ -99,8 +107,11 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 
 				if(game.checkVisible(player.model, game.tiles[i])) 
 					game.tileIsVisible[i] = true;
+//				else if(game.checkVisible(game.light, game.tiles[i])) 
+//					game.tileIsVisible[i] = true;
 				else
 					game.tileIsVisible[i] = false;
+				
 			}
 		}
 		
@@ -123,12 +134,13 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 		//Draws all graphics
 		
 		super.paintComponent(g);
-		game.drawMap(g);
+		game.drawVisible(g);
 		
 		for(int i=0; i<projectile.shots.length; i++)
 			projectile.move(g, i);
 		
 		projectile.initialized = true;
+		game.drawInvisible(g);
 		game.drawWalls(g);
 		
 		player.rotate(g);

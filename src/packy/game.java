@@ -7,15 +7,17 @@ import java.util.*;
 
 public class game {
 	
-	static File file = new File("map2.txt");
+	static File file = new File("map1.txt");
 	static Scanner input;
 	
-	static char[][] map = new char[30][40];
+	static char[][] map;//For square tiles, the # of columns should be 1.78 times the number of rows
+						//The dimensions should also be divisors of both 1920 and 1080
+						//96x54 is a good map size, any larger and it might become laggy
 	
-	static int numRows = map.length;//Map dimensions
-	static int numCols = map[0].length;
-	static int tileWidth = body.screenWidth/numCols;//Tile dimensions
-	static int tileHeight = body.screenHeight/numRows;
+	static int numCols;//Map dimensions
+	static int numRows;
+	static int tileWidth;//Tile dimensions
+	static int tileHeight;
 	
 	static boolean wallsInitialized;
 	static int numWalls = 0;
@@ -25,6 +27,8 @@ public class game {
 	static boolean[] tileIsVisible;
 	static int numTiles = 0;
 	static Rectangle[] tiles;
+	
+	static Rectangle light = new Rectangle(player.startPosX, player.startPosY, player.width, player.height);
 	
 	public static void drawWalls(Graphics g) {
 		//Draws walls
@@ -49,14 +53,16 @@ public class game {
 		
 		wallsInitialized = true;
 		
-		for(int i=0; i<walls.length; i++) 
+		for(int i=0; i<walls.length; i++) {
+			g2.setColor(Color.BLACK);
 			g2.fill(walls[i]);
+		}
 		
 		
 	}
 	
-	public static void drawMap(Graphics g) {
-		//Draws all other tiles
+	public static void drawVisible(Graphics g) {
+		//Draws visible tiles
 		
 		Graphics2D g2 = (Graphics2D) g;
 		int tileCount = 0;
@@ -81,7 +87,18 @@ public class game {
 			if(tileIsVisible[i]) {
 				g2.setColor(Color.WHITE);
 				g2.fill(tiles[i]);
-				g2.setColor(Color.BLACK);
+			}
+		}
+	}
+	
+	public static void drawInvisible(Graphics g) {
+		
+		Graphics2D g2 = (Graphics2D) g;
+		
+		for(int i=0; i<tiles.length; i++) {
+			if(!tileIsVisible[i]) {
+				g2.setColor(Color.LIGHT_GRAY);
+				g2.fill(tiles[i]);
 			}
 		}
 	}

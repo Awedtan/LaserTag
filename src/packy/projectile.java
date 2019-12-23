@@ -5,10 +5,10 @@ import java.awt.*;
 public class projectile {
 
 	static int size = 5;//Size of projectile
-	static int max = 10;//Max # of projectiles on screen
+	static int max = 100;//Max # of projectiles on screen
 	static int inaccuracy = 5;//Inaccuracy of shots
 	
-	static double speed = 20;//Speed of projectiles
+	static double speed = 30;//Speed of projectiles
 	
 	static boolean initialized;
 	
@@ -56,6 +56,7 @@ public class projectile {
 			Graphics2D g2 = (Graphics2D) g;
 			shots[shot] = new Rectangle(posX[shot] + countX[shot], posY[shot] + countY[shot], projectile.size, projectile.size);
 			
+			g2.setColor(Color.BLACK);
 			g2.fill(shots[shot]);
 			countX[shot] += moveX[shot];
 			countY[shot] += moveY[shot];

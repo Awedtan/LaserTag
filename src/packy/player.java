@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 public class player {
 
-	static final int STARTSPEED = 4;//Default player speed
+	static final int STARTSPEED = 3;//Default player speed
 	
 	static int width = 20;//Player dimensions
 	static int height = width;
@@ -28,6 +28,7 @@ public class player {
 		//Draws the player and gun sprite
 		
 		Graphics2D g2 = (Graphics2D) g;
+		g2.setColor(Color.BLACK);
 		g2.fill(model);
 		g2.fillRect((player.model.x-(int)(player.width-player.width*0.2)), player.model.y, player.height, (int)(player.width/5));
 	}
@@ -36,7 +37,7 @@ public class player {
 		//Moves the player model based on keys pressed
 	
 		if(sprint)
-			speed = (int)(STARTSPEED*2);
+			speed = (int)(STARTSPEED*1.5);
 		else 
 			speed = STARTSPEED;
 		
