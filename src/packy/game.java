@@ -28,7 +28,7 @@ public class game {
 	static int numTiles = 0;
 	static Rectangle[] tiles;
 	
-	static Rectangle light = new Rectangle(player.startPosX, player.startPosY, player.width, player.height);
+//	static Rectangle light = new Rectangle(player.STARTPOSX, player.STARTPOSY, player.width, player.height);
 	
 	public static void drawWalls(Graphics g) {
 		//Draws walls
@@ -106,14 +106,23 @@ public class game {
 	public static boolean checkVisible(Rectangle model, Rectangle tile) {
 		//Checks whether the center of the selected model has a direct line of vision with the center of the selected tile
 		
-		Line2D view = new Line2D.Double();
-		view.setLine((model.width/2) + model.x, (model.height/2) + model.y, tile.x + tile.getWidth()/2, tile.y + tile.getHeight()/2);
-		
-		for(int i=0; i<walls.length; i++) 
-			if(view.intersects(walls[i])) 
-				return false;
-		
-		return true;
+		double x1=(model.width/2) + model.x, x2=tile.x + tile.getWidth()/2, y1=(model.height/2) + model.y, y2=tile.y + tile.getHeight()/2;
+		double fov = -(Math.atan2(player.centerX - tile.x + tile.getWidth()/2, player.centerY - tile.y + tile.getHeight()/2) - Math.PI / 2);
+				
+		if(player.angle - (player.angle - fov) > player.angle - Math.toRadians(player.FOV) && player.angle + (player.angle - fov) < player.angle + Math.toRadians(player.FOV)) {
+			if(Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2)) < player.VIEWRANGE) {
+				
+				Line2D view = new Line2D.Double();
+				view.setLine(x1, y1, x2, y2);
+				
+					for(int i=0; i<walls.length; i++) 
+						if(view.intersects(walls[i])) 
+							return false;
+					
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public static void checkProjectileCollision(Rectangle wall, int shot) {

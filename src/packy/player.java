@@ -6,17 +6,20 @@ import java.awt.event.*;
 public class player {
 
 	static final int STARTSPEED = 3;//Default player speed
+	static final int STARTPOSX = 100;//Player start location
+	static final int STARTPOSY = 550;	
+	static final int VIEWRANGE = 300;
+	static final int FOV = 60;
 	
 	static int width = 20;//Player dimensions
 	static int height = width;
-	static int startPosX = 100;//Player start location
-	static int startPosY = 550;	
+	
 	static int centerX;//Player coordinates
 	static int centerY;
 	static int speed = STARTSPEED;
 	static double angle;//Angle to mouse cursor
 	
-	static Rectangle model = new Rectangle(startPosX, startPosY, width, height);//Player model
+	static Rectangle model = new Rectangle(STARTPOSX, STARTPOSY, width, height);//Player model
 	
 	static boolean moveLeft;//Movement booleans
 	static boolean moveRight;

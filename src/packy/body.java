@@ -16,7 +16,7 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	static int mousePosY;
 	static int screenWidth = 1920;//Screen dimensions
 	static int screenHeight = 1080;
-	static int fps = 240;
+	static int fps = 120;
 	
 	static body panel = new body();
 	static JFrame frame;
