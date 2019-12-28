@@ -8,8 +8,8 @@ public class player {
 	static final int STARTSPEED = 3;//Default player speed
 	static final int STARTPOSX = 100;//Player start location
 	static final int STARTPOSY = 550;	
-	static final int VIEWRANGE = 300;
-	static final int FOV = 60;
+	static final int VIEWRANGE = 400;
+	static final int FOV = 90;
 	
 	static int width = 20;//Player dimensions
 	static int height = width;
@@ -34,6 +34,21 @@ public class player {
 		g2.setColor(Color.BLACK);
 		g2.fill(model);
 		g2.fillRect((player.model.x-(int)(player.width-player.width*0.2)), player.model.y, player.height, (int)(player.width/5));
+	}
+	
+	public static void shoot(int startX, int startY, double angle, int shot){
+		//Initializes a projectile at the specified coordinates
+		
+		playerProjectile.angle[shot] = angle;
+		playerProjectile.posX[shot] = startX;
+		playerProjectile.posY[shot] = startY;
+		
+		playerProjectile.moveX[shot] = -(playerProjectile.speed * Math.cos(Math.toRadians(Math.toDegrees(angle) + Math.random()*playerProjectile.inaccuracy-playerProjectile.inaccuracy/2)));
+		playerProjectile.moveY[shot] = -(playerProjectile.speed * Math.sin(Math.toRadians(Math.toDegrees(angle) + Math.random()*playerProjectile.inaccuracy-playerProjectile.inaccuracy/2)));
+		
+		playerProjectile.countX[shot] = 0;
+		playerProjectile.countY[shot] = 0;
+		playerProjectile.alive[shot] = true;
 	}
 	
 	public static void move() {
