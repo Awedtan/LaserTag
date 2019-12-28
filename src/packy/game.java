@@ -5,6 +5,8 @@ import java.awt.geom.*;
 import java.io.*;
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
 public class game {
 	
 	static File file = new File("map1.txt");
@@ -27,8 +29,6 @@ public class game {
 	static boolean[] tileIsVisible;
 	static int numTiles = 0;
 	static Rectangle[] tiles;
-	
-//	static Rectangle light = new Rectangle(player.STARTPOSX, player.STARTPOSY, player.width, player.height);
 	
 	public static void drawWalls(Graphics g) {
 		//Draws walls
@@ -103,14 +103,32 @@ public class game {
 		}
 	}
 	
-	public static boolean checkVisible(Rectangle model, Rectangle tile) {
-		//Checks whether the center of the selected model has a direct line of vision with the center of the selected tile
+	public static boolean checkVisible(Rectangle model, Rectangle tile, int range) {
+		//Checks whether a line can be drawn between two rectangles without intercepting any walls
+		
+		double x1 = (model.width/2) + model.x, x2 = tile.x + tile.getWidth()/2, y1 = (model.height/2) + model.y, y2 = tile.y + tile.getHeight()/2;
+				
+			if(Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2)) < range) {
+				
+				Line2D view = new Line2D.Double();
+				view.setLine(x1, y1, x2, y2);
+				
+					for(int i=0; i<walls.length; i++) 
+						if(view.intersects(walls[i])) 
+							return false;
+					
+				return true;
+			}
+		return false;
+	}
+	
+	public static boolean checkVisible(Rectangle model, Rectangle tile, int range, int fov) {
 		
 		double x1 = (model.width/2) + model.x, x2 = tile.x + tile.getWidth()/2, y1 = (model.height/2) + model.y, y2 = tile.y + tile.getHeight()/2;
 		double angleOfObject = -(Math.atan2(player.centerX - tile.x + tile.getWidth()/2, player.centerY - tile.y + tile.getHeight()/2) - Math.PI / 2);
 				
-		if(player.angle - (player.angle - angleOfObject) > player.angle - Math.toRadians(player.FOV) && player.angle - (player.angle - angleOfObject) < player.angle + Math.toRadians(player.FOV)) {
-			if(Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2)) < player.VIEWRANGE) {
+		if(player.angle - (player.angle - angleOfObject) > player.angle - Math.toRadians(fov) && player.angle - (player.angle - angleOfObject) < player.angle + Math.toRadians(fov)) {
+			if(Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2)) < range) {
 				
 				Line2D view = new Line2D.Double();
 				view.setLine(x1, y1, x2, y2);
@@ -125,17 +143,53 @@ public class game {
 		return false;
 	}
 	
-	public static void checkProjectileCollision(Rectangle wall, int shot) {
+	public static void checkPlayerProjectileCollision(Rectangle wall, int shot) {
 		//Checks for projectile collisions with walls
 		
-		if(projectile.shots[shot].intersects(wall)) {
-		
-			projectile.alive[shot] = false;
-			projectile.countX[shot] = 0;
-			projectile.countY[shot] = 0;
-			projectile.moveX[shot] = 0;
-			projectile.moveY[shot] = 0;
+		if(playerProjectile.shots[shot].intersects(wall)) {
+			
+			playerProjectile.alive[shot] = false;
+			playerProjectile.countX[shot] = 0;
+			playerProjectile.countY[shot] = 0;
+			playerProjectile.moveX[shot] = 0;
+			playerProjectile.moveY[shot] = 0;
 		}
+		
+		if(playerProjectile.shots[shot].intersects(enemy.dummy)) {
+			
+			playerProjectile.alive[shot] = false;
+			playerProjectile.countX[shot] = 0;
+			playerProjectile.countY[shot] = 0;
+			playerProjectile.moveX[shot] = 0;
+			playerProjectile.moveY[shot] = 0;
+		}
+	}
+	
+	public static void checkEnemyProjectileCollision(Rectangle wall, int shot) {
+		//Checks for projectile collisions with walls
+		
+		if(enemyProjectile.shots[shot].intersects(wall)) {
+			
+			enemyProjectile.alive[shot] = false;
+			enemyProjectile.countX[shot] = 0;
+			enemyProjectile.countY[shot] = 0;
+			enemyProjectile.moveX[shot] = 0;
+			enemyProjectile.moveY[shot] = 0;
+		}
+		
+		if(enemyProjectile.shots[shot].intersects(player.model)) {
+			
+			enemyProjectile.alive[shot] = false;
+			enemyProjectile.countX[shot] = 0;
+			enemyProjectile.countY[shot] = 0;
+			enemyProjectile.moveX[shot] = 0;
+			enemyProjectile.moveY[shot] = 0;
+//			test();
+		}
+	}
+	
+	public static void test() {
+		JOptionPane.showMessageDialog (body.frame, "your dead", "dead", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	public static void checkPlayerCollision(Rectangle wall) {
