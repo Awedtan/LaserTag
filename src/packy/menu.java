@@ -8,7 +8,7 @@ import java.awt.*;
 public class menu extends JPanel{
 
     // List of necessary variables
-    JPanel menuPanel = new JPanel();
+    JPanel menuPanel, playPanel, optionPanel;
     
     public static void mainMenu() {
         
