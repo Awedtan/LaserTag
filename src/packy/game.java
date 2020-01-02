@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 public class game {
 	
-	static File file = new File("map1.txt");
+	static File file = new File("maps/map1.txt");
 	static Scanner input;
 	
 	static char[][] map;//For square tiles, the # of columns should be 1.78 times the number of rows

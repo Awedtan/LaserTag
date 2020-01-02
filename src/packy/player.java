@@ -9,7 +9,7 @@ public class player {
 	static final int STARTPOSX = 100;//Player start location
 	static final int STARTPOSY = 550;	
 	static final int VIEWRANGE = 400;
-	static final int FOV = 90;
+	static final int FOV = 45; // This value is half the FOV, therefore 45 = 90 FOV, 90 = 180 FOV
 	
 	static int width = 20;//Player dimensions
 	static int height = width;
