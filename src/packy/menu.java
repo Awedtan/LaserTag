@@ -1,103 +1,120 @@
 package packy;
 
-import javax.swing.*;
-import javax.swing.event.*;
-
-import java.awt.*;
 import java.awt.event.*;
+import java.awt.*;
 
-// TODO: add proper method comments (if we're supposed to) (this goes for every file)
-// TODO: a lot of this code is duplicate from the body.java file so which to remove from????
-// TODO: this code might be poopy, make sure to review
+import javax.swing.*;
 
-public class menu extends JPanel implements KeyListener, MouseListener {
+@SuppressWarnings("serial")
+public class menu extends JPanel implements KeyListener, MouseListener{
+	
+	// TODO: right now this runs as an isolated menu, figure out how to integrate it with the actual game (and also add menus to that)
+	// use this knowledge, i beg you: https://www.youtube.com/watch?v=FZWX5WoGW00
 
-    // List of necessary variables
-    static int screenWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth());// Screen dimensions TODO: duplicate? delete? send help
-	static int screenHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight());
-    static JPanel menuPanel, playPanel, optionPanel;
-    static ImageIcon gameLogo = new ImageIcon("images/logo_v2.png");
-    static JLabel playLabel, optionLabel, exitLabel;
+	//the necessary variables
+	int screenWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth());// Screen dimensions TODO: duplicate code
+    int screenHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight());
 
-    // Main menu variables
+	Image gameLogo = Toolkit.getDefaultToolkit().getImage("images/logo_resized.png");
 
-    // Game menu variables
-    
-    public static void mainMenu() {
+	Font menuFont = new Font("Segoe UI", Font.PLAIN, 70);
+	Color menuColor = new Color(255, 255, 255);
 
-    }
+	// Main menu variables
+    JLabel playLabel, optionLabel, exitLabel;
+	
+	// JPanel method, throw everything in here
+	public menu() {
+		setPreferredSize(new Dimension(screenWidth, screenHeight));
+		setLayout(null);
 
-    public static void startGame() {
-            
-    }
+		playLabel = new JLabel("Play");
+		playLabel.setFont(menuFont);
+		playLabel.setBounds(50, 400, 250, 120);
+		playLabel.setForeground(menuColor);
+		optionLabel = new JLabel("Options");
+		optionLabel.setFont(menuFont);
+		optionLabel.setBounds(50, 550, 250, 120);
+		optionLabel.setForeground(menuColor);
+		exitLabel = new JLabel("Exit");
+		exitLabel.setFont(menuFont);
+		exitLabel.setBounds(50, 800, 250, 120);
+		exitLabel.setForeground(menuColor);
 
-    public static void exitConfirm() {
-        // TODO: using normal dialogs should be enough but idk
-    }
+		add(playLabel);
+		add(optionLabel);
+		add(exitLabel);
+		
+	}
+	
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.setColor(new Color(20, 20, 20));
+		g.setFont(menuFont);
+		g.fillRect(0, 0, screenWidth, screenHeight);
 
-    public menu () {
-        setPreferredSize(new Dimension(screenWidth, screenHeight));
+		g.setColor(Color.WHITE);
+		g.drawImage(gameLogo, 50, 100, (2 * screenWidth/3 - 50), ((2 * screenWidth/3 - 50) / 6), this);
+		// g.drawString("Play", 50, 500);
+		// g.drawString("Options", 50, 650);
+		// // could add a credits option once everything else is done
+		// g.drawString("Exit", 50, 900);
+	}
 
-        setBackground(Color.DARK_GRAY);
-        
-    }
+	@Override
+	public void keyTyped(KeyEvent e) {
+		
+	}
 
-    public void paintComponent(Graphics g) {
-        // Draws menu items
-        super.paintComponent(g);
-    }
-    
-    public static void main(String[] args) {
-        JFrame menuFrame = new JFrame();
+	@Override
+	public void keyPressed(KeyEvent e) {
+		
+	}
 
-        menuPanel = new JPanel();
+	@Override
+	public void keyReleased(KeyEvent e) {
+		
+	}
 
-        menuFrame.setUndecorated(true);
-        menuFrame.add(menuPanel);
-        menuFrame.pack();
-		menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		menuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		menuFrame.setResizable(false);
-		menuFrame.setVisible(true); 
-    }
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		
+	}
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
+	@Override
+	public void mousePressed(MouseEvent e) {
+		
+	}
 
-    }
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		
+	}
 
-    @Override
-    public void mousePressed(MouseEvent e) {
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		
+	}
 
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
+	@Override
+	public void mouseExited(MouseEvent e) {
+		
+	}
+	
+	// TODO: if this can be integrated with the body.java, the main function in either this or that needs to go
+	public static void main(String[] args) {
+		//makes a brand new JFrame
+        JFrame frame = new JFrame ();
+        frame.setUndecorated(true);
+		menu myPanel = new menu();
+		frame.add(myPanel);
+		//so you can actually get keyboard input
+		// frame.addKeyListener(myPanel);
+		//so you can actually get mouse input
+		// frame.addMouseListener(myPanel);
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
+        frame.setVisible(true);
+	}
 }

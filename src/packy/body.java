@@ -14,16 +14,14 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	
 	static int mousePosX;//Mouse cursor coordinates
 	static int mousePosY;
-	// Sets screenWidth and screenHeight to the dimensions of the screen, previous hardcode kept below. Might cause weird behaviours with wacky screen sizes, but ¯\_(ツ)_/¯
+	// Sets screenWidth and screenHeight to the dimensions of the screen
 	static int screenWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth());//Screen dimensions
 	static int screenHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight());
-	// static int screenWidth = 1920;
-	// static int screenHeight = 1080;
 	static int fps = 120;
 	
 	static body panel = new body();
 	static JFrame frame;
-	
+
 	@Override
 	public void run() {
 		//Runs first and forever
