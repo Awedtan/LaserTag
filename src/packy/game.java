@@ -103,32 +103,22 @@ public class game {
 		}
 	}
 	
-	public static boolean checkVisible(Rectangle model, Rectangle tile, int range) {
-
-		
-		double x1 = (model.width/2) + model.x, x2 = tile.x + tile.getWidth()/2, y1 = (model.height/2) + model.y, y2 = tile.y + tile.getHeight()/2;
-				
-			if(Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2)) < range) {
-				
-				Line2D view = new Line2D.Double();
-				view.setLine(x1, y1, x2, y2);
-				
-					for(int i=0; i<walls.length; i++) 
-						if(view.intersects(walls[i])) 
-							return false;
-					
-				return true;
-			}
-		return false;
-	}
-	
 	public static boolean checkVisible(Rectangle model, Rectangle tile, double range, double fov) {
 		//Checks whether a line can be drawn between the centre of two rectangles without intercepting any walls
 		
 		double x1 = (model.width/2) + model.x, x2 = tile.x + tile.getWidth()/2, y1 = (model.height/2) + model.y, y2 = tile.y + tile.getHeight()/2;
 		double angleOfObject = -(Math.atan2(player.centerX - tile.x + tile.getWidth()/2, player.centerY - tile.y + tile.getHeight()/2) - Math.PI / 2);
-		
-		if(player.angle - (player.angle - angleOfObject) > player.angle - Math.toRadians(fov) && player.angle - (player.angle - angleOfObject) < player.angle + Math.toRadians(fov)) {
+				
+		if(
+			(
+			player.angle-(player.angle-angleOfObject) > player.angle-Math.toRadians(fov) 
+			||
+			player.angle+(player.angle-(Math.toRadians(270)+angleOfObject)) > player.angle+Math.toRadians(fov) 
+			) && (
+			player.angle-(player.angle-angleOfObject) < player.angle+Math.toRadians(fov) 
+			)
+			
+		) {
 			if(Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2)) < range) {
 				
 				Line2D view = new Line2D.Double();

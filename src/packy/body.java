@@ -110,12 +110,12 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 			for(int i=0; i<game.numTiles; i++) 
 				if(game.checkVisible(player.model, game.tiles[i], player.VIEWRANGE, player.FOV))
 					game.tileIsVisible[i] = true;
-				else if(game.checkVisible(enemy.dummy, game.tiles[i], enemy.VIEWRANGE)) 
+				else if(game.checkVisible(enemy.dummy, game.tiles[i], enemy.VIEWRANGE, 360)) 
 					game.tileIsVisible[i] = true;
 				else
 					game.tileIsVisible[i] = false;
 			
-			if(game.checkVisible(enemy.dummy, player.model, enemy.VIEWRANGE) && enemyProjectile.findNext(enemyProjectile.shots) != -1) 
+			if(game.checkVisible(enemy.dummy, player.model, enemy.VIEWRANGE, 360) && enemyProjectile.findNext(enemyProjectile.shots) != -1) 
 				enemy.shoot(enemy.centerX, enemy.centerY, enemy.angle, enemyProjectile.findNext(enemyProjectile.shots));
 		}
 	}
