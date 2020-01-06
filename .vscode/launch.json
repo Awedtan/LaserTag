@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - menuTest",
+            "request": "launch",
+            "mainClass": "Final/packy.menuTest",
+            "projectName": "Final"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - menu",
+            "request": "launch",
+            "mainClass": "Final/packy.menu",
+            "projectName": "Final"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - body",
             "request": "launch",
             "mainClass": "Final/packy.body",
