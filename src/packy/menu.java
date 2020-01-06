@@ -30,7 +30,7 @@ public class menu extends JPanel implements KeyListener, MouseListener{
 
 		playLabel = new JLabel("Play");
 		playLabel.setFont(menuFont);
-		playLabel.setBounds(50, 400, 250, 120);
+		playLabel.setBounds(50, 450, 250, 120);
 		playLabel.setForeground(menuColor);
 		playLabel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -40,7 +40,7 @@ public class menu extends JPanel implements KeyListener, MouseListener{
 		});
 		exitLabel = new JLabel("Exit");
 		exitLabel.setFont(menuFont);
-		exitLabel.setBounds(50, 800, 250, 120);
+		exitLabel.setBounds(50, 700, 250, 120);
 		exitLabel.setForeground(menuColor);
 		exitLabel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -111,7 +111,7 @@ public class menu extends JPanel implements KeyListener, MouseListener{
 	// TODO: if this can be integrated with the body.java, the main function in either this or that needs to go
 	public static void main(String[] args) {
 		//makes a brand new JFrame
-        JFrame frame = new JFrame ();
+        JFrame frame = new JFrame();
         frame.setUndecorated(true);
 		menu myPanel = new menu();
 		frame.add(myPanel);
