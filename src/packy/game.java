@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 public class game {
 	
-	static File file = new File("maps/map2.txt");
+	static File file = new File("maps/template128x72.txt");
 	static Scanner input;
 	
 	static char[][] map;//For square tiles, the # of columns should be 1.78 times the number of rows
@@ -113,7 +113,7 @@ public class game {
 			(
 			player.angle-(player.angle-angleOfObject) > player.angle-Math.toRadians(fov) 
 			||
-			player.angle+(player.angle-(Math.toRadians(280)+angleOfObject)) > player.angle+Math.toRadians(fov) 
+			player.angle+(player.angle-(Math.toRadians(270)+angleOfObject)) > player.angle+Math.toRadians(fov) 
 			) && (
 			player.angle-(player.angle-angleOfObject) < player.angle+Math.toRadians(fov) 
 			)
