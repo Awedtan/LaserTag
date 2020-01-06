@@ -9,7 +9,7 @@ import javax.swing.*;
 public class menu extends JPanel implements KeyListener, MouseListener{
 	
 	// TODO: right now this runs as an isolated menu, figure out how to integrate it with the actual game (and also add menus to that)
-	// use this knowledge, i beg you: https://www.youtube.com/watch?v=FZWX5WoGW00
+	// use my knowledge, i beg you: https://www.youtube.com/watch?v=FZWX5WoGW00
 
 	//the necessary variables
 	int screenWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth());// Screen dimensions TODO: duplicate code
@@ -32,17 +32,24 @@ public class menu extends JPanel implements KeyListener, MouseListener{
 		playLabel.setFont(menuFont);
 		playLabel.setBounds(50, 400, 250, 120);
 		playLabel.setForeground(menuColor);
-		optionLabel = new JLabel("Options");
-		optionLabel.setFont(menuFont);
-		optionLabel.setBounds(50, 550, 250, 120);
-		optionLabel.setForeground(menuColor);
+		playLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO: open play menu
+			}
+		});
 		exitLabel = new JLabel("Exit");
 		exitLabel.setFont(menuFont);
 		exitLabel.setBounds(50, 800, 250, 120);
 		exitLabel.setForeground(menuColor);
+		exitLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.exit(0);
+			}
+		});
 
 		add(playLabel);
-		add(optionLabel);
 		add(exitLabel);
 		
 	}
