@@ -113,7 +113,7 @@ public class game {
 			(
 			player.angle-(player.angle-angleOfObject) > player.angle-Math.toRadians(fov) 
 			||
-			player.angle+(player.angle-(Math.toRadians(270)+angleOfObject)) > player.angle+Math.toRadians(fov) 
+			player.angle+(player.angle-(Math.toRadians(360 - 2 * player.FOV)+angleOfObject)) > player.angle+Math.toRadians(fov) 
 			) && (
 			player.angle-(player.angle-angleOfObject) < player.angle+Math.toRadians(fov) 
 			)
