@@ -108,7 +108,7 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 			}
 			
 			for(int i=0; i<game.numTiles; i++) 
-				if(game.checkVisible(player.model, game.tiles[i], player.VIEWRANGE, player.FOV)) 
+				if(game.checkVisible(player.model, game.tiles[i], player.VIEWRANGE, player.FOV))
 					game.tileIsVisible[i] = true;
 				else if(game.checkVisible(enemy.dummy, game.tiles[i], enemy.VIEWRANGE)) 
 					game.tileIsVisible[i] = true;
@@ -144,12 +144,12 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 		for(int i=0; i<enemyProjectile.shots.length; i++)
 			enemyProjectile.move(g, i);
 		
+		
 		playerProjectile.initialized = true;
 		enemyProjectile.initialized = true;
 		game.drawInvisible(g);
 		game.drawWalls(g);
 		enemy.draw(g);
-		
 		player.rotate(g);
 		//Any graphics method called after the rotate method WILL BE ROTATED
 		//If it should not be rotated, put it BEFORE the rotate method

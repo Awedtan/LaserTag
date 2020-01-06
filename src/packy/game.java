@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 public class game {
 	
-	static File file = new File("maps/map1.txt");
+	static File file = new File("maps/map2.txt");
 	static Scanner input;
 	
 	static char[][] map;//For square tiles, the # of columns should be 1.78 times the number of rows
@@ -104,7 +104,7 @@ public class game {
 	}
 	
 	public static boolean checkVisible(Rectangle model, Rectangle tile, int range) {
-		//Checks whether a line can be drawn between two rectangles without intercepting any walls
+
 		
 		double x1 = (model.width/2) + model.x, x2 = tile.x + tile.getWidth()/2, y1 = (model.height/2) + model.y, y2 = tile.y + tile.getHeight()/2;
 				
@@ -122,11 +122,12 @@ public class game {
 		return false;
 	}
 	
-	public static boolean checkVisible(Rectangle model, Rectangle tile, int range, int fov) {
+	public static boolean checkVisible(Rectangle model, Rectangle tile, double range, double fov) {
+		//Checks whether a line can be drawn between the centre of two rectangles without intercepting any walls
 		
 		double x1 = (model.width/2) + model.x, x2 = tile.x + tile.getWidth()/2, y1 = (model.height/2) + model.y, y2 = tile.y + tile.getHeight()/2;
 		double angleOfObject = -(Math.atan2(player.centerX - tile.x + tile.getWidth()/2, player.centerY - tile.y + tile.getHeight()/2) - Math.PI / 2);
-				
+		
 		if(player.angle - (player.angle - angleOfObject) > player.angle - Math.toRadians(fov) && player.angle - (player.angle - angleOfObject) < player.angle + Math.toRadians(fov)) {
 			if(Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2)) < range) {
 				
