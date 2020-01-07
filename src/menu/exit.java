@@ -1,14 +1,14 @@
-package packy;
+package menu;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class exitMenu extends JPanel implements KeyListener, MouseListener{
+public class exit extends JPanel implements KeyListener, MouseListener{
     JLabel confirmAsk, confirmYes, confirmNo;
 
-    public exitMenu() {
+    public exit() {
         confirmAsk = new JLabel("Are you sure you want to quit?", SwingConstants.CENTER);
         confirmAsk.setFont(new Font("Segoe UI", Font.PLAIN, 55));
         confirmAsk.setBounds(menu.screenWidth / 4, 350, menu.screenWidth / 2, 120);

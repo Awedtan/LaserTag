@@ -1,4 +1,4 @@
-package packy;
+package menu;
 
 import java.awt.event.*;
 import java.awt.*;
@@ -21,9 +21,9 @@ public class menu extends JPanel implements KeyListener, MouseListener{
 
 	static JFrame frame;
 
-	static mainMenu menuPanel;
-	static playMenu playPanel;
-	static exitMenu exitPanel;
+	static main menuPanel;
+	static play playPanel;
+	static exit exitPanel;
 	
 	enum STATE {
 		MAIN,
@@ -169,9 +169,9 @@ public class menu extends JPanel implements KeyListener, MouseListener{
 		//makes a brand new JFrame
         frame = new JFrame();
         frame.setUndecorated(true);
-		menuPanel = new mainMenu();
-		playPanel = new playMenu();
-		exitPanel = new exitMenu();
+		menuPanel = new main();
+		playPanel = new play();
+		exitPanel = new exit();
 		frame.add(menuPanel);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
