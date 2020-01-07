@@ -1,14 +1,14 @@
-package packy;
+package menu;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class mainMenu extends JPanel implements KeyListener, MouseListener {
+public class main extends JPanel implements KeyListener, MouseListener {
     JLabel playLabel, exitLabel;
 
-    public mainMenu() {
+    public main() {
         playLabel = new JLabel("Play");
         playLabel.setFont(menu.menuFont);
         playLabel.setBounds(50, 450, 250, 120);

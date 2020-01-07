@@ -1,12 +1,12 @@
-package packy;
+package menu;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class playMenu extends JPanel implements KeyListener, MouseListener{
-    public playMenu() {
+public class play extends JPanel implements KeyListener, MouseListener{
+    public play() {
         // TODO: add the play menu stuffu
     }
 
