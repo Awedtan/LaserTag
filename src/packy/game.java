@@ -134,19 +134,19 @@ public class game {
 		return false;
 	}
 	
-	public static boolean checkVisibleEnemy(Rectangle model, Rectangle tile, double range, double fov) {
+	public static boolean checkVisibleEnemy(Rectangle model, Rectangle tile, double range, double fov, int num) {
 		//Checks whether a line can be drawn between the centre of two rectangles without intercepting any walls
 		
 		double x1 = (model.width/2) + model.x, x2 = tile.x + tile.getWidth()/2, y1 = (model.height/2) + model.y, y2 = tile.y + tile.getHeight()/2;
-		double angleOfObject = -(Math.atan2(enemy.centerX - tile.x + tile.getWidth()/2, enemy.centerY - tile.y + tile.getHeight()/2) - Math.PI / 2);
+		double angleOfObject = -(Math.atan2(enemy.centerX[num] - tile.x + tile.getWidth()/2, enemy.centerY[num] - tile.y + tile.getHeight()/2) - Math.PI / 2);
 				
 		if(
 			(
-			enemy.angle-(enemy.angle-angleOfObject) > enemy.angle-Math.toRadians(fov) 
+			enemy.angle[num]-(enemy.angle[num]-angleOfObject) > enemy.angle[num]-Math.toRadians(fov) 
 			||
-			enemy.angle+(enemy.angle-(Math.toRadians(360 - 2 * enemy.FOV)+angleOfObject)) > enemy.angle+Math.toRadians(fov) 
+			enemy.angle[num]+(enemy.angle[num]-(Math.toRadians(360 - 2 * enemy.FOV)+angleOfObject)) > enemy.angle[num]+Math.toRadians(fov) 
 			) && (
-			enemy.angle-(enemy.angle-angleOfObject) < enemy.angle+Math.toRadians(fov) 
+			enemy.angle[num]-(enemy.angle[num]-angleOfObject) < enemy.angle[num]+Math.toRadians(fov) 
 			)
 			
 		) {
@@ -165,16 +165,15 @@ public class game {
 		return false;
 	}
 	
-	public static void checkPlayerProjectileCollision(Rectangle wall, int shot) {
+	public static void checkPlayerProjectileCollision(Rectangle wall, int shot, int num) {
 		//Checks for projectile collisions with walls
 		
 		if(playerProjectile.shots[shot].intersects(wall)) 
 			playerProjectile.kill(shot);
 		
-		if(playerProjectile.shots[shot].intersects(enemy.dummy)) {
+		if(playerProjectile.shots[shot].intersects(enemy.enemies[num])) {
 			
 			playerProjectile.kill(shot);
-			enemy.alerted(player.model.x, player.model.y);
 		}
 	}
 	
@@ -223,31 +222,32 @@ public class game {
 		}
 	}
 	
-	public static void checkEnemyCollision(Rectangle wall) {
+	public static void checkEnemyCollision(Rectangle wall, int num) {
 		//Checks for player collision with walls
 		
-		if(enemy.dummy.intersects(wall)) {
+		if(enemy.enemies[num].intersects(wall)) {
 			
-			double left1 = enemy.dummy.getX();
-			double right1 = enemy.dummy.getX() + enemy.dummy.getWidth();
-			double top1 = enemy.dummy.getY();
-			double bottom1 = enemy.dummy.getY() + enemy.dummy.getHeight();
+			enemy.wait[num] = -1;
+			double left1 = enemy.enemies[num].getX();
+			double right1 = enemy.enemies[num].getX() + enemy.enemies[num].getWidth();
+			double top1 = enemy.enemies[num].getY();
+			double bottom1 = enemy.enemies[num].getY() + enemy.enemies[num].getHeight();
 			double left2 = wall.getX();
 			double right2 = wall.getX() + wall.getWidth();
 			double top2 = wall.getY();
 			double bottom2 = wall.getY() + wall.getHeight();
 			
 			if(right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) 
-				enemy.dummy.x = wall.x - enemy.dummy.width;
+				enemy.enemies[num].x = wall.x - enemy.enemies[num].width;
 	        
 	        else if(left1 < right2 && right1 > right2 && right2 - left1 < bottom1 - top2 && right2 - left1 < bottom2 - top1) 
-	        	enemy.dummy.x = wall.x + wall.width;
+	        	enemy.enemies[num].x = wall.x + wall.width;
 	        
 	        else if(bottom1 > top2 && top1 < top2) 
-	        	enemy.dummy.y = wall.y - enemy.dummy.height;
+	        	enemy.enemies[num].y = wall.y - enemy.enemies[num].height;
 	        
 	        else if(top1 < bottom2 && bottom1 > bottom2) 
-	        	enemy.dummy.y = wall.y + wall.height;
+	        	enemy.enemies[num].y = wall.y + wall.height;
 		}
 	}
 	
