@@ -9,6 +9,8 @@ public class main extends JPanel implements KeyListener, MouseListener {
     JLabel playLabel, exitLabel;
 
     public main() {
+        setPreferredSize(new Dimension(menu.screenWidth, menu.screenHeight));
+		setLayout(null);
         playLabel = new JLabel("Play");
         playLabel.setFont(menu.menuFont);
         playLabel.setBounds(50, 450, 250, 120);
@@ -27,8 +29,10 @@ public class main extends JPanel implements KeyListener, MouseListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 menu.menuState = menu.STATE.EXIT;
-                menu.frame.removeAll();
-                
+                menu.frame.add(menu.exitPanel);
+                menu.frame.remove(menu.menuPanel);
+                menu.frame.validate();
+                menu.frame.pack();
                 repaint();
             }
         });
@@ -36,6 +40,14 @@ public class main extends JPanel implements KeyListener, MouseListener {
         add(playLabel);
         add(exitLabel);
     }
+
+    public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.setColor(new Color(20, 20, 20));
+		g.fillRect(0, 0, menu.screenWidth, menu.screenHeight);
+
+        g.drawImage(menu.gameLogo, 50, 100, (2 * menu.screenWidth/3 - 50), ((2 * menu.screenWidth/3 - 50) / 6), this);
+	}
 
     @Override
     public void mouseClicked(MouseEvent e) {
