@@ -14,7 +14,7 @@ public class game {
 	
 	static char[][] map;//For square tiles, the # of columns should be 1.78 times the number of rows
 						//The dimensions should also be divisors of both 1920 and 1080
-						//96x54 is a good map size, any larger and it might become laggy
+						//128x72 is a good map size, any larger and it might become laggy
 	
 	static int numCols;//Map dimensions
 	static int numRows;
@@ -137,44 +137,22 @@ public class game {
 	public static void checkPlayerProjectileCollision(Rectangle wall, int shot) {
 		//Checks for projectile collisions with walls
 		
-		if(playerProjectile.shots[shot].intersects(wall)) {
-			
-			playerProjectile.alive[shot] = false;
-			playerProjectile.countX[shot] = 0;
-			playerProjectile.countY[shot] = 0;
-			playerProjectile.moveX[shot] = 0;
-			playerProjectile.moveY[shot] = 0;
-		}
+		if(playerProjectile.shots[shot].intersects(wall)) 
+			playerProjectile.kill(shot);
 		
-		if(playerProjectile.shots[shot].intersects(enemy.dummy)) {
-			
-			playerProjectile.alive[shot] = false;
-			playerProjectile.countX[shot] = 0;
-			playerProjectile.countY[shot] = 0;
-			playerProjectile.moveX[shot] = 0;
-			playerProjectile.moveY[shot] = 0;
-		}
+		if(playerProjectile.shots[shot].intersects(enemy.dummy)) 
+			playerProjectile.kill(shot);
 	}
 	
 	public static void checkEnemyProjectileCollision(Rectangle wall, int shot) {
 		//Checks for projectile collisions with walls
 		
-		if(enemyProjectile.shots[shot].intersects(wall)) {
-			
-			enemyProjectile.alive[shot] = false;
-			enemyProjectile.countX[shot] = 0;
-			enemyProjectile.countY[shot] = 0;
-			enemyProjectile.moveX[shot] = 0;
-			enemyProjectile.moveY[shot] = 0;
-		}
+		if(enemyProjectile.shots[shot].intersects(wall)) 
+			enemyProjectile.kill(shot);
 		
 		if(enemyProjectile.shots[shot].intersects(player.model)) {
 			
-			enemyProjectile.alive[shot] = false;
-			enemyProjectile.countX[shot] = 0;
-			enemyProjectile.countY[shot] = 0;
-			enemyProjectile.moveX[shot] = 0;
-			enemyProjectile.moveY[shot] = 0;
+			enemyProjectile.kill(shot);
 //			test();
 		}
 	}
@@ -211,19 +189,18 @@ public class game {
 		}
 	}
 	
-//	TODO: This isn't really necessary if all the maps are walled off
-//	public static void checkInBound() {
-//		
-//		if(player.model.x < 0)
-//			player.model.x = 0;
-//		
-//		else if(player.model.x > body.screenWidth - player.model.width)
-//			player.model.x = body.screenWidth - player.model.width;
-//		
-//		if(player.model.y < 0)
-//			player.model.y = 0;
-//		
-//		else if(player.model.y > body.screenHeight - player.model.height)
-//			player.model.y = body.screenHeight - player.model.height;
-//	}
+	public static boolean checkInBound(Rectangle rect) {
+		
+		if(rect.x < -100)
+			return false;
+		else if(rect.x > body.screenWidth - rect.width + 100)
+			return false;
+		
+		if(rect.y < -100)
+			return false;
+		else if(rect.y > body.screenHeight - rect.height + 100)
+			return false;
+		
+		return true;
+	}
 }

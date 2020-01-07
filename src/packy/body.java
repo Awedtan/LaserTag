@@ -93,7 +93,6 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 		//Updates object locations, checks for collisions and visibility
 		
 		player.move();
-//		game.checkInBound();
 		
 		if(game.wallsInitialized && playerProjectile.initialized && enemyProjectile.initialized && game.tilesInitialized) {
 			for(int i=0; i<game.walls.length; i++) {
@@ -101,16 +100,24 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 				game.checkPlayerCollision(game.walls[i]);
 				
 				for(int j=0; j<playerProjectile.shots.length; j++) 
-					game.checkPlayerProjectileCollision(game.walls[i], j);
+					if(playerProjectile.alive[j])
+						game.checkPlayerProjectileCollision(game.walls[i], j);
 				
 				for(int j=0; j<enemyProjectile.shots.length; j++) 
-					game.checkEnemyProjectileCollision(game.walls[i], j);
+					if(enemyProjectile.alive[j])
+						game.checkEnemyProjectileCollision(game.walls[i], j);
 			}
+			
+			for(int i=0; i<playerProjectile.shots.length; i++) 
+				if(!game.checkInBound(playerProjectile.shots[i])) 
+					playerProjectile.kill(i);
+			
+			for(int i=0; i<enemyProjectile.shots.length; i++) 
+				if(!game.checkInBound(enemyProjectile.shots[i])) 
+					enemyProjectile.kill(i);
 			
 			for(int i=0; i<game.numTiles; i++) 
 				if(game.checkVisible(player.model, game.tiles[i], player.VIEWRANGE, player.FOV))
-					game.tileIsVisible[i] = true;
-				else if(game.checkVisible(enemy.dummy, game.tiles[i], enemy.VIEWRANGE, 360)) 
 					game.tileIsVisible[i] = true;
 				else
 					game.tileIsVisible[i] = false;
@@ -135,6 +142,7 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 	public void paintComponent(Graphics g) {
 		//Draws all graphics
 		
+		Graphics gg = g.create();
 		super.paintComponent(g);
 		game.drawVisible(g);
 		
@@ -144,16 +152,20 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 		for(int i=0; i<enemyProjectile.shots.length; i++)
 			enemyProjectile.move(g, i);
 		
-		
 		playerProjectile.initialized = true;
 		enemyProjectile.initialized = true;
 		game.drawInvisible(g);
 		game.drawWalls(g);
-		enemy.draw(g);
-		player.rotate(g);
+		
 		//Any graphics method called after the rotate method WILL BE ROTATED
 		//If it should not be rotated, put it BEFORE the rotate method
+		player.rotate(g);
 		player.draw(g);
+		
+		//Ditto with this
+		enemy.rotate(gg);
+		enemy.draw(gg);
+		enemy.move(gg);
 	}
 	
 	@Override
@@ -165,11 +177,9 @@ public class body extends JPanel implements KeyListener, MouseListener, Runnable
 		//Shoots a projectile, if possible, on click
 		
 		if(playerProjectile.findNext(playerProjectile.shots) != -1) {
-			
 			mousePosX = e.getX();
 			mousePosY = e.getY();
 			panel.repaint();
-			
 			player.shoot(player.centerX, player.centerY, player.angle, playerProjectile.findNext(playerProjectile.shots));
 		}
 	}

@@ -5,11 +5,11 @@ import java.awt.event.*;
 
 public class player {
 
-	static final int STARTSPEED = 3;//Default player speed
+	static final int STARTSPEED = 4;//Default player speed
 	static final int STARTPOSX = 100;//Player start location
 	static final int STARTPOSY = 550;	
-	static final int VIEWRANGE = 700;
-	static final int FOV = 45; //In degrees, this value is half the FOV, therefore 45 = 90 FOV, 90 = 180 FOV
+	static final int VIEWRANGE = 600;
+	static final int FOV = 30; //In degrees, this value is half the FOV, therefore 45 = 90 FOV, 90 = 180 FOV
 	
 	static int width = 20;//Player dimensions
 	static int height = width;
@@ -71,13 +71,10 @@ public class player {
 				model.y -= speed;
 		else if(moveDown && !moveUp) 
 				model.y += speed;
-		
 	}
 	
 	public static void rotate(Graphics g) {
 		//Rotates the player model towards the mouse cursor
-		
-		Graphics2D g2 = (Graphics2D) g;
 		
 		centerY = (height/2) + model.y;
 		centerX = (width/2) + model.x;
@@ -97,6 +94,7 @@ public class player {
 		});
 		
 		angle = -(Math.atan2(centerX - body.mousePosX, centerY - body.mousePosY) - Math.PI / 2);
+		Graphics2D g2 = (Graphics2D) g;
 		g2.rotate(angle, centerX, centerY);
 	}
 }
