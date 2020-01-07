@@ -33,13 +33,22 @@ public class playerProjectile {
 		return -1;
 	}
 	
+	public static void kill(int shot) {
+		
+		playerProjectile.alive[shot] = false;
+		playerProjectile.countX[shot] = -10;
+		playerProjectile.countY[shot] = -10;
+		playerProjectile.moveX[shot] = -10;
+		playerProjectile.moveY[shot] = -10;
+	}
+	
 	public static void move(Graphics g, int shot) {
 		//Moves the specified projectile
 		
 		if(!alive[shot]) {
 			
-			posX[shot] = 0;
-			posY[shot] = 0;
+			posX[shot] = -10;
+			posY[shot] = -10;
 		}
 		
 			Graphics2D g2 = (Graphics2D) g;
