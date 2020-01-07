@@ -87,6 +87,9 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		game.walls = new Rectangle[game.numWalls];
 		game.tiles = new Rectangle[game.numTiles];
 		game.tileIsVisible = new boolean[game.numTiles];
+		
+		for(int i=0; i<enemy.MAX; i++)
+			enemy.initialize(i);
 	}
 	
 	public void update() {
@@ -94,41 +97,43 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		
 		if(game.wallsInitialized && playerProjectile.initialized && enemyProjectile.initialized && game.tilesInitialized) {
 			
-			enemy.move();
 			player.move();
 			
-			for(int i=0; i<game.walls.length; i++) {
+			for(int k=0; k<enemy.MAX; k++) {
 				
-				game.checkPlayerCollision(game.walls[i]);
-				game.checkEnemyCollision(game.walls[i]);
+				enemy.move(k);
+			
+				for(int i=0; i<game.walls.length; i++) {
+					
+					game.checkPlayerCollision(game.walls[i]);
+					game.checkEnemyCollision(game.walls[i], k);
+					
+					for(int j=0; j<playerProjectile.shots.length; j++) 
+						if(playerProjectile.alive[j])
+							game.checkPlayerProjectileCollision(game.walls[i], j, k);
+					
+					for(int j=0; j<enemyProjectile.shots.length; j++) 
+						if(enemyProjectile.alive[j])
+							game.checkEnemyProjectileCollision(game.walls[i], j);
+				}
 				
-				for(int j=0; j<playerProjectile.shots.length; j++) 
-					if(playerProjectile.alive[j])
-						game.checkPlayerProjectileCollision(game.walls[i], j);
+				for(int i=0; i<playerProjectile.shots.length; i++) 
+					if(!game.checkInBound(playerProjectile.shots[i])) 
+						playerProjectile.kill(i);
 				
-				for(int j=0; j<enemyProjectile.shots.length; j++) 
-					if(enemyProjectile.alive[j])
-						game.checkEnemyProjectileCollision(game.walls[i], j);
+				for(int i=0; i<enemyProjectile.shots.length; i++) 
+					if(!game.checkInBound(enemyProjectile.shots[i])) 
+						enemyProjectile.kill(i);
+				
+				for(int i=0; i<game.numTiles; i++) 
+//					if(game.checkVisiblePlayer(player.model, game.tiles[i], player.VIEWRANGE, player.FOV))
+						game.tileIsVisible[i] = true;
+//					else
+//						game.tileIsVisible[i] = false;
+				
+				if(game.checkVisibleEnemy(enemy.enemies[k], player.model, enemy.VIEWRANGE, enemy.FOV, k) && enemyProjectile.findNext(enemyProjectile.shots) != -1) 
+					enemy.shoot(enemy.centerX[k], enemy.centerY[k], enemy.angle[k], enemyProjectile.findNext(enemyProjectile.shots));
 			}
-			
-			for(int i=0; i<playerProjectile.shots.length; i++) 
-				if(!game.checkInBound(playerProjectile.shots[i])) 
-					playerProjectile.kill(i);
-			
-			for(int i=0; i<enemyProjectile.shots.length; i++) 
-				if(!game.checkInBound(enemyProjectile.shots[i])) 
-					enemyProjectile.kill(i);
-			
-			for(int i=0; i<game.numTiles; i++) 
-				if(game.checkVisiblePlayer(player.model, game.tiles[i], player.VIEWRANGE, player.FOV))
-					game.tileIsVisible[i] = true;
-//				else if(game.checkVisibleEnemy(enemy.dummy, game.tiles[i], enemy.VIEWRANGE, enemy.FOV))
-//					game.tileIsVisible[i] = true;
-				else
-					game.tileIsVisible[i] = false;
-			
-			if(game.checkVisibleEnemy(enemy.dummy, player.model, enemy.VIEWRANGE, enemy.FOV) && enemyProjectile.findNext(enemyProjectile.shots) != -1) 
-				enemy.shoot(enemy.centerX, enemy.centerY, enemy.angle, enemyProjectile.findNext(enemyProjectile.shots));
 		}
 	}
 	
@@ -147,7 +152,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	public void paintComponent(Graphics g) {
 		//Draws all graphics
 		
-		Graphics gEnemy = g.create();
+		
 		Graphics gPlayer = g.create();
 		super.paintComponent(g);
 		game.drawVisible(g);
@@ -163,8 +168,13 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		
 		game.drawWalls(g);
 		
-		enemy.rotate(gEnemy);
-		enemy.draw(gEnemy);
+		for(int i=0; i<enemy.MAX; i++) {
+			
+			Graphics gEnemy = g.create();
+			enemy.rotate(gEnemy, i);
+			enemy.draw(gEnemy, i);
+			gEnemy.dispose();
+		}
 		
 		game.drawInvisible(g);
 		

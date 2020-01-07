@@ -4,25 +4,25 @@ import java.awt.*;
 
 public class enemyProjectile {
 
-	static int size = 5;//Size of projectile
-	static int max = 100;//Max # of projectiles on screen
-	static int inaccuracy = 5;//Inaccuracy of shots
+	static final int SIZE = 5;//Size of projectile
+	static final int MAX = 100;//Max # of projectiles on screen
+	static final int INACCURACY = 5;//Inaccuracy of shots
 	
 	static double speed = 10;//Speed of projectiles
 	
 	static boolean initialized;
 	
-	static Rectangle[] shots = new Rectangle[max];//The projectiles
+	static Rectangle[] shots = new Rectangle[MAX];//The projectiles
 	
-	static int[] posX = new int[max];//Projectile information
-	static int[] posY = new int[max];
-	static int[] countX = new int[max];
-	static int[] countY = new int[max];
-	static int[] tick = new int[max];
-	static double[] moveX = new double[max];
-	static double[] moveY = new double[max];
-	static double[] angle = new double[max];
-	static boolean[] alive = new boolean[max];
+	static int[] posX = new int[MAX];//Projectile information
+	static int[] posY = new int[MAX];
+	static int[] countX = new int[MAX];
+	static int[] countY = new int[MAX];
+	static int[] tick = new int[MAX];
+	static double[] moveX = new double[MAX];
+	static double[] moveY = new double[MAX];
+	static double[] angle = new double[MAX];
+	static boolean[] alive = new boolean[MAX];
 	
 	public static int findNext(Rectangle[] shots) {
 		//Finds the next inactive/dead slot in the projectile array
@@ -36,11 +36,11 @@ public class enemyProjectile {
 	
 	public static void kill(int shot) {
 		
-		enemyProjectile.alive[shot] = false;
-		enemyProjectile.countX[shot] = -10;
-		enemyProjectile.countY[shot] = -10;
-		enemyProjectile.moveX[shot] = -10;
-		enemyProjectile.moveY[shot] = -10;
+		alive[shot] = false;
+		countX[shot] = -10;
+		countY[shot] = -10;
+		moveX[shot] = -10;
+		moveY[shot] = -10;
 	}
 	
 	public static void move(Graphics g, int shot) {
@@ -52,12 +52,12 @@ public class enemyProjectile {
 			posY[shot] = -10;
 		}
 		
-			Graphics2D g2 = (Graphics2D) g;
-			shots[shot] = new Rectangle(posX[shot] + countX[shot], posY[shot] + countY[shot], enemyProjectile.size, enemyProjectile.size);
-			
-			g2.setColor(Color.BLACK);
-			g2.fill(shots[shot]);
-			countX[shot] += moveX[shot];
-			countY[shot] += moveY[shot];
+		Graphics2D g2 = (Graphics2D) g;
+		shots[shot] = new Rectangle(posX[shot] + countX[shot], posY[shot] + countY[shot], SIZE, SIZE);
+		
+		g2.setColor(Color.BLACK);
+		g2.fill(shots[shot]);
+		countX[shot] += moveX[shot];
+		countY[shot] += moveY[shot];
 	}
 }
