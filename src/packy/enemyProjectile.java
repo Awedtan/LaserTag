@@ -8,7 +8,7 @@ public class enemyProjectile {
 	static int max = 100;//Max # of projectiles on screen
 	static int inaccuracy = 5;//Inaccuracy of shots
 	
-	static double speed = 20;//Speed of projectiles
+	static double speed = 10;//Speed of projectiles
 	
 	static boolean initialized;
 	
@@ -18,6 +18,7 @@ public class enemyProjectile {
 	static int[] posY = new int[max];
 	static int[] countX = new int[max];
 	static int[] countY = new int[max];
+	static int[] tick = new int[max];
 	static double[] moveX = new double[max];
 	static double[] moveY = new double[max];
 	static double[] angle = new double[max];
