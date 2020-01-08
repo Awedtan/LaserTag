@@ -33,10 +33,21 @@ public class menu extends JPanel implements KeyListener, MouseListener{
 	
 	static STATE menuState = STATE.MAIN;
 
-	// public static void addStatePanel() {
-	// 	// TODO: write method to add the current panel to frame based on menuState
-		
-	// }
+	/**
+	 * Removes the specified panel and replaces it with a new one 
+	 * @param panelRemove The panel to be removed (current panel)
+	 * @param panelAdd The panel to be added
+	 * @param newState The new state (should be the same as the added panel)
+	 */
+	public static void switchStatePanel(Component panelRemove, Component panelAdd, STATE newState) {
+		// TODO: write method to add the current panel to frame based on menuState
+		menu.menuState = newState;
+		menu.frame.add(panelAdd);
+		menu.frame.remove(panelRemove);
+		menu.frame.revalidate();
+		menu.frame.pack();
+		menu.frame.repaint();
+	}
 
 
 	@Override
@@ -82,7 +93,7 @@ public class menu extends JPanel implements KeyListener, MouseListener{
 	// TODO: if this can be integrated with the body.java, the main function in either this or that needs to go
 	public static void main(String[] args) {
 		//makes a brand new JFrame
-        frame = new JFrame();
+        frame = new JFrame("Lazer Tag");
         frame.setUndecorated(true);
 		menuPanel = new main();
 		playPanel = new play();
