@@ -14,7 +14,7 @@ public class game {
 	
 	static char[][] map;//For square tiles, the # of columns should be 1.78 times the number of rows
 						//The dimensions should also be divisors of both 1920 and 1080
-						//128x72 is a good map size, any larger and it might become laggy
+						//96x54 is a good map size, any larger and it might become laggy
 	
 	static int numCols;//Map dimensions
 	static int numRows;
@@ -174,6 +174,7 @@ public class game {
 		if(playerProjectile.shots[shot].intersects(enemy.enemies[num])) {
 			
 			playerProjectile.kill(shot);
+			enemy.kill(num);
 		}
 	}
 	

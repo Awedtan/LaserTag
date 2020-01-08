@@ -17,7 +17,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	// Sets screenWidth and screenHeight to the dimensions of the screen
 	static int screenWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth());//Screen dimensions
 	static int screenHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight());
-	static int fps = 120;
+	static int fps = 60;
 	
 	static body panel = new body();
 	static JFrame frame;
@@ -93,47 +93,50 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	}
 	
 	public void update() {
-		//Updates object locations, checks for collisions and visibility
+		//Updates object locations, checks for collisions, visibility, lots of stuff
 		
 		if(game.wallsInitialized && playerProjectile.initialized && enemyProjectile.initialized && game.tilesInitialized) {
 			
 			player.move();
 			
-			for(int k=0; k<enemy.MAX; k++) {
-				
+			for(int k=0; k<enemy.MAX; k++) 
 				enemy.move(k);
 			
-				for(int i=0; i<game.walls.length; i++) {
-					
-					game.checkPlayerCollision(game.walls[i]);
+			for(int i=0; i<game.walls.length; i++) {
+				
+				game.checkPlayerCollision(game.walls[i]);
+				
+				for(int k=0; k<enemy.MAX; k++) 
 					game.checkEnemyCollision(game.walls[i], k);
-					
-					for(int j=0; j<playerProjectile.shots.length; j++) 
-						if(playerProjectile.alive[j])
+				
+				for(int j=0; j<playerProjectile.shots.length; j++) 
+					if(playerProjectile.alive[j])
+						for(int k=0; k<enemy.MAX; k++) 
 							game.checkPlayerProjectileCollision(game.walls[i], j, k);
-					
-					for(int j=0; j<enemyProjectile.shots.length; j++) 
-						if(enemyProjectile.alive[j])
-							game.checkEnemyProjectileCollision(game.walls[i], j);
-				}
 				
-				for(int i=0; i<playerProjectile.shots.length; i++) 
-					if(!game.checkInBound(playerProjectile.shots[i])) 
-						playerProjectile.kill(i);
-				
-				for(int i=0; i<enemyProjectile.shots.length; i++) 
-					if(!game.checkInBound(enemyProjectile.shots[i])) 
-						enemyProjectile.kill(i);
-				
-				for(int i=0; i<game.numTiles; i++) 
-//					if(game.checkVisiblePlayer(player.model, game.tiles[i], player.VIEWRANGE, player.FOV))
-						game.tileIsVisible[i] = true;
-//					else
-//						game.tileIsVisible[i] = false;
-				
-				if(game.checkVisibleEnemy(enemy.enemies[k], player.model, enemy.VIEWRANGE, enemy.FOV, k) && enemyProjectile.findNext(enemyProjectile.shots) != -1) 
-					enemy.shoot(enemy.centerX[k], enemy.centerY[k], enemy.angle[k], enemyProjectile.findNext(enemyProjectile.shots));
+				for(int j=0; j<enemyProjectile.shots.length; j++) 
+					if(enemyProjectile.alive[j])
+						game.checkEnemyProjectileCollision(game.walls[i], j);
 			}
+			
+			for(int i=0; i<playerProjectile.shots.length; i++) 
+				if(!game.checkInBound(playerProjectile.shots[i])) 
+					playerProjectile.kill(i);
+			
+			for(int i=0; i<enemyProjectile.shots.length; i++) 
+				if(!game.checkInBound(enemyProjectile.shots[i])) 
+					enemyProjectile.kill(i);
+			
+			for(int i=0; i<game.numTiles; i++) 
+//				if(game.checkVisiblePlayer(player.model, game.tiles[i], player.VIEWRANGE, player.FOV))
+					game.tileIsVisible[i] = true;
+//				else
+//					game.tileIsVisible[i] = false;
+			
+			for(int k=0; k<enemy.MAX; k++) 
+				if(game.checkVisibleEnemy(enemy.enemies[k], player.model, enemy.VIEWRANGE, enemy.FOV, k) && enemyProjectile.findNext(enemyProjectile.shots) != -1) 
+				enemy.shoot(enemy.centerX[k], enemy.centerY[k], enemy.angle[k], enemyProjectile.findNext(enemyProjectile.shots), k);
+			
 		}
 	}
 	
@@ -169,11 +172,13 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		game.drawWalls(g);
 		
 		for(int i=0; i<enemy.MAX; i++) {
-			
-			Graphics gEnemy = g.create();
-			enemy.rotate(gEnemy, i);
-			enemy.draw(gEnemy, i);
-			gEnemy.dispose();
+			if(enemy.alive[i]) {
+				
+				Graphics gEnemy = g.create();
+				enemy.rotate(gEnemy, i);
+				enemy.draw(gEnemy, i);
+				gEnemy.dispose();
+			}
 		}
 		
 		game.drawInvisible(g);
