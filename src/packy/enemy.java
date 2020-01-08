@@ -1,6 +1,7 @@
 package packy;
 
 import java.awt.*;
+import java.awt.geom.Line2D;
 
 public class enemy {
 	
@@ -8,11 +9,13 @@ public class enemy {
 	static final int STARTSPEED = 3;//Default enemy speed
 	static final int VIEWRANGE = 500;//Length of enemy vision
 	static final int SHOOTRANGE = 150;//When the distance to the player is smaller than this, enemies stop moving
-	static final int FOV = 80;//Range of enemy vision, behaves like player fov
+	static final int FOV = 90;//Range of enemy vision, behaves like player fov
 	
 	static int width = 20;//Enemy dimensions
 	static int height = width;
 	static int speed = STARTSPEED;
+	static Color color = Color.red;
+	
 	static int[] movement = new int[]{0, 45, 90, 135, 180, 225, 270, 315, 360};
 	
 	static int[] STARTPOSX = new int[] {100, 120, 300, 350, 200, 500, 1200, 1000, 1000, 1200, 1700, 1700, 950, 1000, 1800};//<- This needs to be initialized manually for now
@@ -49,7 +52,7 @@ public class enemy {
 		centerX[enemy] = (height/2) + enemies[enemy].x;
 
 		Graphics2D g2 = (Graphics2D) g;
-		g2.setColor(Color.BLACK);
+		g2.setColor(color);
 		g2.fill(enemies[enemy]);
 		g2.fillRect((enemies[enemy].x-(int)(enemies[enemy].width-enemies[enemy].width*0.2)), enemies[enemy].y, enemies[enemy].height, (int)(enemies[enemy].width/5));
 	}
@@ -79,7 +82,7 @@ public class enemy {
 	public static void move(int enemy) {
 		//Moves the enemy model
 		
-		if(game.checkVisibleEnemy(enemies[enemy], player.model, VIEWRANGE, FOV, enemy)) {
+		if(checkVisible(enemies[enemy], player.model, VIEWRANGE, FOV, enemy)) {
 			if(Math.sqrt((enemies[enemy].x-player.model.x)*(enemies[enemy].x-player.model.x) + (enemies[enemy].y-player.model.y)*(enemies[enemy].y-player.model.y)) > SHOOTRANGE) {
 				
 				double angle = Math.toDegrees(-(Math.atan2(centerX[enemy] - player.centerX, centerY[enemy] - player.centerY) - Math.PI / 2));
@@ -143,7 +146,7 @@ public class enemy {
 			if(wait[enemy] < 0) {
 				
 				 random[enemy] = (int)(Math.random() * 10);
-				 wait[enemy] = (int)(Math.random() * 480);
+				 wait[enemy] = (int)(Math.random() * 200);
 			}
 			else 
 				wait[enemy]--;
@@ -244,10 +247,89 @@ public class enemy {
 		centerY[enemy] = (height/2) + enemies[enemy].y;
 		centerX[enemy] = (width/2) + enemies[enemy].x;
 		
-		if(game.checkVisibleEnemy(enemies[enemy], player.model, VIEWRANGE, FOV, enemy))
+		if(checkVisible(enemies[enemy], player.model, VIEWRANGE, FOV, enemy))
 			angle[enemy] = -(Math.atan2(centerX[enemy] - player.centerX, centerY[enemy] - player.centerY) - Math.PI / 2);
 		
 		Graphics2D g2 = (Graphics2D) g;
 		g2.rotate(angle[enemy], centerX[enemy], centerY[enemy]);
+	}
+	
+	public static boolean checkVisible(Rectangle model, Rectangle tile, double range, double fov, int num) {
+		//Checks whether a line can be drawn between the centre of two rectangles without intercepting any walls
+		
+		double x1 = (model.width/2) + model.x, x2 = tile.x + tile.getWidth()/2, y1 = (model.height/2) + model.y, y2 = tile.y + tile.getHeight()/2;
+		double angleOfObject = -(Math.atan2(enemy.centerX[num] - tile.x + tile.getWidth()/2, enemy.centerY[num] - tile.y + tile.getHeight()/2) - Math.PI / 2);
+				
+		if(
+			(
+			enemy.angle[num]-(enemy.angle[num]-angleOfObject) > enemy.angle[num]-Math.toRadians(fov) 
+			||
+			enemy.angle[num]+(enemy.angle[num]-(Math.toRadians(360 - 2 * enemy.FOV)+angleOfObject)) > enemy.angle[num]+Math.toRadians(fov) 
+			) && (
+			enemy.angle[num]-(enemy.angle[num]-angleOfObject) < enemy.angle[num]+Math.toRadians(fov) 
+			)
+			
+		) {
+			if(Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2)) < range) {
+				
+				Line2D view = new Line2D.Double();
+				view.setLine(x1, y1, x2, y2);
+				
+					for(int i=0; i<game.walls.length; i++) 
+						if(view.intersects(game.walls[i])) 
+							return false;
+					
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static void checkCollision(Rectangle rect, int num) {
+		//Checks for player collision with rectangles
+		
+		if(enemy.enemies[num].intersects(rect)) {
+			
+			enemy.wait[num] = -1;
+			double left1 = enemy.enemies[num].getX();
+			double right1 = enemy.enemies[num].getX() + enemy.enemies[num].getWidth();
+			double top1 = enemy.enemies[num].getY();
+			double bottom1 = enemy.enemies[num].getY() + enemy.enemies[num].getHeight();
+			double left2 = rect.getX();
+			double right2 = rect.getX() + rect.getWidth();
+			double top2 = rect.getY();
+			double bottom2 = rect.getY() + rect.getHeight();
+			
+			if(right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) 
+				enemy.enemies[num].x = rect.x - enemy.enemies[num].width;
+	        
+	        else if(left1 < right2 && right1 > right2 && right2 - left1 < bottom1 - top2 && right2 - left1 < bottom2 - top1) 
+	        	enemy.enemies[num].x = rect.x + rect.width;
+	        
+	        else if(bottom1 > top2 && top1 < top2) 
+	        	enemy.enemies[num].y = rect.y - enemy.enemies[num].height;
+	        
+	        else if(top1 < bottom2 && bottom1 > bottom2) 
+	        	enemy.enemies[num].y = rect.y + rect.height;
+		}
+	}
+	
+	public static void checkProjectileCollision(Rectangle wall, int shot) {
+		//Checks for projectile collisions with walls
+		
+		if(enemyProjectile.shots[shot].intersects(wall)) 
+			enemyProjectile.kill(shot);
+		
+		if(enemyProjectile.shots[shot].intersects(player.model)) {
+			
+			enemyProjectile.kill(shot);
+			test();
+		}
+	}
+	
+	public static void test() {
+		
+		player.color = Color.red;
+		game.cWall = Color.red;
 	}
 }

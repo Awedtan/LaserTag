@@ -100,23 +100,35 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 			player.move();
 			
 			for(int k=0; k<enemy.MAX; k++) 
-				enemy.move(k);
+				if(enemy.alive[k])
+					enemy.move(k);
 			
 			for(int i=0; i<game.walls.length; i++) {
 				
-				game.checkPlayerCollision(game.walls[i]);
+				player.checkCollision(game.walls[i]);
 				
 				for(int k=0; k<enemy.MAX; k++) 
-					game.checkEnemyCollision(game.walls[i], k);
+					if(enemy.alive[k])
+						enemy.checkCollision(game.walls[i], k);
 				
 				for(int j=0; j<playerProjectile.shots.length; j++) 
 					if(playerProjectile.alive[j])
 						for(int k=0; k<enemy.MAX; k++) 
-							game.checkPlayerProjectileCollision(game.walls[i], j, k);
+							if(enemy.alive[k])
+								player.checkProjectileCollision(game.walls[i], j, k);
 				
 				for(int j=0; j<enemyProjectile.shots.length; j++) 
 					if(enemyProjectile.alive[j])
-						game.checkEnemyProjectileCollision(game.walls[i], j);
+						enemy.checkProjectileCollision(game.walls[i], j);
+			}
+			
+			for(int k=0; k<enemy.MAX; k++) {
+				for(int l=0; l<enemy.MAX; l++)
+					if(k != l && enemy.alive[k])
+						enemy.checkCollision(enemy.enemies[k], l);
+				
+				if(enemy.alive[k])
+					player.checkCollision(enemy.enemies[k]);
 			}
 			
 			for(int i=0; i<playerProjectile.shots.length; i++) 
@@ -128,14 +140,14 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 					enemyProjectile.kill(i);
 			
 			for(int i=0; i<game.numTiles; i++) 
-//				if(game.checkVisiblePlayer(player.model, game.tiles[i], player.VIEWRANGE, player.FOV))
+				if(player.checkVisible(player.model, game.tiles[i], player.VIEWRANGE, player.FOV))
 					game.tileIsVisible[i] = true;
-//				else
-//					game.tileIsVisible[i] = false;
+				else
+					game.tileIsVisible[i] = false;
 			
 			for(int k=0; k<enemy.MAX; k++) 
-				if(game.checkVisibleEnemy(enemy.enemies[k], player.model, enemy.VIEWRANGE, enemy.FOV, k) && enemyProjectile.findNext(enemyProjectile.shots) != -1) 
-				enemy.shoot(enemy.centerX[k], enemy.centerY[k], enemy.angle[k], enemyProjectile.findNext(enemyProjectile.shots), k);
+				if(enemy.checkVisible(enemy.enemies[k], player.model, enemy.VIEWRANGE, enemy.FOV, k) && enemyProjectile.findNext(enemyProjectile.shots) != -1 && enemy.alive[k]) 
+					enemy.shoot(enemy.centerX[k], enemy.centerY[k], enemy.angle[k], enemyProjectile.findNext(enemyProjectile.shots), k);
 			
 		}
 	}
@@ -154,7 +166,6 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	
 	public void paintComponent(Graphics g) {
 		//Draws all graphics
-		
 		
 		Graphics gPlayer = g.create();
 		super.paintComponent(g);
@@ -185,6 +196,11 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		
 		player.rotate(gPlayer);
 		player.draw(gPlayer);
+		
+		game.drawWalls(g);
+		
+		game.cWall = game.CWALL;
+		player.color = Color.blue;
 	}
 	
 	@Override
