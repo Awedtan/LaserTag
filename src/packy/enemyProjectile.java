@@ -7,7 +7,7 @@ public class enemyProjectile {
 	static final int SIZE = 5;//Size of projectile
 	static final int MAX = 100;//Max # of projectiles on screen
 	static final int INACCURACY = 5;//Inaccuracy of shots
-	
+	static Color color = Color.red;
 	static double speed = 15;//Speed of projectiles
 	
 	static boolean initialized;
@@ -55,7 +55,7 @@ public class enemyProjectile {
 		Graphics2D g2 = (Graphics2D) g;
 		shots[shot] = new Rectangle(posX[shot] + countX[shot], posY[shot] + countY[shot], SIZE, SIZE);
 		
-		g2.setColor(Color.RED);
+		g2.setColor(color);
 		g2.fill(shots[shot]);
 		countX[shot] += moveX[shot];
 		countY[shot] += moveY[shot];
