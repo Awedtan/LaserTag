@@ -13,12 +13,12 @@ public class main extends JPanel implements KeyListener, MouseListener {
 		setLayout(null);
         playLabel = new JLabel("Play");
         playLabel.setFont(menu.menuFont);
-        playLabel.setBounds(50, 450, 250, 120);
+        playLabel.setBounds(50, 450, 300, 120);
         playLabel.setForeground(Color.WHITE);
         playLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // TODO: open play menu
+                menu.switchStatePanel(menu.menuPanel, menu.playPanel, menu.STATE.PLAY);
             }
         });
         exitLabel = new JLabel("Exit");
@@ -28,12 +28,7 @@ public class main extends JPanel implements KeyListener, MouseListener {
         exitLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                menu.menuState = menu.STATE.EXIT;
-                menu.frame.add(menu.exitPanel);
-                menu.frame.remove(menu.menuPanel);
-                menu.frame.validate();
-                menu.frame.pack();
-                repaint();
+                menu.switchStatePanel(menu.menuPanel, menu.exitPanel, menu.STATE.EXIT);
             }
         });
 

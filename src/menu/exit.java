@@ -34,12 +34,7 @@ public class exit extends JPanel implements KeyListener, MouseListener{
         confirmNo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                menu.menuState = menu.STATE.MAIN;
-                menu.frame.add(menu.menuPanel);
-                menu.frame.remove(menu.exitPanel);
-                menu.frame.validate();
-                menu.frame.pack();
-                repaint();
+                menu.switchStatePanel(menu.exitPanel, menu.menuPanel, menu.STATE.MAIN);
             }
         });
 
