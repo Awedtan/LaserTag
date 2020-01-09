@@ -40,7 +40,6 @@ public class menu extends JPanel implements KeyListener, MouseListener{
 	 * @param newState The new state (should be the same as the added panel)
 	 */
 	public static void switchStatePanel(Component panelRemove, Component panelAdd, STATE newState) {
-		// TODO: write method to add the current panel to frame based on menuState
 		menu.menuState = newState;
 		menu.frame.add(panelAdd);
 		menu.frame.remove(panelRemove);

@@ -24,7 +24,7 @@ public class enemy {
 	static int [] centerY = new int[MAX];
 	static int[] wait = new int[MAX];
 	static int[] random = new int[MAX];
-	static int[] lastX = new int[MAX];
+	static int[] lastX = new int[MAX]; // last known player position for each enemy
 	static int[] lastY = new int[MAX];
 	static double[] angle = new double[MAX];
 	static boolean[] alive = new boolean[MAX];
