@@ -20,14 +20,18 @@ public class enemy {
 	
 	static int[] STARTPOSX = new int[] {100, 120, 300, 350, 200, 500, 1200, 1000, 1000, 1200, 1700, 1700, 950, 1000, 1800};//<- This needs to be initialized manually for now
 	static int[] STARTPOSY = new int[] {100, 900, 400, 900, 120, 500, 350, 400, 900, 500, 900, 100, 200, 800, 900};//<- Ditto
+//	static int[] STARTPOSX = new int[] {1000};
+//	static int[] STARTPOSY = new int[] {600};
 	static int[] centerX = new int[MAX];
 	static int [] centerY = new int[MAX];
 	static int[] wait = new int[MAX];
+	static int[] angleWait = new int[MAX];
 	static int[] random = new int[MAX];
-	static int[] lastX = new int[MAX]; // last known player position for each enemy
+	static int[] lastX = new int[MAX];
 	static int[] lastY = new int[MAX];
 	static double[] angle = new double[MAX];
 	static boolean[] alive = new boolean[MAX];
+	static boolean[] turnRight = new boolean[MAX];
 	static Rectangle[] enemies = new Rectangle[MAX];
 	
 	public static void initialize(int enemy) {
@@ -183,61 +187,68 @@ public class enemy {
 				case 8:
 				case 9:
 				case 10:
-					double angle = Math.toDegrees(-(Math.atan2(centerX[enemy] - lastX[enemy], centerY[enemy] - lastY[enemy]) - Math.PI / 2));
-					
-					if(angle < 0)
-						angle = 270 + (90 + angle);
-					
-					double distance = Math.abs(movement[0] - angle);
-					int count = 0;
-					
-					for(int c = 1; c < movement.length; c++){
+					if(centerX[enemy] != lastX[enemy] && centerY[enemy] != lastY[enemy]) {
 						
-						double cdistance = Math.abs(movement[c] - angle);
+						double angle = Math.toDegrees(-(Math.atan2(centerX[enemy] - lastX[enemy], centerY[enemy] - lastY[enemy]) - Math.PI / 2));
 						
-						if(cdistance < distance){
+						if(angle < 0)
+							angle = 270 + (90 + angle);
+						
+						double distance = Math.abs(movement[0] - angle);
+						int count = 0;
+						
+						for(int c = 1; c < movement.length; c++){
 							
-							count = c;
-							distance = cdistance;
+							double cdistance = Math.abs(movement[c] - angle);
+							
+							if(cdistance < distance){
+								
+								count = c;
+								distance = cdistance;
+							}
 						}
+						
+						int direction = movement[count];
+						
+						if(direction == 45 || direction == 135 || direction == 225 || direction == 315) 
+							speed /= 1.2;
+			
+						switch (direction) {
+							case 0:
+								enemies[enemy].x -= speed;
+								break;
+							case 45:
+								enemies[enemy].x -= speed;
+								enemies[enemy].y -= speed/STARTSPEED;
+							case 90: 
+								enemies[enemy].y -= speed;
+								break;
+							case 135:
+								enemies[enemy].x += speed/STARTSPEED;
+								enemies[enemy].y -= speed;
+							case 180:
+								enemies[enemy].x += speed;
+								break;
+							case 225:
+								enemies[enemy].x += speed;
+								enemies[enemy].y += speed/STARTSPEED;
+							case 270:
+								enemies[enemy].y += speed;
+								break;
+							case 315:
+								enemies[enemy].x -= speed/STARTSPEED;
+								enemies[enemy].y += speed;
+							case 360:
+								enemies[enemy].x -= speed;
+						}
+						
+						speed = STARTSPEED;
 					}
-					
-					int direction = movement[count];
-					
-					if(direction == 45 || direction == 135 || direction == 225 || direction == 315) 
-						speed /= 1.2;
-		
-					switch (direction) {
-						case 0:
-							enemies[enemy].x -= speed;
-							break;
-						case 45:
-							enemies[enemy].x -= speed;
-							enemies[enemy].y -= speed/STARTSPEED;
-						case 90: 
-							enemies[enemy].y -= speed;
-							break;
-						case 135:
-							enemies[enemy].x += speed/STARTSPEED;
-							enemies[enemy].y -= speed;
-						case 180:
-							enemies[enemy].x += speed;
-							break;
-						case 225:
-							enemies[enemy].x += speed;
-							enemies[enemy].y += speed/STARTSPEED;
-						case 270:
-							enemies[enemy].y += speed;
-							break;
-						case 315:
-							enemies[enemy].x -= speed/STARTSPEED;
-							enemies[enemy].y += speed;
-						case 360:
-							enemies[enemy].x -= speed;
+					else {
+						
+						wait[enemy] = -1;
 					}
-					
-					speed = STARTSPEED;
-				}
+			}
 		}
 	}
 	
@@ -249,6 +260,154 @@ public class enemy {
 		
 		if(checkVisible(enemies[enemy], player.model, VIEWRANGE, FOV, enemy))
 			angle[enemy] = -(Math.atan2(centerX[enemy] - player.centerX, centerY[enemy] - player.centerY) - Math.PI / 2);
+//		else {
+//			
+//			switch(random[enemy]) {
+//			case 0:
+//				if(!game.isInRange(angle[enemy], Math.toRadians(0), Math.toRadians(10))) 
+//					if(turnRight[enemy]) 
+//						angle[enemy] += 0.05;
+//					else 
+//						angle[enemy] -= 0.05;
+//				else 
+//					if(turnRight[enemy]) 
+//						turnRight[enemy] = false;
+//					else
+//						turnRight[enemy] = true;
+//				break;
+//			case 1:
+//				if(!game.isInRange(angle[enemy], Math.toRadians(45), Math.toRadians(10)))
+//					if(turnRight[enemy]) 
+//						angle[enemy] += 0.05;
+//					else 
+//						angle[enemy] -= 0.05;
+//				else 
+//					if(turnRight[enemy]) 
+//						turnRight[enemy] = false;
+//					else
+//						turnRight[enemy] = true;
+//				break;
+//			case 2:
+//				if(!game.isInRange(angle[enemy], Math.toRadians(90), Math.toRadians(10)))
+//					if(turnRight[enemy]) 
+//						angle[enemy] += 0.05;
+//					else 
+//						angle[enemy] -= 0.05;
+//				else 
+//					if(turnRight[enemy]) 
+//						turnRight[enemy] = false;
+//					else
+//						turnRight[enemy] = true;
+//				break;
+//			case 3:
+//				if(!game.isInRange(angle[enemy], Math.toRadians(135), Math.toRadians(10)))
+//					if(turnRight[enemy]) 
+//						angle[enemy] += 0.05;
+//					else 
+//						angle[enemy] -= 0.05;
+//				else 
+//					if(turnRight[enemy]) 
+//						turnRight[enemy] = false;
+//					else
+//						turnRight[enemy] = true;
+//				break;
+//			case 4:
+//				if(!game.isInRange(angle[enemy], Math.toRadians(180), Math.toRadians(10)))
+//					if(turnRight[enemy]) 
+//						angle[enemy] += 0.05;
+//					else 
+//						angle[enemy] -= 0.05;
+//				else 
+//					if(turnRight[enemy]) 
+//						turnRight[enemy] = false;
+//					else
+//						turnRight[enemy] = true;
+//				break;
+//			case 5:
+//				if(!game.isInRange(angle[enemy], Math.toRadians(225), Math.toRadians(10)))
+//					if(turnRight[enemy]) 
+//						angle[enemy] += 0.05;
+//					else 
+//						angle[enemy] -= 0.05;
+//				else 
+//					if(turnRight[enemy]) 
+//						turnRight[enemy] = false;
+//					else
+//						turnRight[enemy] = true;
+//				break;
+//			case 6:
+//				if(!game.isInRange(angle[enemy], Math.toRadians(270), Math.toRadians(10)))
+//					if(turnRight[enemy]) 
+//						angle[enemy] += 0.05;
+//					else 
+//						angle[enemy] -= 0.05;
+//				else 
+//					if(turnRight[enemy]) 
+//						turnRight[enemy] = false;
+//					else
+//						turnRight[enemy] = true;
+//				break;
+//			case 7:
+//				if(!game.isInRange(angle[enemy], Math.toRadians(315), Math.toRadians(10)))
+//					if(turnRight[enemy]) 
+//						angle[enemy] += 0.05;
+//					else 
+//						angle[enemy] -= 0.05;
+//				else 
+//					if(turnRight[enemy]) 
+//						turnRight[enemy] = false;
+//					else
+//						turnRight[enemy] = true;
+//				break;
+//			case 8:
+//			case 9:
+//			case 10:
+//				if(centerX[enemy] != lastX[enemy] && centerY[enemy] != lastY[enemy]) {
+//					
+//					double turnAngle = Math.toDegrees(-(Math.atan2(centerX[enemy] - lastX[enemy], centerY[enemy] - lastY[enemy]) - Math.PI / 2));
+//					
+//					if(turnAngle < 0)
+//						turnAngle = 270 + (90 + turnAngle);
+//					
+//					double distance = Math.abs(movement[0] - turnAngle);
+//					int count = 0;
+//					
+//					for(int c = 1; c < movement.length; c++){
+//						
+//						double cdistance = Math.abs(movement[c] - turnAngle);
+//						
+//						if(cdistance < distance){
+//							
+//							count = c;
+//							distance = cdistance;
+//						}
+//					}
+//					
+//					int direction = movement[count];
+//					
+//					if(direction == 45 || direction == 135 || direction == 225 || direction == 315) 
+//						speed /= 1.2;
+//		
+//					if(!game.isInRange(angle[enemy], Math.toRadians(direction), Math.toRadians(10)))
+//						if(turnRight[enemy]) 
+//							angle[enemy] += 0.05;
+//						else 
+//							angle[enemy] -= 0.05;
+//					else 
+//						switch((int)(Math.random() * 2)) {
+//							case 0:
+//								turnRight[enemy] = true;
+//								break;
+//							case 1:
+//								turnRight[enemy] = false;
+//								break;
+//						}
+//					speed = STARTSPEED;
+//				}
+//				else 
+//					wait[enemy] = -1;
+//			}
+//		}
 		
 		Graphics2D g2 = (Graphics2D) g;
 		g2.rotate(angle[enemy], centerX[enemy], centerY[enemy]);
