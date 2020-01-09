@@ -6,9 +6,9 @@ import java.util.*;
 
 public class game {
 	
-	static final Color CWALL = new Color(84,31,76);
+	static final Color CWALL = Color.black;
 	static final Color CVISIBLE = Color.lightGray;
-	static final Color CINVISIBLE = Color.black;
+	static final Color CINVISIBLE = Color.gray;
 	
 	static File file = new File("maps/map1.txt");
 	static Scanner input;
@@ -33,6 +33,16 @@ public class game {
 	static boolean[] tileIsVisible;
 	static int numTiles = 0;
 	static Rectangle[] tiles;
+	
+	public static boolean isInRange(double input, double compare, double range) {
+		
+		if(input >= compare && input <= compare+range)
+			return true;
+		else if(input < compare && input >= compare-range)
+			return true;
+		
+		return false;
+	}
 	
 	public static void drawWalls(Graphics g) {
 		//Draws walls
