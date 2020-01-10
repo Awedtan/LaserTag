@@ -9,6 +9,7 @@ public class playerProjectile {
 	static int inaccuracy = 5;//Inaccuracy of shots
 	static Color color = Color.blue;
 	static double speed = 15;//Speed of projectiles
+	static int damage = 5;// amount of damage that each player projectile does
 	
 	static boolean initialized;
 	

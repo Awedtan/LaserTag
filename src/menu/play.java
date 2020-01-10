@@ -8,6 +8,8 @@ import javax.swing.border.*;
 @SuppressWarnings("serial")
 public class play extends JPanel implements KeyListener, MouseListener{
     JLabel titleLabel, enemiesLabel, mapLabel, modifiersLabel, startLabel;
+
+    Border defaultBorder = BorderFactory.createLineBorder(Color.WHITE, 5);
     
     static int numberEnemies;
     static String mapName;
@@ -39,6 +41,18 @@ public class play extends JPanel implements KeyListener, MouseListener{
         mapLabel.setBounds(50, 400, 250, 150);
         mapLabel.setForeground(Color.WHITE);
 
+        modifiersLabel = new JLabel("Modifiers", SwingConstants.CENTER);
+        modifiersLabel.setFont(optionFont);
+        modifiersLabel.setBounds(50, menu.screenHeight - 185, 300, 120);
+        modifiersLabel.setForeground(Color.WHITE);
+        modifiersLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // TODO: implement modifiers menu
+            }
+        });
+        modifiersLabel.setBorder(defaultBorder);
+
         startLabel = new JLabel("Start", SwingConstants.CENTER);
         startLabel.setFont(new Font("Segoe UI", Font.PLAIN, 80));
         startLabel.setBounds(menu.screenWidth - 300, menu.screenHeight - 200, 250, 150);
@@ -49,12 +63,12 @@ public class play extends JPanel implements KeyListener, MouseListener{
                 // TODO: run the game using the settings here and on the modifers page
             }
         });
-        Border startBorder = BorderFactory.createLineBorder(Color.WHITE, 5);
-        startLabel.setBorder(startBorder);
+        startLabel.setBorder(defaultBorder);
 
         add(titleLabel);
         add(enemiesLabel);
         add(mapLabel);
+        add(modifiersLabel);
         add(startLabel);
     }
 
