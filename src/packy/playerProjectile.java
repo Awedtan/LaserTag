@@ -8,7 +8,7 @@ public class playerProjectile {
 	static int max = 100;//Max # of projectiles on screen
 	static int inaccuracy = 5;//Inaccuracy of shots
 	static Color color = Color.blue;
-	static double speed = 15;//Speed of projectiles
+	static double speed = 20;//Speed of projectiles
 	
 	static boolean initialized;
 	
@@ -23,6 +23,8 @@ public class playerProjectile {
 	static double[] angle = new double[max];
 	static boolean[] alive = new boolean[max];
 	
+	static Image image;
+	
 	public static int findNext(Rectangle[] shots) {
 		//Finds the next inactive/dead slot in the projectile array
 		
@@ -36,27 +38,29 @@ public class playerProjectile {
 	public static void kill(int shot) {
 		
 		playerProjectile.alive[shot] = false;
-		playerProjectile.countX[shot] = -10;
-		playerProjectile.countY[shot] = -10;
-		playerProjectile.moveX[shot] = -10;
-		playerProjectile.moveY[shot] = -10;
+		playerProjectile.countX[shot] = -1000;
+		playerProjectile.countY[shot] = -1000;
+		playerProjectile.moveX[shot] = 0;
+		playerProjectile.moveY[shot] =0;
 	}
 	
 	public static void move(Graphics g, int shot) {
 		//Moves the specified projectile
 		
-		if(!alive[shot]) {
-			
-			posX[shot] = -10;
-			posY[shot] = -10;
-		}
-		
 			Graphics2D g2 = (Graphics2D) g;
-			shots[shot] = new Rectangle(posX[shot] + countX[shot], posY[shot] + countY[shot], size, size);
-			
-			g2.setColor(color);
-			g2.fill(shots[shot]);
-			countX[shot] += moveX[shot];
-			countY[shot] += moveY[shot];
+		shots[shot] = new Rectangle(posX[shot] + countX[shot], posY[shot] + countY[shot], size, size);
+					
+		g2.setColor(game.cVisible);
+		g2.fill(shots[shot]);
+		g2.drawImage(image, posX[shot] + countX[shot], posY[shot] + countY[shot] - size/2, null);
+
+		countX[shot] += moveX[shot];
+		countY[shot] += moveY[shot];
+	}
+	
+	public static void rotate(Graphics g, int shot) {
+		
+		Graphics2D g2 = (Graphics2D)g;
+		g2.rotate(angle[shot]-Math.toRadians(90), posX[shot] + countX[shot], posY[shot] + countY[shot]);
 	}
 }

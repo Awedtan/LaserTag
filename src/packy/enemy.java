@@ -5,7 +5,7 @@ import java.awt.geom.Line2D;
 
 public class enemy {
 	
-	static final int MAX = 1;//# of enemies
+	static final int MAX = 15;//# of enemies
 	static final int STARTSPEED = 3;//Default enemy speed
 	static final int VIEWRANGE = 500;//Length of enemy vision
 	static final int SHOOTRANGE = 150;//When the distance to the player is smaller than this, enemies stop moving
@@ -18,10 +18,10 @@ public class enemy {
 	
 	static int[] movement = new int[]{0, 45, 90, 135, 180, 225, 270, 315, 360};
 	
-//	static int[] STARTPOSX = new int[] {100, 120, 300, 350, 200, 500, 1200, 1000, 1000, 1200, 1700, 1700, 950, 1000, 1800};//<- This needs to be initialized manually for now
-//	static int[] STARTPOSY = new int[] {100, 900, 400, 900, 120, 500, 350, 400, 900, 500, 900, 100, 200, 800, 900};//<- Ditto
-	static int[] STARTPOSX = new int[] {1000};
-	static int[] STARTPOSY = new int[] {600};
+	static int[] STARTPOSX = new int[] {100, 120, 300, 350, 200, 500, 1200, 1000, 1000, 1200, 1700, 1700, 950, 1000, 1800};//<- This needs to be initialized manually for now
+	static int[] STARTPOSY = new int[] {100, 900, 400, 900, 120, 500, 350, 400, 900, 500, 900, 100, 200, 800, 900};//<- Ditto
+//	static int[] STARTPOSX = new int[] {1000};
+//	static int[] STARTPOSY = new int[] {600};
 	static int[] centerX = new int[MAX];
 	static int [] centerY = new int[MAX];
 	static int[] wait = new int[MAX];
@@ -70,8 +70,8 @@ public class enemy {
 			enemyProjectile.angle[shot] = angle;
 			enemyProjectile.posX[shot] = startX;
 			enemyProjectile.posY[shot] = startY;
-			enemyProjectile.moveX[shot] = -(enemyProjectile.speed * Math.cos(Math.toRadians(Math.toDegrees(angle) + Math.random()*enemyProjectile.INACCURACY-enemyProjectile.INACCURACY/2)));
-			enemyProjectile.moveY[shot] = -(enemyProjectile.speed * Math.sin(Math.toRadians(Math.toDegrees(angle) + Math.random()*enemyProjectile.INACCURACY-enemyProjectile.INACCURACY/2)));
+			enemyProjectile.moveX[shot] = -(enemyProjectile.speed * Math.cos(Math.toRadians(Math.toDegrees(angle) + Math.random()*enemyProjectile.inaccuracy-enemyProjectile.inaccuracy/2)));
+			enemyProjectile.moveY[shot] = -(enemyProjectile.speed * Math.sin(Math.toRadians(Math.toDegrees(angle) + Math.random()*enemyProjectile.inaccuracy-enemyProjectile.inaccuracy/2)));
 			enemyProjectile.countX[shot] = 0;
 			enemyProjectile.countY[shot] = 0;
 			enemyProjectile.alive[shot] = true;
