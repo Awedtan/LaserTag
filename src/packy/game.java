@@ -10,7 +10,7 @@ public class game {
 	static final Color CVISIBLE = Color.lightGray;
 	static final Color CINVISIBLE = Color.gray;
 	
-	static File file = new File("maps/map1.txt");
+	static File file = new File("maps/template96x54.txt");
 	static Scanner input;
 	
 	static char[][] map;//The dimensions should be common divisors of 1920 and 1080

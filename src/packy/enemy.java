@@ -161,15 +161,15 @@ public class enemy {
 				enemies[enemy].x -= speed;
 				break;
 			case 1:
-				enemies[enemy].x -= speed/1.2;
-				enemies[enemy].y -= speed/1.2;
+				enemies[enemy].x -= speed/1.5;
+				enemies[enemy].y -= speed/1.5;
 				break;
 			case 2:
 				enemies[enemy].y -= speed;
 				break;
 			case 3:
-				enemies[enemy].x += speed/1.2;
-				enemies[enemy].y -= speed/1.2;
+				enemies[enemy].x += speed;
+				enemies[enemy].y -= speed/1.5;
 				break;
 			case 4:
 				enemies[enemy].x += speed;
@@ -182,8 +182,8 @@ public class enemy {
 				enemies[enemy].y += speed;
 				break;
 			case 7:
-				enemies[enemy].x -= speed/1.2;
-				enemies[enemy].y += speed/1.2;
+				enemies[enemy].x -= speed/1.5;
+				enemies[enemy].y += speed/1.5;
 				break;
 			case 8:
 			case 9:
