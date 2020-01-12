@@ -5,7 +5,7 @@ import java.awt.geom.Line2D;
 
 public class enemy {
 	
-	static final int MAX = 15;//# of enemies
+	static final int MAX = 1;//# of enemies
 	static final int STARTSPEED = 3;//Default enemy speed
 	static final int VIEWRANGE = 500;//Length of enemy vision
 	static final int SHOOTRANGE = 150;//When the distance to the player is smaller than this, enemies stop moving
