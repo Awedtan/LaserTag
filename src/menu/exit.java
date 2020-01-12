@@ -11,8 +11,8 @@ public class exit extends JPanel implements KeyListener, MouseListener{
     public exit() {
         setPreferredSize(new Dimension(menu.screenWidth, menu.screenHeight));
 		setLayout(null);
-        confirmAsk = new JLabel("Are you sure you want to exit?", SwingConstants.CENTER);
-        confirmAsk.setFont(new Font("Segoe UI", Font.PLAIN, 70));
+        confirmAsk = new JLabel("Are you sure you want to quit?", SwingConstants.CENTER);
+        confirmAsk.setFont(new Font("Segoe UI", Font.PLAIN, 55));
         confirmAsk.setBounds(menu.screenWidth / 4, 350, menu.screenWidth / 2, 120);
         confirmAsk.setForeground(Color.WHITE);
 
@@ -34,7 +34,7 @@ public class exit extends JPanel implements KeyListener, MouseListener{
         confirmNo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                menu.switchStatePanel(menu.exitPanel, menu.menuPanel);
+                menu.switchStatePanel(menu.exitPanel, menu.menuPanel, menu.STATE.MAIN);
             }
         });
 
@@ -45,7 +45,7 @@ public class exit extends JPanel implements KeyListener, MouseListener{
 
     public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.setColor(menu.backgroundColor);
+		g.setColor(new Color(20, 20, 20));
 		g.fillRect(0, 0, menu.screenWidth, menu.screenHeight);   
     }
 

@@ -18,7 +18,7 @@ public class main extends JPanel implements KeyListener, MouseListener {
         playLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                menu.switchStatePanel(menu.menuPanel, menu.playPanel);
+                menu.switchStatePanel(menu.menuPanel, menu.playPanel, menu.STATE.PLAY);
             }
         });
         exitLabel = new JLabel("Exit");
@@ -28,7 +28,7 @@ public class main extends JPanel implements KeyListener, MouseListener {
         exitLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                menu.switchStatePanel(menu.menuPanel, menu.exitPanel);
+                menu.switchStatePanel(menu.menuPanel, menu.exitPanel, menu.STATE.EXIT);
             }
         });
 
@@ -38,10 +38,10 @@ public class main extends JPanel implements KeyListener, MouseListener {
 
     public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.setColor(menu.backgroundColor);
+		g.setColor(new Color(20, 20, 20));
 		g.fillRect(0, 0, menu.screenWidth, menu.screenHeight);
 
-        g.drawImage(menu.gameLogo, 50, 50, (2 * menu.screenWidth/3 - 50), ((2 * menu.screenWidth/3 - 50) / 6), this);
+        g.drawImage(menu.gameLogo, 50, 100, (2 * menu.screenWidth/3 - 50), ((2 * menu.screenWidth/3 - 50) / 6), this);
 	}
 
     @Override
