@@ -39,9 +39,9 @@ public class enemy {
 		enemyHealth[enemy] = 5; //TODO: set this to variable that can be changed in modifiers
 	}
 	
-	public static void kill(int enemy) {
+	public static void hit(int enemy) {
 		// Damages enemy based on damage variable
-				enemyHealth[enemy] -= playerProjectile.damage;
+				enemyHealth[enemy] -= playerProjectile.DAMAGE;
 
 				// Kills enemy if health falls below 0
 				if (enemyHealth[enemy] <= 0) {
@@ -74,8 +74,8 @@ public class enemy {
 			enemyProjectile.angle[shot] = angle;
 			enemyProjectile.posX[shot] = startX;
 			enemyProjectile.posY[shot] = startY;
-			enemyProjectile.moveX[shot] = -(enemyProjectile.speed * Math.cos(Math.toRadians(Math.toDegrees(angle) + Math.random()*enemyProjectile.INACCURACY-enemyProjectile.INACCURACY/2)));
-			enemyProjectile.moveY[shot] = -(enemyProjectile.speed * Math.sin(Math.toRadians(Math.toDegrees(angle) + Math.random()*enemyProjectile.INACCURACY-enemyProjectile.INACCURACY/2)));
+			enemyProjectile.moveX[shot] = -(enemyProjectile.SPEED * Math.cos(Math.toRadians(Math.toDegrees(angle) + Math.random()*enemyProjectile.INACCURACY-enemyProjectile.INACCURACY/2)));
+			enemyProjectile.moveY[shot] = -(enemyProjectile.SPEED * Math.sin(Math.toRadians(Math.toDegrees(angle) + Math.random()*enemyProjectile.INACCURACY-enemyProjectile.INACCURACY/2)));
 			enemyProjectile.countX[shot] = 0;
 			enemyProjectile.countY[shot] = 0;
 			enemyProjectile.alive[shot] = true;
@@ -390,24 +390,5 @@ public class enemy {
 	        else if(top1 < bottom2 && bottom1 > bottom2) 
 	        	enemy.enemies[num].y = rect.y + rect.height;
 		}
-	}
-	
-	public static void checkProjectileCollision(Rectangle wall, int shot) {
-		//Checks for projectile collisions with walls
-		
-		if(enemyProjectile.shots[shot].intersects(wall)) 
-			enemyProjectile.kill(shot);
-		
-		if(enemyProjectile.shots[shot].intersects(player.model)) {
-			
-			enemyProjectile.kill(shot);
-			test();
-		}
-	}
-	
-	public static void test() {
-		
-		player.color = Color.red;
-		game.cWall = Color.red;
 	}
 }

@@ -4,27 +4,26 @@ import java.awt.*;
 
 public class playerProjectile {
 
-	static int width = 5;//Size of projectile
-	static int height = 60;
-	static int max = 100;//Max # of projectiles on screen
-	static int inaccuracy = 5;//Inaccuracy of shots
-	static Color color = Color.blue;
-	static double speed = 30;//Speed of projectiles
-	static int damage = 5;//Amount of damage that each player projectile does
+	static final int WIDTH = 5;//Size of projectile
+	static final int HEIGHT = 5;
+	static final int MAX = 100;//MAX # of projectiles on screen
+	static final int INACCURACY = 5;//INACCURACY of shots
+	static final double SPEED = 20;//SPEED of projectiles
+	static final int DAMAGE = 5;//Amount of DAMAGE that each player projectile does
 	
 	static boolean initialized;
 	
 	static Image image;
 	
-	static int[] posX = new int[max];//Projectile information
-	static int[] posY = new int[max];
-	static int[] countX = new int[max];
-	static int[] countY = new int[max];
-	static double[] moveX = new double[max];
-	static double[] moveY = new double[max];
-	static double[] angle = new double[max];
-	static boolean[] alive = new boolean[max];
-	static Rectangle[] shots = new Rectangle[max];//The projectiles
+	static int[] posX = new int[MAX];//Projectile information
+	static int[] posY = new int[MAX];
+	static int[] countX = new int[MAX];
+	static int[] countY = new int[MAX];
+	static double[] moveX = new double[MAX];
+	static double[] moveY = new double[MAX];
+	static double[] angle = new double[MAX];
+	static boolean[] alive = new boolean[MAX];
+	static Rectangle[] shots = new Rectangle[MAX];//The projectiles
 	
 	public static int findNext(Rectangle[] shots) {
 		//Finds the next inactive/dead slot in the projectile array
@@ -51,11 +50,11 @@ public class playerProjectile {
 		//Moves the specified projectile
 		
 			Graphics2D g2 = (Graphics2D) g;
-			shots[shot] = new Rectangle(posX[shot] + countX[shot], posY[shot] + countY[shot], width, height);
+			shots[shot] = new Rectangle(posX[shot] + countX[shot], posY[shot] + countY[shot], WIDTH, HEIGHT);
 
-			g2.setColor(color);
+			g2.setColor(game.cVisible);
 			g2.fill(shots[shot]);
-			g2.drawImage(image, posX[shot] + countX[shot] - width/2, posY[shot] + countY[shot], null);
+			g2.drawImage(image, posX[shot] + countX[shot] - WIDTH/2, posY[shot] + countY[shot], null);
 
 			countX[shot] += moveX[shot];
 			countY[shot] += moveY[shot];
@@ -65,5 +64,22 @@ public class playerProjectile {
 
 		Graphics2D g2 = (Graphics2D)g;
 		g2.rotate(angle[shot]-Math.toRadians(90), posX[shot] + countX[shot], posY[shot] + countY[shot]);
+	}
+	
+	public static void checkWallCollision(Rectangle wall, int shot) {
+		//Checks for projectile collisions with walls
+		
+		if(playerProjectile.shots[shot].intersects(wall)) 
+			playerProjectile.kill(shot);
+	}
+	
+	public static void checkEnemyCollision(int enem, int shot) {
+		//Checks for projectile collisions with walls
+		
+		if(playerProjectile.shots[shot].intersects(enemy.enemies[enem])) {
+			
+			playerProjectile.kill(shot);
+			enemy.hit(enem);
+		}
 	}
 }
