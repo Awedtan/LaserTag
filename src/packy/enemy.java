@@ -29,27 +29,20 @@ public class enemy {
 	static double[] angle = new double[MAX];
 	static boolean[] alive = new boolean[MAX];
 	static Rectangle[] enemies = new Rectangle[MAX];
-	static int[] enemyHealth = new int[MAX]; // health of each enemy
 	
 	public static void initialize(int enemy) {
 		
 		enemies[enemy] = new Rectangle(STARTPOSX[enemy], STARTPOSY[enemy], width, height);
 		alive[enemy] = true;
-		enemyHealth[enemy] = 10; //TODO: set this to variable that can be changed in modifiers
 	}
 	
 	public static void kill(int enemy) {
-		// Damages enemy based on damage variable
-		enemyHealth[enemy] -= playerProjectile.damage;
-
-		// Kills enemy if health falls below 0
-		if (enemyHealth[enemy] <= 0) {
-			alive[enemy] = false;
-			centerX[enemy] = -100;
-			centerY[enemy] = -100;
-			lastX[enemy] = 0;
-			lastY[enemy] = 0;
-		}		
+		
+		alive[enemy] = false;
+		centerX[enemy] = -100;
+		centerY[enemy] = -100;
+		lastX[enemy] = 0;
+		lastY[enemy] = 0;
 	}
 	
 	public static void draw(Graphics g, int enemy) {

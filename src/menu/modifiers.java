@@ -6,7 +6,6 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class modifiers extends JPanel implements KeyListener, MouseListener {
-    
 
     public modifiers() {
         setPreferredSize(new Dimension(menu.screenWidth, menu.screenHeight));

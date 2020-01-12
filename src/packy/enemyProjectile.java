@@ -35,6 +35,7 @@ public class enemyProjectile {
 	}
 	
 	public static void kill(int shot) {
+		
 		alive[shot] = false;
 		countX[shot] = -10;
 		countY[shot] = -10;
