@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.awt.*;
 
 import javax.swing.*;
+import javax.swing.border.*;
 
 @SuppressWarnings("serial")
 public class menu extends JPanel implements KeyListener, MouseListener{
@@ -16,31 +17,24 @@ public class menu extends JPanel implements KeyListener, MouseListener{
     static int screenHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight());
 
 	static Image gameLogo = Toolkit.getDefaultToolkit().getImage("images/logo_resized.png");
-
-	static Font menuFont = new Font("Segoe UI", Font.PLAIN, 70);
+	
+	static Font menuFont = new Font("Segoe UI", Font.PLAIN, 80);
+	static Color backgroundColor = new Color(20, 20, 20);
+	static Border defaultBorder = BorderFactory.createLineBorder(Color.WHITE, 5);
 
 	static JFrame frame;
 
 	static main menuPanel;
 	static play playPanel;
 	static exit exitPanel;
-	
-	enum STATE {
-		MAIN,
-		PLAY,
-		EXIT
-	}
-	
-	static STATE menuState = STATE.MAIN;
+	static modifiers modifiersPanel;
 
 	/**
 	 * Removes the specified panel and replaces it with a new one 
 	 * @param panelRemove The panel to be removed (current panel)
 	 * @param panelAdd The panel to be added
-	 * @param newState The new state (should be the same as the added panel)
 	 */
-	public static void switchStatePanel(Component panelRemove, Component panelAdd, STATE newState) {
-		menu.menuState = newState;
+	public static void switchStatePanel(Component panelRemove, Component panelAdd) {
 		menu.frame.add(panelAdd);
 		menu.frame.remove(panelRemove);
 		menu.frame.revalidate();
@@ -97,6 +91,7 @@ public class menu extends JPanel implements KeyListener, MouseListener{
 		menuPanel = new main();
 		playPanel = new play();
 		exitPanel = new exit();
+		modifiersPanel = new modifiers();
 		frame.add(menuPanel);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
