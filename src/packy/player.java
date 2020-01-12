@@ -50,6 +50,12 @@ public class player {
 		g2.fillRect((model.x-(int)(width-width*0.2)), model.y, height, (int)(width/5));
 	}
 	
+	public static void hit() {
+		
+		player.color = Color.red;
+		game.cWall = Color.red;
+	}
+	
 	public static void shoot(int startX, int startY, double angle, int shot){
 		//Initializes a projectile at the specified coordinates
 		
@@ -57,8 +63,8 @@ public class player {
 		playerProjectile.posX[shot] = startX;
 		playerProjectile.posY[shot] = startY;
 		
-		playerProjectile.moveX[shot] = -(playerProjectile.speed * Math.cos(Math.toRadians(Math.toDegrees(angle) + Math.random()*playerProjectile.inaccuracy-playerProjectile.inaccuracy/2)));
-		playerProjectile.moveY[shot] = -(playerProjectile.speed * Math.sin(Math.toRadians(Math.toDegrees(angle) + Math.random()*playerProjectile.inaccuracy-playerProjectile.inaccuracy/2)));
+		playerProjectile.moveX[shot] = -(playerProjectile.SPEED * Math.cos(Math.toRadians(Math.toDegrees(angle) + Math.random()*playerProjectile.INACCURACY-playerProjectile.INACCURACY/2)));
+		playerProjectile.moveY[shot] = -(playerProjectile.SPEED * Math.sin(Math.toRadians(Math.toDegrees(angle) + Math.random()*playerProjectile.INACCURACY-playerProjectile.INACCURACY/2)));
 		
 		playerProjectile.countX[shot] = 0;
 		playerProjectile.countY[shot] = 0;
@@ -169,24 +175,5 @@ public class player {
 	        else if(top1 < bottom2 && bottom1 > bottom2) 
 	        	player.model.y = rect.y + rect.height;
 		}
-	}
-	
-	public static void checkProjectileCollision(Rectangle wall, int shot, int num) {
-		//Checks for projectile collisions with walls
-		
-		if(playerProjectile.shots[shot].intersects(wall)) {
-			playerProjectile.kill(shot);
-			System.out.println(wall);
-		}
-		
-		if(playerProjectile.shots[shot].intersects(enemy.enemies[num])) {
-			
-			playerProjectile.kill(shot);
-			enemy.damage(num);
-		}
-	}
-
-	public static void respawn() {
-		
 	}
 }
