@@ -10,6 +10,7 @@ public class enemyProjectile {
 	static final int INACCURACY = 5;//Inaccuracy of shots
 	static Color color = Color.red;
 	static double speed = 30;//Speed of projectiles
+	static int damage = 5;//Projectile damage
 	
 	static boolean initialized;
 	
