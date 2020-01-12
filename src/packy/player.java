@@ -162,8 +162,10 @@ public class player {
 	public static void checkProjectileCollision(Rectangle wall, int shot, int num) {
 		//Checks for projectile collisions with walls
 		
-		if(playerProjectile.shots[shot].intersects(wall)) 
+		if(playerProjectile.shots[shot].intersects(wall)) {
 			playerProjectile.kill(shot);
+			System.out.println(wall);
+		}
 		
 		if(playerProjectile.shots[shot].intersects(enemy.enemies[num])) {
 			

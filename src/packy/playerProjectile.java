@@ -4,15 +4,17 @@ import java.awt.*;
 
 public class playerProjectile {
 
-	static int size = 5;//Size of projectile
+	static int width = 5;//Size of projectile
+	static int height = 60;
 	static int max = 100;//Max # of projectiles on screen
 	static int inaccuracy = 5;//Inaccuracy of shots
 	static Color color = Color.blue;
-	static double speed = 15;//Speed of projectiles
+	static double speed = 30;//Speed of projectiles
+	static int damage = 5;//Amount of damage that each player projectile does
 	
 	static boolean initialized;
 	
-	static Rectangle[] shots = new Rectangle[max];//The projectiles
+	static Image image;
 	
 	static int[] posX = new int[max];//Projectile information
 	static int[] posY = new int[max];
@@ -22,6 +24,7 @@ public class playerProjectile {
 	static double[] moveY = new double[max];
 	static double[] angle = new double[max];
 	static boolean[] alive = new boolean[max];
+	static Rectangle[] shots = new Rectangle[max];//The projectiles
 	
 	public static int findNext(Rectangle[] shots) {
 		//Finds the next inactive/dead slot in the projectile array
@@ -36,27 +39,31 @@ public class playerProjectile {
 	public static void kill(int shot) {
 		
 		playerProjectile.alive[shot] = false;
-		playerProjectile.countX[shot] = -10;
-		playerProjectile.countY[shot] = -10;
-		playerProjectile.moveX[shot] = -10;
-		playerProjectile.moveY[shot] = -10;
+		posX[shot] = -20;
+		posY[shot] = -20;
+		countX[shot] = -20;
+		countY[shot] = -20;
+		moveX[shot] = 0;
+		moveY[shot] = 0;
 	}
 	
 	public static void move(Graphics g, int shot) {
 		//Moves the specified projectile
 		
-		if(!alive[shot]) {
-			
-			posX[shot] = -10;
-			posY[shot] = -10;
-		}
-		
 			Graphics2D g2 = (Graphics2D) g;
-			shots[shot] = new Rectangle(posX[shot] + countX[shot], posY[shot] + countY[shot], size, size);
-			
+			shots[shot] = new Rectangle(posX[shot] + countX[shot], posY[shot] + countY[shot], width, height);
+
 			g2.setColor(color);
 			g2.fill(shots[shot]);
+			g2.drawImage(image, posX[shot] + countX[shot] - width/2, posY[shot] + countY[shot], null);
+
 			countX[shot] += moveX[shot];
 			countY[shot] += moveY[shot];
+	}
+	
+	public static void rotate(Graphics g, int shot) {
+
+		Graphics2D g2 = (Graphics2D)g;
+		g2.rotate(angle[shot]-Math.toRadians(90), posX[shot] + countX[shot], posY[shot] + countY[shot]);
 	}
 }

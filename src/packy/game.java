@@ -6,9 +6,9 @@ import java.util.*;
 
 public class game {
 	
-	static final Color CWALL = new Color(84,31,76);
+	static final Color CWALL = Color.black;
 	static final Color CVISIBLE = Color.lightGray;
-	static final Color CINVISIBLE = Color.black;
+	static final Color CINVISIBLE = Color.gray;
 	
 	static File file = new File("maps/map1.txt");
 	static Scanner input;

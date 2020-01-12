@@ -48,6 +48,8 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		try {
 			
 			game.input = new Scanner(game.file);
+			playerProjectile.image = Toolkit.getDefaultToolkit().getImage("images\\bluelaser.png");
+			enemyProjectile.image = Toolkit.getDefaultToolkit().getImage("images\\redlaser.png");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -140,10 +142,10 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 					enemyProjectile.kill(i);
 			
 			for(int i=0; i<game.numTiles; i++) 
-				if(player.checkVisible(player.model, game.tiles[i], player.VIEWRANGE, player.FOV))
+//				if(player.checkVisible(player.model, game.tiles[i], player.VIEWRANGE, player.FOV))
 					game.tileIsVisible[i] = true;
-				else
-					game.tileIsVisible[i] = false;
+//				else
+//					game.tileIsVisible[i] = false;
 			
 			for(int k=0; k<enemy.MAX; k++) 
 				if(enemy.checkVisible(enemy.enemies[k], player.model, enemy.VIEWRANGE, enemy.FOV, k) && enemyProjectile.findNext(enemyProjectile.shots) != -1 && enemy.alive[k]) 
@@ -167,15 +169,25 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	public void paintComponent(Graphics g) {
 		//Draws all graphics
 		
-		Graphics gPlayer = g.create();
 		super.paintComponent(g);
 		game.drawVisible(g);
 		
-		for(int i=0; i<playerProjectile.shots.length; i++)
-			playerProjectile.move(g, i);
-		
-		for(int i=0; i<enemyProjectile.shots.length; i++)
-			enemyProjectile.move(g, i);
+		for(int i=0; i<playerProjectile.shots.length; i++) {
+			Graphics gLaser = g.create();
+			playerProjectile.rotate(gLaser,  i);
+			playerProjectile.move(gLaser, i);
+			gLaser.dispose();
+		}
+
+
+
+		for(int i=0; i<enemyProjectile.shots.length; i++) {
+
+			Graphics gLaser = g.create();
+			enemyProjectile.rotate(gLaser,  i);
+			enemyProjectile.move(gLaser, i);
+			gLaser.dispose();
+		}
 		
 		playerProjectile.initialized = true;
 		enemyProjectile.initialized = true;
@@ -194,8 +206,10 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		
 		game.drawInvisible(g);
 		
+		Graphics gPlayer = g.create();
 		player.rotate(gPlayer);
 		player.draw(gPlayer);
+		gPlayer.dispose();
 		
 		game.drawWalls(g);
 		
