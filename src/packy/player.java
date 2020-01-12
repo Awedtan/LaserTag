@@ -33,7 +33,7 @@ public class player {
 	static boolean alive;
 	
 	public static void damage() {
-		health -= enemyProjectile.damage;
+		health -= enemyProjectile.DAMAGE;
 
 		// handle player deaths in terms of scoreboard and respawning
 		if (health <= 0) {
