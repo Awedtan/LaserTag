@@ -106,7 +106,7 @@ public class game {
 			}
 		}
 	}
-	
+
 	public static boolean checkInBound(Rectangle rect) {
 		
 		if(rect.x < -100)

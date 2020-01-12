@@ -116,8 +116,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 				for(int j=0; j<playerProjectile.shots.length; j++) 
 					if(playerProjectile.alive[j])
 						for(int k=0; k<enemy.MAX; k++) 
-							player.checkProjectileCollision(game.walls[i], j, k);	
-														
+							player.checkProjectileCollision(game.walls[i], j, k);
 				
 				for(int j=0; j<enemyProjectile.shots.length; j++) 
 					if(enemyProjectile.alive[j])
@@ -164,6 +163,8 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		addKeyListener(this);
 		mainThread = new Thread(this);
 		mainThread.start();
+
+		// TODO: add scoreboard stuff
 	}
 	
 	public void paintComponent(Graphics g) {

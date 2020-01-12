@@ -61,8 +61,20 @@ public class modifiers extends JPanel implements KeyListener, MouseListener {
         add(saveLabel);
 
         // ------------ Modifier Labels ------------ //
+        playerHealthLabel = new JLabel("Player Health");
+        playerHealthLabel.setFont(modifierFont);
+        playerHealthLabel.setBounds(menu.screenWidth - 300, menu.screenHeight - 200, 250, 150);// TODO: adjust positions of all of these
+        playerHealthLabel.setForeground(Color.WHITE);
 
+        playerDamageLabel = new JLabel("Player Damage");
+        playerDamageLabel.setFont(modifierFont);
+        playerDamageLabel.setBounds(menu.screenWidth - 300, menu.screenHeight - 200, 250, 150);
+        playerDamageLabel.setForeground(Color.WHITE);
 
+        playerFovLabel = new JLabel("Player FOV");
+        playerFovLabel.setFont(modifierFont);
+        playerFovLabel.setBounds(menu.screenWidth - 300, menu.screenHeight - 200, 250, 150);
+        playerFovLabel.setForeground(Color.WHITE);
     }
 
     public void paintComponent(Graphics g) {
