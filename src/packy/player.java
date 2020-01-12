@@ -20,8 +20,6 @@ public class player {
 	static int centerY;
 	static int speed = STARTSPEED;
 	static double angle;//Angle to mouse cursor
-	static int health = 100;// Player health
-	static int score = 0;// Player score
 	
 	static Rectangle model = new Rectangle(STARTPOSX, STARTPOSY, width, height);//Player model
 	
@@ -30,17 +28,7 @@ public class player {
 	static boolean moveUp;
 	static boolean moveDown;
 	static boolean sprint;
-	static boolean alive;
 	
-	public static void damage() {
-		health -= enemyProjectile.damage;
-
-		// handle player deaths in terms of scoreboard and respawning
-		if (health <= 0) {
-
-		}
-	}
-
 	public static void draw(Graphics g) {
 		//Draws the player and gun sprite
 		
@@ -182,11 +170,7 @@ public class player {
 		if(playerProjectile.shots[shot].intersects(enemy.enemies[num])) {
 			
 			playerProjectile.kill(shot);
-			enemy.damage(num);
+			enemy.kill(num);
 		}
-	}
-
-	public static void respawn() {
-		
 	}
 }
