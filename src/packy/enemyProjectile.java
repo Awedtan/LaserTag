@@ -6,7 +6,7 @@ public class enemyProjectile {
 
 	static final int WIDTH = 5;//Size of projectile
 	static final int HEIGHT = 5;
-	static final int MAX = 100;//Max # of projectiles on screen
+	static final int MAX = 10;//Max # of projectiles on screen
 	static final int INACCURACY = 5;//Inaccuracy of shots
 	static final double SPEED = 20;//SPEED of projectiles
 	static final int DAMAGE = 5;//Amount of DAMAGE that each player projectile does

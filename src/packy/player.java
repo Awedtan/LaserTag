@@ -4,8 +4,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Line2D;
 
-import javax.swing.JOptionPane;
-
 public class player {
 
 	static final int STARTSPEED = 4;//Default player speed
@@ -13,7 +11,7 @@ public class player {
 	static final int STARTPOSY = 550;	
 	static final int VIEWRANGE = 500;
 	static final int FOV = 50;//In degrees, this value is half the FOV, therefore 45 = 90 FOV, 90 = 180 FOV
-	static final int HEALTHMAX = 10;
+	static final int HEALTHMAX = 50;
 	
 	static int width = 20;//Player dimensions
 	static int height = width;
@@ -23,7 +21,7 @@ public class player {
 	static int centerY;
 	static int speed = STARTSPEED;
 	static double angle;//Angle to mouse cursor
-	static int health = 10;// Player health
+	static int health = HEALTHMAX;// Player health
 	static int score = 0;// Player score
 	
 	static Rectangle model = new Rectangle(STARTPOSX, STARTPOSY, width, height);//Player model
@@ -64,11 +62,13 @@ public class player {
 	}
 	
 	public static void kill() {
-		
-		JOptionPane.showMessageDialog (null, "You died! Click anywhere on the map to respawn!", "You Died!", JOptionPane.INFORMATION_MESSAGE);
+				
 		model.x = -30;
 		model.y = -30;
 		alive = false;
+		
+		if(game.mode == 0)
+			game.ended = true;
 	}
 	
 	public static void respawn(int x, int y) {

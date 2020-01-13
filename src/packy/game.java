@@ -10,6 +10,9 @@ public class game {
 	static final Color CVISIBLE = Color.lightGray;
 	static final Color CINVISIBLE = Color.gray;
 	
+	static int mode;
+	static boolean ended;
+	
 	static File file = new File("maps/map1.txt");
 	static Scanner input;
 	
