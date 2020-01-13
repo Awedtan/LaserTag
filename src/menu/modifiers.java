@@ -9,7 +9,8 @@ public class modifiers extends JPanel implements KeyListener, MouseListener {
     JLabel resetLabel, backLabel, saveLabel; // TODO: add load previous options?
 
     // All modifier labels
-    JLabel bulletSpeedLabel, playerFovLabel, playerDamageLabel, playerHealthLabel, enemyFOVLabel, enemyDamageLabel, enemyHealthLabe, viewDistanceLabel;
+    JLabel playerFovLabel, playerViewrangeLabel, playerDamageLabel, playerHealthLabel, enemyFovLabel, enemyViewrangeLabel, enemyDamageLabel, enemyHealthLabel;
+    JTextField playerFovField, playerViewrangeField, playerDamageField, playerHealthField, enemyFovField, enemyViewrangeField, enemyDamageField, enemyHealthField;
 
     Image headerImage = Toolkit.getDefaultToolkit().getImage("images/header_modifiers.png");
 
@@ -52,6 +53,7 @@ public class modifiers extends JPanel implements KeyListener, MouseListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // TODO: save values in text field
+                menu.switchStatePanel(menu.modifiersPanel, menu.playPanel);
             }
         });
         saveLabel.setBorder(menu.defaultBorder);
@@ -61,20 +63,57 @@ public class modifiers extends JPanel implements KeyListener, MouseListener {
         add(saveLabel);
 
         // ------------ Modifier Labels ------------ //
-        playerHealthLabel = new JLabel("Player Health");
+        playerHealthLabel = new JLabel("Player Health:");
         playerHealthLabel.setFont(modifierFont);
-        playerHealthLabel.setBounds(menu.screenWidth - 300, menu.screenHeight - 200, 250, 150);// TODO: adjust positions of all of these
+        playerHealthLabel.setBounds(50, 250, 500, 150);
         playerHealthLabel.setForeground(Color.WHITE);
 
-        playerDamageLabel = new JLabel("Player Damage");
+        playerDamageLabel = new JLabel("Player Damage:");
         playerDamageLabel.setFont(modifierFont);
-        playerDamageLabel.setBounds(menu.screenWidth - 300, menu.screenHeight - 200, 250, 150);
+        playerDamageLabel.setBounds(50, 350, 500, 150);
         playerDamageLabel.setForeground(Color.WHITE);
 
-        playerFovLabel = new JLabel("Player FOV");
+        playerFovLabel = new JLabel("Player FOV:");
         playerFovLabel.setFont(modifierFont);
-        playerFovLabel.setBounds(menu.screenWidth - 300, menu.screenHeight - 200, 250, 150);
+        playerFovLabel.setBounds(50, 450, 500, 150);
         playerFovLabel.setForeground(Color.WHITE);
+
+        playerViewrangeLabel = new JLabel("Player Viewrange:");
+        playerViewrangeLabel.setFont(modifierFont);
+        playerViewrangeLabel.setBounds(50, 550, 500, 150);
+        playerViewrangeLabel.setForeground(Color.WHITE);
+
+        enemyHealthLabel = new JLabel("Enemy Health:");
+        enemyHealthLabel.setFont(modifierFont);
+        enemyHealthLabel.setBounds(700, 250, 500, 150);
+        enemyHealthLabel.setForeground(Color.WHITE);
+
+        enemyDamageLabel = new JLabel("Enemy Damage:");
+        enemyDamageLabel.setFont(modifierFont);
+        enemyDamageLabel.setBounds(700, 350, 500, 150);
+        enemyDamageLabel.setForeground(Color.WHITE);
+
+        enemyFovLabel = new JLabel("Enemy FOV:");
+        enemyFovLabel.setFont(modifierFont);
+        enemyFovLabel.setBounds(700, 450, 500, 150);
+        enemyFovLabel.setForeground(Color.WHITE);
+
+        enemyViewrangeLabel = new JLabel("Enemy Viewrange:");
+        enemyViewrangeLabel.setFont(modifierFont);
+        enemyViewrangeLabel.setBounds(700, 550, 500, 150);
+        enemyViewrangeLabel.setForeground(Color.WHITE);
+
+        add(playerHealthLabel);
+        add(playerDamageLabel);
+        add(playerFovLabel);
+        add(playerViewrangeLabel);
+        add(enemyHealthLabel);
+        add(enemyDamageLabel);
+        add(enemyFovLabel);
+        add(enemyViewrangeLabel);
+
+        // ------------ Modifier boxes ------------ //
+
     }
 
     public void paintComponent(Graphics g) {
@@ -82,7 +121,7 @@ public class modifiers extends JPanel implements KeyListener, MouseListener {
 		g.setColor(menu.backgroundColor);
         g.fillRect(0, 0, menu.screenWidth, menu.screenHeight);   
         
-        g.drawImage(headerImage, 50, 50, 1000, 158, this);
+        g.drawImage(headerImage, 50, 50, 1000, 160, this);
     }
 
     @Override

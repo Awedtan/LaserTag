@@ -31,7 +31,7 @@ public class play extends JPanel implements KeyListener, MouseListener{
         enemiesLabel.setForeground(Color.WHITE);
 
         // TODO: figure out how to change colors for this (right now it's mostly the default look and feel)
-        enemiesInput = new JSpinner(new SpinnerNumberModel(0, 0, 15, 1));
+        enemiesInput = new JSpinner(new SpinnerNumberModel(1, 1, 15, 1));
         enemiesInput.setFont(optionFont);
         enemiesInput.setBounds(300, 300, 250, 70);
         enemiesInput.setBorder(menu.defaultBorder);
@@ -48,7 +48,6 @@ public class play extends JPanel implements KeyListener, MouseListener{
         modifiersLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // TODO: implement modifiers menu
                 menu.switchStatePanel(menu.playPanel, menu.modifiersPanel);
             }
         });
@@ -93,7 +92,7 @@ public class play extends JPanel implements KeyListener, MouseListener{
 		g.setColor(menu.backgroundColor);
         g.fillRect(0, 0, menu.screenWidth, menu.screenHeight);   
         
-        g.drawImage(headerImage, 50, 50, 490, 150, this);
+        g.drawImage(headerImage, 50, 50, 500, 173, this);
     }
 
     @Override
