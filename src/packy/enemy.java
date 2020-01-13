@@ -337,15 +337,15 @@ public class enemy {
 		//Checks whether a line can be drawn between the centre of two rectangles without intercepting any walls
 		
 		double x1 = (model.width/2) + model.x, x2 = tile.x + tile.getWidth()/2, y1 = (model.height/2) + model.y, y2 = tile.y + tile.getHeight()/2;
-		double angleOfObject = -(Math.atan2(enemy.centerX[num] - tile.x + tile.getWidth()/2, enemy.centerY[num] - tile.y + tile.getHeight()/2) - Math.PI / 2);
+		double angleOfObject = -(Math.atan2(centerX[num] - tile.x + tile.getWidth()/2, centerY[num] - tile.y + tile.getHeight()/2) - Math.PI / 2);
 				
 		if(
 			(
-			enemy.angle[num]-(enemy.angle[num]-angleOfObject) > enemy.angle[num]-Math.toRadians(fov) 
+			angle[num]-(angle[num]-angleOfObject) > angle[num]-Math.toRadians(fov) 
 			||
-			enemy.angle[num]+(enemy.angle[num]-(Math.toRadians(360 - 2 * enemy.FOV)+angleOfObject)) > enemy.angle[num]+Math.toRadians(fov) 
+			angle[num]+(angle[num]-(Math.toRadians(360 - 2 * FOV)+angleOfObject)) > angle[num]+Math.toRadians(fov) 
 			) && (
-			enemy.angle[num]-(enemy.angle[num]-angleOfObject) < enemy.angle[num]+Math.toRadians(fov) 
+			angle[num]-(angle[num]-angleOfObject) < angle[num]+Math.toRadians(fov) 
 			)
 			
 		) {
@@ -367,29 +367,29 @@ public class enemy {
 	public static void checkCollision(Rectangle rect, int num) {
 		//Checks for player collision with rectangles
 		
-		if(enemy.enemies[num].intersects(rect)) {
+		if(enemies[num].intersects(rect)) {
 			
-			enemy.wait[num] = -1;
-			double left1 = enemy.enemies[num].getX();
-			double right1 = enemy.enemies[num].getX() + enemy.enemies[num].getWidth();
-			double top1 = enemy.enemies[num].getY();
-			double bottom1 = enemy.enemies[num].getY() + enemy.enemies[num].getHeight();
+			wait[num] = -1;
+			double left1 = enemies[num].getX();
+			double right1 = enemies[num].getX() + enemies[num].getWidth();
+			double top1 = enemies[num].getY();
+			double bottom1 = enemies[num].getY() + enemies[num].getHeight();
 			double left2 = rect.getX();
 			double right2 = rect.getX() + rect.getWidth();
 			double top2 = rect.getY();
 			double bottom2 = rect.getY() + rect.getHeight();
 			
 			if(right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) 
-				enemy.enemies[num].x = rect.x - enemy.enemies[num].width;
+				enemies[num].x = rect.x - enemies[num].width;
 	        
 	        else if(left1 < right2 && right1 > right2 && right2 - left1 < bottom1 - top2 && right2 - left1 < bottom2 - top1) 
-	        	enemy.enemies[num].x = rect.x + rect.width;
+	        	enemies[num].x = rect.x + rect.width;
 	        
 	        else if(bottom1 > top2 && top1 < top2) 
-	        	enemy.enemies[num].y = rect.y - enemy.enemies[num].height;
+	        	enemies[num].y = rect.y - enemies[num].height;
 	        
 	        else if(top1 < bottom2 && bottom1 > bottom2) 
-	        	enemy.enemies[num].y = rect.y + rect.height;
+	        	enemies[num].y = rect.y + rect.height;
 		}
 	}
 }

@@ -69,11 +69,11 @@ public class enemyProjectile {
 	public static void checkCollision(Rectangle wall, int shot) {
 		//Checks for projectile collisions with walls
 		
-		if(enemyProjectile.shots[shot].intersects(wall)) 
-			enemyProjectile.kill(shot);
-		else if(enemyProjectile.shots[shot].intersects(player.model)) {
-				
-				enemyProjectile.kill(shot);
+		if(shots[shot].intersects(wall)) 
+			kill(shot);
+		else if(shots[shot].intersects(player.model) && alive[shot]) {
+			
+				kill(shot);
 				player.hit();
 		}
 	}

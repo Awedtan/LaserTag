@@ -48,7 +48,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		try {
 			
 			game.input = new Scanner(game.file);
-			playerProjectile.image = Toolkit.getDefaultToolkit().getImage("images\\bluelaser.png");
+			playerProjectile.image = Toolkit.getDefaultToolkit().getImage("images\\bluelaser_v2.png");
 			enemyProjectile.image = Toolkit.getDefaultToolkit().getImage("images\\redlaser.png");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -230,12 +230,16 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	public void mousePressed(MouseEvent e) {
 		//Shoots a projectile, if possible, on click
 		
-		if(playerProjectile.findNext(playerProjectile.shots) != -1) {
-			mousePosX = e.getX();
-			mousePosY = e.getY();
+		mousePosX = e.getX();
+		mousePosY = e.getY();
+		
+		if(player.alive && playerProjectile.findNext(playerProjectile.shots) != -1) {
+			
 			panel.repaint();
 			player.shoot(player.centerX, player.centerY, player.angle, playerProjectile.findNext(playerProjectile.shots));
 		}
+		else if(!player.alive) 
+			player.respawn(mousePosX, mousePosY);
 	}
 
 	@Override

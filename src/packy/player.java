@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Line2D;
 
+import javax.swing.JOptionPane;
+
 public class player {
 
 	static final int STARTSPEED = 4;//Default player speed
@@ -11,6 +13,7 @@ public class player {
 	static final int STARTPOSY = 550;	
 	static final int VIEWRANGE = 500;
 	static final int FOV = 50;//In degrees, this value is half the FOV, therefore 45 = 90 FOV, 90 = 180 FOV
+	static final int HEALTHMAX = 10;
 	
 	static int width = 20;//Player dimensions
 	static int height = width;
@@ -20,7 +23,7 @@ public class player {
 	static int centerY;
 	static int speed = STARTSPEED;
 	static double angle;//Angle to mouse cursor
-	static int health = 100;// Player health
+	static int health = 10;// Player health
 	static int score = 0;// Player score
 	
 	static Rectangle model = new Rectangle(STARTPOSX, STARTPOSY, width, height);//Player model
@@ -30,7 +33,7 @@ public class player {
 	static boolean moveUp;
 	static boolean moveDown;
 	static boolean sprint;
-	static boolean alive;
+	static boolean alive = true;
 	
 	public static void damage() {
 		health -= enemyProjectile.DAMAGE;
@@ -52,8 +55,32 @@ public class player {
 	
 	public static void hit() {
 		
-		player.color = Color.red;
+		color = Color.red;
 		game.cWall = Color.red;
+		health -= enemyProjectile.DAMAGE;
+		
+		if(health <= 0) 
+			kill();
+	}
+	
+	public static void kill() {
+		
+		JOptionPane.showMessageDialog (null, "You died! Click anywhere on the map to respawn!", "You Died!", JOptionPane.INFORMATION_MESSAGE);
+		model.x = -30;
+		model.y = -30;
+		alive = false;
+	}
+	
+	public static void respawn(int x, int y) {
+		
+		model.x = x;
+		model.y = y;
+		health = HEALTHMAX;
+		moveUp = false;
+		moveDown = false;
+		moveLeft = false;
+		moveRight = false;
+		alive = true;
 	}
 	
 	public static void shoot(int startX, int startY, double angle, int shot){
@@ -122,15 +149,15 @@ public class player {
 		//Checks whether a line can be drawn between the centre of two rectangles without intercepting any walls
 		
 		double x1 = (model.width/2) + model.x, x2 = tile.x + tile.getWidth()/2, y1 = (model.height/2) + model.y, y2 = tile.y + tile.getHeight()/2;
-		double angleOfObject = -(Math.atan2(player.centerX - tile.x + tile.getWidth()/2, player.centerY - tile.y + tile.getHeight()/2) - Math.PI / 2);
+		double angleOfObject = -(Math.atan2(centerX - tile.x + tile.getWidth()/2, centerY - tile.y + tile.getHeight()/2) - Math.PI / 2);
 				
 		if(
 			(
-			player.angle-(player.angle-angleOfObject) > player.angle-Math.toRadians(fov) 
+			angle-(angle-angleOfObject) > angle-Math.toRadians(fov) 
 			||
-			player.angle+(player.angle-(Math.toRadians(360 - 2 * player.FOV)+angleOfObject)) > player.angle+Math.toRadians(fov) 
+			angle+(angle-(Math.toRadians(360 - 2 * FOV)+angleOfObject)) > angle+Math.toRadians(fov) 
 			) && (
-			player.angle-(player.angle-angleOfObject) < player.angle+Math.toRadians(fov) 
+			angle-(angle-angleOfObject) < angle+Math.toRadians(fov) 
 			)
 			
 		) {
@@ -152,28 +179,28 @@ public class player {
 	public static void checkCollision(Rectangle rect) {
 		//Checks for player collision with rectangles
 		
-		if(player.model.intersects(rect)) {
-			
-			double left1 = player.model.getX();
-			double right1 = player.model.getX() + player.model.getWidth();
-			double top1 = player.model.getY();
-			double bottom1 = player.model.getY() + player.model.getHeight();
+		if(model.intersects(rect)) {
+
+			double left1 = model.getX();
+			double right1 = model.getX() + model.getWidth();
+			double top1 = model.getY();
+			double bottom1 = model.getY() + model.getHeight();
 			double left2 = rect.getX();
 			double right2 = rect.getX() + rect.getWidth();
 			double top2 = rect.getY();
 			double bottom2 = rect.getY() + rect.getHeight();
 			
 			if(right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) 
-				player.model.x = rect.x - player.model.width;
+				model.x = rect.x - model.width;
 	        
 	        else if(left1 < right2 && right1 > right2 && right2 - left1 < bottom1 - top2 && right2 - left1 < bottom2 - top1) 
-	        	player.model.x = rect.x + rect.width;
+	        	model.x = rect.x + rect.width;
 	        
 	        else if(bottom1 > top2 && top1 < top2) 
-	        	player.model.y = rect.y - player.model.height;
+	        	model.y = rect.y - model.height;
 	        
 	        else if(top1 < bottom2 && bottom1 > bottom2) 
-	        	player.model.y = rect.y + rect.height;
+	        	model.y = rect.y + rect.height;
 		}
 	}
 }

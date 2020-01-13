@@ -37,7 +37,7 @@ public class playerProjectile {
 	
 	public static void kill(int shot) {
 		
-		playerProjectile.alive[shot] = false;
+		alive[shot] = false;
 		posX[shot] = -20;
 		posY[shot] = -20;
 		countX[shot] = -20;
@@ -69,16 +69,16 @@ public class playerProjectile {
 	public static void checkWallCollision(Rectangle wall, int shot) {
 		//Checks for projectile collisions with walls
 		
-		if(playerProjectile.shots[shot].intersects(wall)) 
-			playerProjectile.kill(shot);
+		if(shots[shot].intersects(wall)) 
+			kill(shot);
 	}
 	
 	public static void checkEnemyCollision(int enem, int shot) {
 		//Checks for projectile collisions with walls
 		
-		if(playerProjectile.shots[shot].intersects(enemy.enemies[enem])) {
+		if(shots[shot].intersects(enemy.enemies[enem])) {
 			
-			playerProjectile.kill(shot);
+			kill(shot);
 			enemy.hit(enem);
 		}
 	}
