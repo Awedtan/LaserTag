@@ -10,7 +10,8 @@ public class exit extends JPanel implements KeyListener, MouseListener{
 
     public exit() {
         setPreferredSize(new Dimension(menu.screenWidth, menu.screenHeight));
-		setLayout(null);
+        setLayout(null);
+
         confirmAsk = new JLabel("Are you sure you want to exit?", SwingConstants.CENTER);
         confirmAsk.setFont(new Font("Segoe UI", Font.PLAIN, 70));
         confirmAsk.setBounds(menu.screenWidth / 4, 350, menu.screenWidth / 2, 120);

@@ -10,7 +10,8 @@ public class main extends JPanel implements KeyListener, MouseListener {
 
     public main() {
         setPreferredSize(new Dimension(menu.screenWidth, menu.screenHeight));
-		setLayout(null);
+        setLayout(null);
+
         playLabel = new JLabel("Play");
         playLabel.setFont(menu.menuFont);
         playLabel.setBounds(50, 450, 300, 120);
