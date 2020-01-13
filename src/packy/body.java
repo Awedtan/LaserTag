@@ -145,10 +145,10 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 					enemyProjectile.kill(i);
 			
 			for(int i=0; i<game.numTiles; i++) 
-//				if(player.checkVisible(player.model, game.tiles[i], player.VIEWRANGE, player.FOV))
+//					if(player.checkVisible(player.model, game.tiles[i], player.VIEWRANGE, player.FOV))
 					game.tileIsVisible[i] = true;
-//				else
-//					game.tileIsVisible[i] = false;
+//					else
+//						game.tileIsVisible[i] = false;
 			
 			for(int k=0; k<enemy.MAX; k++) 
 				if(enemy.checkVisible(enemy.enemies[k], player.model, enemy.VIEWRANGE, enemy.FOV, k) && enemyProjectile.findNext(enemyProjectile.shots) != -1 && enemy.alive[k]) 
@@ -218,6 +218,26 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		
 		game.drawWalls(g);
 		
+		if(player.alive) {
+			
+			g.setColor(Color.black);
+			g.drawString(Integer.toString(player.health), player.model.x, player.model.y - player.model.height);
+		}
+		else if(!game.ended){
+			
+			g.setColor(Color.white);
+			g.drawString("You died! Click anywhere on the map to respawn...", 
+					(int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth())/2, 
+					(int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight())/2);
+		}
+		else {
+			
+			g.setColor(Color.white);
+			g.drawString("You died! You managed to kill " + player.score + " enemies before dying...", 
+					(int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth())/2, 
+					(int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight())/2);
+		}
+		
 		game.cWall = game.CWALL;
 		player.color = Color.blue;
 	}
@@ -238,7 +258,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 			panel.repaint();
 			player.shoot(player.centerX, player.centerY, player.angle, playerProjectile.findNext(playerProjectile.shots));
 		}
-		else if(!player.alive) 
+		else if(!player.alive && !game.ended) 
 			player.respawn(mousePosX, mousePosY);
 	}
 
