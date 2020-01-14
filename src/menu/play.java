@@ -6,11 +6,11 @@ import java.io.File;
 
 import javax.swing.*;
 
-import packy.game;
+import packy.*;
 
 @SuppressWarnings("serial")
-public class play extends JPanel implements KeyListener, MouseListener{
-    JLabel titleLabel, enemiesLabel, mapLabel, modifiersLabel, backLabel, startLabel;
+public class play extends JPanel implements MouseListener{
+    JLabel titleLabel, enemiesLabel, mapLabel, modifiersLabel, gamemodeLabel, backLabel, startLabel;
     
     Image headerImage = Toolkit.getDefaultToolkit().getImage("images/header_play.png");
     static Font optionFont = new Font("Segoe UI", Font.PLAIN, 60);
@@ -27,12 +27,8 @@ public class play extends JPanel implements KeyListener, MouseListener{
 
     public play() {
         setPreferredSize(new Dimension(menu.screenWidth, menu.screenHeight));
+        setFocusable(true);
         setLayout(null);
-        
-        titleLabel = new JLabel("Play");
-        titleLabel.setFont(new Font("Segoe UI", Font.PLAIN, 100));
-        titleLabel.setBounds(50, 50, 250, 150);
-        titleLabel.setForeground(Color.WHITE);
 
         enemiesLabel = new JLabel("Enemies:");
         enemiesLabel.setFont(optionFont);
@@ -59,15 +55,20 @@ public class play extends JPanel implements KeyListener, MouseListener{
 
         modifiersLabel = new JLabel("Change Modifiers", SwingConstants.CENTER);
         modifiersLabel.setFont(optionFont);
-        modifiersLabel.setBounds(50, 600, 500, 120);
+        modifiersLabel.setBounds(375, menu.screenHeight - 185, 500, 120);
         modifiersLabel.setForeground(Color.WHITE);
         modifiersLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                menu.switchStatePanel(menu.playPanel, menu.modifiersPanel);
+                menu.switchStatePanel(body.playPanel, body.modifiersPanel);
             }
         });
         modifiersLabel.setBorder(menu.defaultBorder);
+
+        gamemodeLabel = new JLabel("Gamemode: ");
+        gamemodeLabel.setFont(optionFont);
+        gamemodeLabel.setBounds(50, 550, 500, 120);
+        gamemodeLabel.setForeground(Color.WHITE);
 
         backLabel = new JLabel("< Back", SwingConstants.CENTER);
         backLabel.setFont(optionFont);
@@ -76,7 +77,7 @@ public class play extends JPanel implements KeyListener, MouseListener{
         backLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                menu.switchStatePanel(menu.playPanel, menu.menuPanel);
+                menu.switchStatePanel(body.playPanel, body.menuPanel);
             }
         });
         backLabel.setBorder(menu.defaultBorder);
@@ -95,9 +96,8 @@ public class play extends JPanel implements KeyListener, MouseListener{
                     //TODO: return error if something poopy
                 }
                 mapName = "maps/" + (String) mapSelector.getSelectedItem();
-
-                System.out.println(mapName);
                 // body.main(new String[0]);
+                menu.switchStatePanel(body.playPanel, body.panel);
             }
         });
         startLabel.setBorder(menu.defaultBorder);
@@ -108,6 +108,7 @@ public class play extends JPanel implements KeyListener, MouseListener{
         add(mapLabel);
         add(mapSelector);
         add(modifiersLabel);
+        add(gamemodeLabel);
         add(backLabel);
         add(startLabel);
     }
@@ -142,21 +143,6 @@ public class play extends JPanel implements KeyListener, MouseListener{
 
     @Override
     public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
 
     }
 }
