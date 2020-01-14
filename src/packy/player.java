@@ -6,12 +6,12 @@ import java.awt.geom.Line2D;
 
 public class player {
 
-	static final int STARTSPEED = 4;//Default player speed
+	static int STARTSPEED = 4;//Default player speed
 	static final int STARTPOSX = 100;//Player start location
 	static final int STARTPOSY = 550;	
-	static final int VIEWRANGE = 500;
-	static final int FOV = 50;//In degrees, this value is half the FOV, therefore 45 = 90 FOV, 90 = 180 FOV
-	static final int HEALTHMAX = 50;
+	static int VIEWRANGE = 500;
+	static int FOV = 50;//In degrees, this value is half the FOV, therefore 45 = 90 FOV, 90 = 180 FOV
+	static int HEALTHMAX = 50;
 	
 	static int width = 20;//Player dimensions
 	static int height = width;
@@ -67,7 +67,7 @@ public class player {
 		model.y = -30;
 		alive = false;
 		
-		if(game.mode == 0)
+		if(game.mode == game.MODE.HSCORE)
 			game.ended = true;
 	}
 	

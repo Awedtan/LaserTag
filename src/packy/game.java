@@ -10,7 +10,11 @@ public class game {
 	static final Color CVISIBLE = Color.lightGray;
 	static final Color CINVISIBLE = Color.gray;
 	
-	static int mode;
+	static MODE mode = MODE.HSCORE;
+	enum MODE {
+		DM, // previously mode 1
+		HSCORE, // previously mode 0
+	}
 	static boolean ended;
 	
 	static File file = new File("maps/map1.txt");
@@ -123,5 +127,13 @@ public class game {
 			return false;
 		
 		return true;
+	}
+
+	public static void endGame(game.MODE mode, Graphics g) {
+		if (mode == MODE.DM ) {
+
+		} else if (mode == MODE.HSCORE) {
+
+		}
 	}
 }
