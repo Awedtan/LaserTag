@@ -122,8 +122,14 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 				player.checkCollision(game.walls[i]);
 				
 				for(int k=0; k<enemy.MAX; k++) 
-					if(enemy.alive[k])
+					if(enemy.alive[k]) {
+
 						enemy.checkCollision(game.walls[i], k);
+
+						for(int l=0; l<enemy.MAX; l++) 
+							if(k != l)
+								enemy.checkCollision(enemy.enemies[l], k);
+					}
 				
 				for(int j=0; j<playerProjectile.shots.length; j++) {
 					if(playerProjectile.alive[j])

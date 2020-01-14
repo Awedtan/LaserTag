@@ -19,7 +19,7 @@ public class game {
 	}
 	static boolean ended;
 	
-	static File file = new File("maps/map1.txt");
+	static File file = new File("maps/map2.txt");
 	static Scanner input;
 	
 	static char[][] map;//The dimensions should be common divisors of 1920 and 1080
