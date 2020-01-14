@@ -11,7 +11,7 @@ public class game {
 	static final Color CINVISIBLE = Color.gray;
 	
 	static MODE mode = MODE.HSCORE;
-	enum MODE {
+	public enum MODE {
 		DM, // previously mode 1
 		HSCORE, // previously mode 0
 	}
