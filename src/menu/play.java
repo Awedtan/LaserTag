@@ -96,7 +96,6 @@ public class play extends JPanel implements MouseListener{
                     //TODO: return error if something poopy
                 }
                 mapName = "maps/" + (String) mapSelector.getSelectedItem();
-                // body.main(new String[0]);
                 menu.switchStatePanel(body.playPanel, body.panel);
             }
         });
