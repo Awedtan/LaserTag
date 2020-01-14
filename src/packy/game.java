@@ -10,10 +10,12 @@ public class game {
 	static final Color CVISIBLE = Color.lightGray;
 	static final Color CINVISIBLE = Color.gray;
 	
-	static MODE mode = MODE.HSCORE;
+	static MODE mode = MODE.DM;
+	
 	public enum MODE {
+		
 		DM, // previously mode 1
-		HSCORE, // previously mode 0
+		SURVIVAL, // previously mode 0
 	}
 	static boolean ended;
 	
@@ -132,7 +134,7 @@ public class game {
 	public static void endGame(game.MODE mode, Graphics g) {
 		if (mode == MODE.DM ) {
 
-		} else if (mode == MODE.HSCORE) {
+		} else if (mode == MODE.SURVIVAL) {
 
 		}
 	}

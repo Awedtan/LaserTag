@@ -67,7 +67,7 @@ public class player {
 		model.y = -30;
 		alive = false;
 		
-		if(game.mode == game.MODE.HSCORE)
+		if(game.mode == game.MODE.SURVIVAL)
 			game.ended = true;
 	}
 	

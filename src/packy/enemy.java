@@ -64,7 +64,20 @@ public class enemy {
 		lastX[enemy] = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth())/2;
 		lastY[enemy] = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight())/2;
 		
-		if(game.mode == game.MODE.HSCORE) {
+		if(game.mode == game.MODE.SURVIVAL) {
+			do {
+			
+				int x = (int)(Math.random()*1920);
+				int y = (int)(Math.random()*1080);
+				
+				if(Math.sqrt((x-aliveX)*(x-aliveX) + (y-aliveY)*(y-aliveY)) > player.VIEWRANGE) {
+					
+					respawn(x, y, enemy);
+					break;
+				}
+			}while(true);
+		}
+		else if(game.mode == game.MODE.DM) {
 			do {
 			
 				int x = (int)(Math.random()*1920);
