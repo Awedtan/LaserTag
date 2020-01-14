@@ -5,12 +5,12 @@ import java.awt.geom.Line2D;
 
 public class enemy {
 	
-	static final int MAX = 15;//# of enemies
-	static final int STARTSPEED = 3;//Default enemy speed
-	static final int VIEWRANGE = 500;//Length of enemy vision
-	static final int SHOOTRANGE = 150;//When the distance to the player is smaller than this, enemies stop moving
-	static final int FOV = 90;//Range of enemy vision, behaves like player fov
-	static final int HEALTH = 10;
+	static int MAX = 15;//# of enemies
+	static int STARTSPEED = 3;//Default enemy speed
+	static int VIEWRANGE = 500;//Length of enemy vision
+	static int SHOOTRANGE = 150;//When the distance to the player is smaller than this, enemies stop moving
+	static int FOV = 90;//Range of enemy vision, behaves like player fov
+	static int HEALTH = 10;
 	
 	static int width = 20;//Enemy dimensions
 	static int height = width;
@@ -57,13 +57,14 @@ public class enemy {
 		int aliveX = enemies[enemy].x;
 		int aliveY = enemies[enemy].y;
 		player.score++;
+		body.scoreLabel.setText("Score: " + Integer.toString(player.score));// Updates the player's score when enemy is kill
 		alive[enemy] = false;
 		enemies[enemy].x = -100;
 		enemies[enemy].y = -100;
 		lastX[enemy] = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth())/2;
 		lastY[enemy] = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight())/2;
 		
-		if(game.mode == 0) {
+		if(game.mode == game.MODE.HSCORE) {
 			do {
 			
 				int x = (int)(Math.random()*1920);

@@ -2,19 +2,28 @@ package menu;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+
 import javax.swing.*;
+
+import packy.game;
 
 @SuppressWarnings("serial")
 public class play extends JPanel implements KeyListener, MouseListener{
     JLabel titleLabel, enemiesLabel, mapLabel, modifiersLabel, backLabel, startLabel;
-
+    
     Image headerImage = Toolkit.getDefaultToolkit().getImage("images/header_play.png");
+    static Font optionFont = new Font("Segoe UI", Font.PLAIN, 60);
 
     JSpinner enemiesInput; // TODO: adjust max size of spinner (what is our max number?)
+    JComboBox<String> mapSelector;
+    File mapFolder = new File("maps");
+    String[] mapFilepaths = mapFolder.list();
     
-    static int enemiesCount;
-    static String mapName;
-    static Font optionFont = new Font("Segoe UI", Font.PLAIN, 60);
+    // Player-selected settings
+    int enemiesCount;
+    String mapName;
+    game.MODE gamemode; // TODO: use these values in the actual game
 
     public play() {
         setPreferredSize(new Dimension(menu.screenWidth, menu.screenHeight));
@@ -34,12 +43,19 @@ public class play extends JPanel implements KeyListener, MouseListener{
         enemiesInput = new JSpinner(new SpinnerNumberModel(1, 1, 15, 1));
         enemiesInput.setFont(optionFont);
         enemiesInput.setBounds(300, 300, 250, 70);
-        enemiesInput.setBorder(menu.defaultBorder);
+        enemiesInput.getEditor().getComponent(0).setForeground(Color.WHITE);
+        enemiesInput.getEditor().getComponent(0).setBackground(menu.backgroundColor);
 
         mapLabel = new JLabel("Map:");
         mapLabel.setFont(optionFont);
         mapLabel.setBounds(50, 400, 250, 150);
         mapLabel.setForeground(Color.WHITE);
+
+        mapSelector = new JComboBox<String>(mapFilepaths);
+        mapSelector.setFont(optionFont);
+        mapSelector.setBounds(250, 425, 600, 100);
+        mapSelector.setForeground(Color.WHITE);
+        mapSelector.setBackground(menu.backgroundColor);
 
         modifiersLabel = new JLabel("Change Modifiers", SwingConstants.CENTER);
         modifiersLabel.setFont(optionFont);
@@ -73,6 +89,14 @@ public class play extends JPanel implements KeyListener, MouseListener{
             @Override
             public void mouseClicked(MouseEvent e) {
                 // TODO: run the game using the settings here and on the modifers page
+                try {
+                    enemiesCount = Integer.parseInt(enemiesInput.getValue().toString());
+                } catch (Exception e2) {
+                    //TODO: return error if something poopy
+                }
+                mapName = "maps/" + (String) mapSelector.getSelectedItem();
+
+                System.out.println(mapName);
                 // body.main(new String[0]);
             }
         });
@@ -82,6 +106,7 @@ public class play extends JPanel implements KeyListener, MouseListener{
         add(enemiesLabel);
         add(enemiesInput);
         add(mapLabel);
+        add(mapSelector);
         add(modifiersLabel);
         add(backLabel);
         add(startLabel);

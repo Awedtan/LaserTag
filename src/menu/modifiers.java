@@ -12,6 +12,22 @@ public class modifiers extends JPanel implements KeyListener, MouseListener {
     JLabel playerFovLabel, playerViewrangeLabel, playerDamageLabel, playerHealthLabel, enemyFovLabel, enemyViewrangeLabel, enemyDamageLabel, enemyHealthLabel;
     JTextField playerFovField, playerViewrangeField, playerDamageField, playerHealthField, enemyFovField, enemyViewrangeField, enemyDamageField, enemyHealthField;
 
+    // Modifier variables: player
+    boolean playerFovEnabled;
+    int playerFovRange, playerViewrange, playerDamage, playerHealth;
+
+    // Modifier variables: enemy
+    boolean enemyFovEnabled;
+    int enemyFovRange, enemyViewrange, enemyDamage, enemyHealth;
+
+    // Modifier inputs: player
+    JCheckBox playerFovCheck;
+    JTextField playerFovInput, playerViewrangeInput, playerDamageInput, playerHealthInput;
+
+    // Modifier inputs: enemy
+    JCheckBox enemyFovCheck;
+    JTextField enemyFovInput, enemyViewrangeInput, enemyDamageInput, enemyHealthInput;
+
     Image headerImage = Toolkit.getDefaultToolkit().getImage("images/header_modifiers.png");
 
     Font modifierFont = new Font("Segoe UI", Font.PLAIN, 50);
@@ -63,6 +79,7 @@ public class modifiers extends JPanel implements KeyListener, MouseListener {
         add(saveLabel);
 
         // ------------ Modifier Labels ------------ //
+        // Player modifiers
         playerHealthLabel = new JLabel("Player Health:");
         playerHealthLabel.setFont(modifierFont);
         playerHealthLabel.setBounds(50, 250, 500, 150);
@@ -83,24 +100,25 @@ public class modifiers extends JPanel implements KeyListener, MouseListener {
         playerViewrangeLabel.setBounds(50, 550, 500, 150);
         playerViewrangeLabel.setForeground(Color.WHITE);
 
+        // Enemy modiviers
         enemyHealthLabel = new JLabel("Enemy Health:");
         enemyHealthLabel.setFont(modifierFont);
-        enemyHealthLabel.setBounds(700, 250, 500, 150);
+        enemyHealthLabel.setBounds(900, 250, 500, 150);
         enemyHealthLabel.setForeground(Color.WHITE);
 
         enemyDamageLabel = new JLabel("Enemy Damage:");
         enemyDamageLabel.setFont(modifierFont);
-        enemyDamageLabel.setBounds(700, 350, 500, 150);
+        enemyDamageLabel.setBounds(900, 350, 500, 150);
         enemyDamageLabel.setForeground(Color.WHITE);
 
         enemyFovLabel = new JLabel("Enemy FOV:");
         enemyFovLabel.setFont(modifierFont);
-        enemyFovLabel.setBounds(700, 450, 500, 150);
+        enemyFovLabel.setBounds(900, 450, 500, 150);
         enemyFovLabel.setForeground(Color.WHITE);
 
         enemyViewrangeLabel = new JLabel("Enemy Viewrange:");
         enemyViewrangeLabel.setFont(modifierFont);
-        enemyViewrangeLabel.setBounds(700, 550, 500, 150);
+        enemyViewrangeLabel.setBounds(900, 550, 500, 150);
         enemyViewrangeLabel.setForeground(Color.WHITE);
 
         add(playerHealthLabel);
