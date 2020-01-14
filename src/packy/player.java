@@ -158,8 +158,9 @@ public class player {
 			angle+(angle-(Math.toRadians(360 - 2 * FOV)+angleOfObject)) > angle+Math.toRadians(fov) 
 			) && (
 			angle-(angle-angleOfObject) < angle+Math.toRadians(fov) 
+			||
+			Math.toRadians(-90 - (270 - Math.toDegrees(angleOfObject))) > angle-Math.toRadians(fov)
 			)
-			
 		) {
 			if(Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2)) < range) {
 				
@@ -169,7 +170,6 @@ public class player {
 					for(int i=0; i<game.walls.length; i++) 
 						if(view.intersects(game.walls[i])) 
 							return false;
-					
 				return true;
 			}
 		}
