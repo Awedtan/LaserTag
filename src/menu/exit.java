@@ -4,12 +4,15 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import packy.*;
+
 @SuppressWarnings("serial")
-public class exit extends JPanel implements KeyListener, MouseListener{
+public class exit extends JPanel implements MouseListener{
     JLabel confirmAsk, confirmYes, confirmNo;
 
     public exit() {
         setPreferredSize(new Dimension(menu.screenWidth, menu.screenHeight));
+        setFocusable(true);
         setLayout(null);
 
         confirmAsk = new JLabel("Are you sure you want to exit?", SwingConstants.CENTER);
@@ -35,7 +38,7 @@ public class exit extends JPanel implements KeyListener, MouseListener{
         confirmNo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                menu.switchStatePanel(menu.exitPanel, menu.menuPanel);
+                menu.switchStatePanel(body.exitPanel, body.menuPanel);
             }
         });
 
@@ -72,21 +75,6 @@ public class exit extends JPanel implements KeyListener, MouseListener{
 
     @Override
     public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
 
     }
 }

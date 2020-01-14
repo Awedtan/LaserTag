@@ -4,12 +4,17 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import packy.*;
+
 @SuppressWarnings("serial")
-public class main extends JPanel implements KeyListener, MouseListener {
+public class main extends JPanel implements MouseListener {
     JLabel playLabel, exitLabel;
+
+    static Image gameLogo = Toolkit.getDefaultToolkit().getImage("images/logo_resized.png");
 
     public main() {
         setPreferredSize(new Dimension(menu.screenWidth, menu.screenHeight));
+        setFocusable(true);
         setLayout(null);
 
         playLabel = new JLabel("Play");
@@ -19,7 +24,7 @@ public class main extends JPanel implements KeyListener, MouseListener {
         playLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                menu.switchStatePanel(menu.menuPanel, menu.playPanel);
+                menu.switchStatePanel(body.menuPanel, body.playPanel);
             }
         });
         exitLabel = new JLabel("Exit");
@@ -29,7 +34,7 @@ public class main extends JPanel implements KeyListener, MouseListener {
         exitLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                menu.switchStatePanel(menu.menuPanel, menu.exitPanel);
+                menu.switchStatePanel(body.menuPanel, body.exitPanel);
             }
         });
 
@@ -42,7 +47,7 @@ public class main extends JPanel implements KeyListener, MouseListener {
 		g.setColor(menu.backgroundColor);
 		g.fillRect(0, 0, menu.screenWidth, menu.screenHeight);
 
-        g.drawImage(menu.gameLogo, 50, 50, (2 * menu.screenWidth/3 - 50), ((2 * menu.screenWidth/3 - 50) / 6), this);
+        g.drawImage(gameLogo, 50, 50, (2 * menu.screenWidth/3 - 50), ((2 * menu.screenWidth/3 - 50) / 6), this);
 	}
 
     @Override
@@ -67,21 +72,6 @@ public class main extends JPanel implements KeyListener, MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
 
     }
 }

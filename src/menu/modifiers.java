@@ -4,8 +4,10 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import packy.*;
+
 @SuppressWarnings("serial")
-public class modifiers extends JPanel implements KeyListener, MouseListener {
+public class modifiers extends JPanel implements MouseListener {
     JLabel resetLabel, backLabel, saveLabel; // TODO: add load previous options?
 
     // All modifier labels
@@ -34,12 +36,13 @@ public class modifiers extends JPanel implements KeyListener, MouseListener {
 
     public modifiers() {
         setPreferredSize(new Dimension(menu.screenWidth, menu.screenHeight));
+        setFocusable(true);
         setLayout(null);
 
         // ------------ Menu operation labels ------------ //
         resetLabel = new JLabel("Reset to defaults", SwingConstants.CENTER);
         resetLabel.setFont(play.optionFont);
-        resetLabel.setBounds(375, menu.screenHeight - 185, 500, 120 );
+        resetLabel.setBounds(375, menu.screenHeight - 185, 500, 120);
         resetLabel.setForeground(Color.WHITE);
         resetLabel.addMouseListener(new MouseAdapter() {
             @Override
@@ -56,7 +59,7 @@ public class modifiers extends JPanel implements KeyListener, MouseListener {
         backLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                menu.switchStatePanel(menu.modifiersPanel, menu.playPanel);
+                menu.switchStatePanel(body.modifiersPanel, body.playPanel);
             }
         });
         backLabel.setBorder(menu.defaultBorder);
@@ -69,7 +72,7 @@ public class modifiers extends JPanel implements KeyListener, MouseListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // TODO: save values in text field
-                menu.switchStatePanel(menu.modifiersPanel, menu.playPanel);
+                menu.switchStatePanel(body.modifiersPanel, body.playPanel);
             }
         });
         saveLabel.setBorder(menu.defaultBorder);
@@ -100,25 +103,25 @@ public class modifiers extends JPanel implements KeyListener, MouseListener {
         playerViewrangeLabel.setBounds(50, 550, 500, 150);
         playerViewrangeLabel.setForeground(Color.WHITE);
 
-        // Enemy modiviers
+        // Enemy modifiers
         enemyHealthLabel = new JLabel("Enemy Health:");
         enemyHealthLabel.setFont(modifierFont);
-        enemyHealthLabel.setBounds(900, 250, 500, 150);
+        enemyHealthLabel.setBounds(body.screenWidth / 2, 250, 500, 150);
         enemyHealthLabel.setForeground(Color.WHITE);
 
         enemyDamageLabel = new JLabel("Enemy Damage:");
         enemyDamageLabel.setFont(modifierFont);
-        enemyDamageLabel.setBounds(900, 350, 500, 150);
+        enemyDamageLabel.setBounds(body.screenWidth / 2, 350, 500, 150);
         enemyDamageLabel.setForeground(Color.WHITE);
 
         enemyFovLabel = new JLabel("Enemy FOV:");
         enemyFovLabel.setFont(modifierFont);
-        enemyFovLabel.setBounds(900, 450, 500, 150);
+        enemyFovLabel.setBounds(body.screenWidth / 2, 450, 500, 150);
         enemyFovLabel.setForeground(Color.WHITE);
 
         enemyViewrangeLabel = new JLabel("Enemy Viewrange:");
         enemyViewrangeLabel.setFont(modifierFont);
-        enemyViewrangeLabel.setBounds(900, 550, 500, 150);
+        enemyViewrangeLabel.setBounds(body.screenWidth / 2, 550, 500, 150);
         enemyViewrangeLabel.setForeground(Color.WHITE);
 
         add(playerHealthLabel);
@@ -164,21 +167,6 @@ public class modifiers extends JPanel implements KeyListener, MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
 
     }
 }

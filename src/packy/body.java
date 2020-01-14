@@ -7,6 +7,8 @@ import java.awt.geom.*;
 import java.io.*;
 import java.util.*;
 
+import menu.*;
+
 @SuppressWarnings("serial")
 public class body extends JPanel implements KeyListener, MouseListener, MouseMotionListener, Runnable{
 	//Daniel Su, Zhenyang Cai, 2D top-down shooter game
@@ -16,12 +18,18 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	static int mousePosX;//Mouse cursor coordinates
 	static int mousePosY;
 	// Sets screenWidth and screenHeight to the dimensions of the screen
-	static int screenWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth());//Screen dimensions
-	static int screenHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight());
+	public static int screenWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth());//Screen dimensions
+	public static int screenHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight());
 	static int fps = 60;
 	
-	static body panel = new body();
-	static JFrame frame;
+	public static body panel = new body();
+	public static JFrame frame;
+
+	// Menu elements
+	public static main menuPanel;
+	public static play playPanel;
+	public static exit exitPanel;
+	public static modifiers modifiersPanel;
 
 	// ------------ HUD Elements ------------ //
 	static JLabel scoreLabel, timeLabel;
@@ -168,7 +176,53 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		setBackground(new Color(200, 200, 200));
 		setFocusable(true);
 		addMouseListener(this);
-		addKeyListener(this);
+		addKeyListener(new KeyListener() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				//Player movement keys
+
+				if(e.getKeyCode() == KeyEvent.VK_A) 
+					player.moveLeft = true;
+				
+				else if(e.getKeyCode() == KeyEvent.VK_D) 
+					player.moveRight = true;
+				
+				else if(e.getKeyCode() == KeyEvent.VK_W) 
+					player.moveUp = true;
+				
+				else if(e.getKeyCode() == KeyEvent.VK_S) 
+					player.moveDown = true;
+						
+				if(e.getKeyCode() == KeyEvent.VK_SHIFT)
+					player.sprint = true;
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				//Stopping player movement
+				
+				if(e.getKeyCode() == KeyEvent.VK_A) 
+					player.moveLeft = false;
+				
+				else if(e.getKeyCode() == KeyEvent.VK_D)
+					player.moveRight = false;
+				
+				else if(e.getKeyCode() == KeyEvent.VK_W) 
+					player.moveUp = false;
+				
+				else if(e.getKeyCode() == KeyEvent.VK_S) 
+					player.moveDown = false;
+				
+				if(e.getKeyCode() == KeyEvent.VK_SHIFT)
+					player.sprint = false;
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+
+			}
+		});
 		mainThread = new Thread(this);
 		mainThread.start();
 
@@ -182,6 +236,8 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		scoreLabel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
 		
 		add(scoreLabel);
+
+
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -358,8 +414,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		
 		else if(e.getKeyCode() == KeyEvent.VK_S) 
 			player.moveDown = true;
-		
-		
+				
 		if(e.getKeyCode() == KeyEvent.VK_SHIFT)
 			player.sprint = true;
 		
@@ -388,9 +443,13 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	public static void main(String[] args) {
 		//Creates and displays the game window
 		
-		frame = new JFrame();
+		frame = new JFrame("Lazer Tag");
+		menuPanel = new main();
+		playPanel = new play();
+		exitPanel = new exit();
+		modifiersPanel = new modifiers();
 		frame.setUndecorated(true);
-		frame.add(panel);
+		frame.add(menuPanel);
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
