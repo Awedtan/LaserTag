@@ -7,7 +7,7 @@ public class enemy {
 	
 	static int MAX = 15;//# of enemies
 	static int STARTSPEED = 3;//Default enemy speed
-	static int VIEWRANGE = 500;//Length of enemy vision
+	static int VIEWRANGE = 450;//Length of enemy vision
 	static int SHOOTRANGE = 150;//When the distance to the player is smaller than this, enemies stop moving
 	static int FOV = 90;//Range of enemy vision, behaves like player fov
 	static int HEALTH = 10;

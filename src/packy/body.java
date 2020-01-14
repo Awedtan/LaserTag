@@ -82,8 +82,8 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 			int length = line.length();
 			
 			for(int i=0; i<length; i++) {
-				
-				game.map[mapRow][i] = line.charAt(i);
+				if(line.charAt(i) != ' ')
+					game.map[mapRow][(i+1)/2] = line.charAt(i);
 			}
 			
 			mapRow++;
@@ -163,10 +163,10 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 					enemyProjectile.kill(i);
 			
 			for(int i=0; i<game.numTiles; i++) 
-//					if(player.checkVisible(player.model, game.tiles[i], player.VIEWRANGE, player.FOV))
-					game.tileIsVisible[i] = true;
-//					else
-//						game.tileIsVisible[i] = false;
+					if(player.checkVisible(player.model, game.tiles[i], player.VIEWRANGE, player.FOV))
+						game.tileIsVisible[i] = true;
+					else
+						game.tileIsVisible[i] = false;
 			
 			for(int k=0; k<enemy.MAX; k++) 
 				if(enemy.checkVisible(enemy.enemies[k], player.model, enemy.VIEWRANGE, enemy.FOV, k) && enemyProjectile.findNext(enemyProjectile.shots) != -1 && enemy.alive[k]) 
