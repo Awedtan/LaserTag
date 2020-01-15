@@ -18,20 +18,20 @@ public class modifiers extends JPanel implements MouseListener {
     JLabel playerFovLabel, playerViewrangeLabel, playerDamageLabel, playerHealthLabel, enemyFovLabel, enemyViewrangeLabel, enemyDamageLabel, enemyHealthLabel;
 
     // Modifier variables: player
-    boolean playerFovEnabled;
-    int playerFovRange, playerViewrange, playerDamage, playerHealth;
+    static boolean playerFovEnabled;
+    static int playerFovRange, playerViewrange, playerDamage, playerHealth;
 
     // Modifier variables: enemy
-    boolean enemyFovEnabled;
-    int enemyFovRange, enemyViewrange, enemyDamage, enemyHealth;
+    static boolean enemyFovEnabled;
+    static int enemyFovRange, enemyViewrange, enemyDamage, enemyHealth;
 
     // Modifier inputs: player
-    JCheckBox playerFovCheck;
-    JFormattedTextField playerFovInput, playerViewrangeInput, playerDamageInput, playerHealthInput;
+    static JCheckBox playerFovCheck;
+    static JFormattedTextField playerFovInput, playerViewrangeInput, playerDamageInput, playerHealthInput;
 
     // Modifier inputs: enemy
-    JCheckBox enemyFovCheck;
-    JFormattedTextField enemyFovInput, enemyViewrangeInput, enemyDamageInput, enemyHealthInput;
+    static JCheckBox enemyFovCheck;
+    static JFormattedTextField enemyFovInput, enemyViewrangeInput, enemyDamageInput, enemyHealthInput;
 
     Image headerImage = Toolkit.getDefaultToolkit().getImage("images/header_modifiers.png");
 
@@ -46,6 +46,24 @@ public class modifiers extends JPanel implements MouseListener {
             System.err.println("bad formatter" + e.getMessage());
         }
         return numberMask;
+    }
+
+    public static void setDefault() {
+        playerHealth = packy.defaultValues.playerHealth;
+        playerDamage = packy.defaultValues.playerDamage;
+        playerFovRange = packy.defaultValues.playerFovRange;
+
+        playerHealthInput.setValue(packy.defaultValues.playerHealth);
+        playerDamageInput.setValue(packy.defaultValues.playerDamage);
+        playerFovCheck.setSelected(true);
+        playerFovInput.setValue(packy.defaultValues.playerFovRange);
+        playerViewrangeInput.setValue(packy.defaultValues.playerViewrange);
+
+        enemyHealthInput.setValue(packy.defaultValues.enemyHealth);
+        enemyDamageInput.setValue(packy.defaultValues.enemyDamage);
+        enemyFovCheck.setSelected(true);
+        enemyFovInput.setValue(packy.defaultValues.enemyFovRange);
+        enemyViewrangeInput.setValue(packy.defaultValues.enemyViewrange);
     }
 
     public modifiers() {
@@ -129,7 +147,7 @@ public class modifiers extends JPanel implements MouseListener {
         playerFovCheck.setFont(modifierFont);
         playerFovCheck.setForeground(Color.WHITE);
         playerFovCheck.setBackground(menu.backgroundColor);
-        playerFovCheck.setBounds(400, 490, 80, 75); // TODO: change the image to something that's actually f-ing usable
+        playerFovCheck.setBounds(400, 490, 80, 75);
         playerFovCheck.setSelectedIcon(checkTrue);
         playerFovCheck.setDisabledIcon(checkFalse);
         playerFovCheck.addActionListener(new ActionListener() {
