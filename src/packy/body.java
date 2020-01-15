@@ -33,6 +33,8 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 
 	// ------------ HUD Elements ------------ //
 	static JLabel scoreLabel, timeLabel;
+	static int startTime;
+	static int elapsedTime;
 
 	@Override
 	public void run() {
@@ -56,6 +58,8 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	
 	public void initialize() {
 		//Sets up map creation
+		
+		startTime = (int) System.currentTimeMillis();
 		
 		try {
 			
@@ -109,6 +113,9 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	public void update() {
 		//Updates object locations, checks for collisions, visibility, lots of stuff
 		
+		elapsedTime = (int) ((new Date()).getTime() - startTime)/1000;
+		timeLabel.setText("Time: " + elapsedTime);
+
 		if(game.wallsInitialized && playerProjectile.initialized && enemyProjectile.initialized && game.tilesInitialized) {
 			
 			player.move();
@@ -243,7 +250,15 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		
 		add(scoreLabel);
 
-
+		timeLabel = new JLabel("Time: " + elapsedTime, SwingConstants.CENTER);
+		timeLabel.setFont(new Font("Segoe UI", Font.PLAIN, 30));
+		timeLabel.setBounds(screenWidth-260, 10, 250, 50);
+		timeLabel.setForeground(Color.WHITE);
+		timeLabel.setOpaque(true);
+		timeLabel.setBackground(new Color(128, 128, 128, 192));
+		timeLabel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+		
+		add(timeLabel);
 	}
 	
 	public void paintComponent(Graphics g) {
