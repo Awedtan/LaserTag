@@ -23,7 +23,7 @@ public class play extends JPanel implements MouseListener{
     
     // Player-selected settings
     int enemiesCount;
-    String mapName;
+    public static String mapName;
     game.MODE gamemode; // TODO: use these values in the actual game
 
     public play() {
@@ -37,7 +37,7 @@ public class play extends JPanel implements MouseListener{
         enemiesLabel.setForeground(Color.WHITE);
 
         // TODO: figure out how to change colors for this (right now it's mostly the default look and feel)
-        enemiesInput = new JSpinner(new SpinnerNumberModel(1, 1, 15, 1));
+        enemiesInput = new JSpinner(new SpinnerNumberModel(1, 1, packy.enemy.MAX, 1));
         enemiesInput.setFont(optionFont);
         enemiesInput.setBounds(300, 280, 250, 100);
         enemiesInput.getEditor().getComponent(0).setForeground(Color.BLACK);
@@ -101,12 +101,23 @@ public class play extends JPanel implements MouseListener{
                 	
                 	packy.body.startTime = (int) System.currentTimeMillis();
                     enemiesCount = Integer.parseInt(enemiesInput.getValue().toString());
+                    packy.enemy.MAX = enemiesCount;
                     mapName = "maps/" + (String) mapSelector.getSelectedItem();
+                    System.out.println(mapName);
                     menu.switchStatePanel(body.playPanel, body.panel);
+                    
+                    packy.player.VIEWRANGE = modifiers.playerViewRange;
+                    packy.player.health = modifiers.playerHealth;
+                    packy.playerProjectile.DAMAGE = modifiers.playerDamage;
+                    packy.player.FOV = modifiers.playerFovRange;
+                    
+                    packy.enemy.VIEWRANGE = modifiers.enemyViewRange;
+                    packy.enemy.HEALTH = modifiers.enemyHealth;
+                    packy.enemyProjectile.DAMAGE = modifiers.enemyDamage;
+                    packy.enemy.FOV = modifiers.enemyFovRange;
                 } catch (Exception e2) {
-                    //TODO: return error if something poopy
+                    //TODO: return error if something bad
                 }
-                
             }
         });
         startLabel.setBorder(menu.defaultBorder);

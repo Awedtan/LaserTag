@@ -4,12 +4,13 @@ import java.awt.*;
 
 public class playerProjectile {
 
-	static final int WIDTH = 5;//Size of projectile
-	static final int HEIGHT = 5;
-	static final int MAX = 10;//MAX # of projectiles on screen
-	static final int INACCURACY = 5;//INACCURACY of shots
-	static final double SPEED = 20;//SPEED of projectiles
-	static final int DAMAGE = 5;//Amount of DAMAGE that each player projectile does
+	static int WIDTH = 5;//Size of projectile
+	static int HEIGHT = 5;
+	static int MAX = 20;//MAX # of projectiles on screen
+	static int INACCURACY = 5;//INACCURACY of shots
+	static double SPEED = 20;//SPEED of projectiles
+	
+	public static int DAMAGE = 5;//Amount of DAMAGE that each player projectile does
 	
 	static boolean initialized;
 	

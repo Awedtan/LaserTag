@@ -9,10 +9,13 @@ public class player {
 	static int STARTSPEED = 4;//Default player speed
 	static int STARTPOSX = 100;//Player start location
 	static int STARTPOSY = 550;	
-	static int VIEWRANGE = 500;
-	static int FOV = 50;//In degrees, this value is half the FOV, therefore 45 = 90 FOV, 90 = 180 FOV
 	static int HEALTHMAX = 50;
 	
+	public static boolean FOVENABLED;
+	public static int VIEWRANGE = 500;
+	public static int FOV = 50;//In degrees, this value is half the FOV, therefore 45 = 90 FOV, 90 = 180 FOV
+	public static int health = HEALTHMAX;// Player health
+
 	static int width = 20;//Player dimensions
 	static int height = width;
 	static Color color = Color.blue;
@@ -21,7 +24,6 @@ public class player {
 	static int centerY;
 	static int speed = STARTSPEED;
 	static double angle;//Angle to mouse cursor
-	static int health = HEALTHMAX;// Player health
 	static int score = 0;// Player score
 	
 	static Rectangle model = new Rectangle(STARTPOSX, STARTPOSY, width, height);//Player model

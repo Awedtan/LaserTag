@@ -22,8 +22,9 @@ public class game {
 	static int timeLimit = 60;
 	static int killLimit = 5;
 	static boolean ended;
+	public static boolean started;
 	
-	static File file = new File("maps/map1.txt");
+	public static File file = new File("maps/map1.txt");
 	static Scanner input;
 	
 	static char[][] map;//The dimensions should be common divisors of 1920 and 1080

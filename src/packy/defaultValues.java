@@ -8,9 +8,9 @@ public class defaultValues {
 
     // Player defaults
     public static final boolean playerFovEnabled = true;
-    public static final int playerFovRange = 50, playerViewrange = 500, playerDamage = 5, playerHealth = 50;
+    public static final int playerFovRange = 50, playerViewRange = 500, playerDamage = 5, playerHealth = 50;
 
     // Enemy defaults
     public static final boolean enemyFovEnabled = true;
-    public static final int enemyFovRange = 90, enemyViewrange = 500, enemyDamage = 5, enemyHealth = 10;
+    public static final int enemyFovRange = 90, enemyViewRange = 500, enemyDamage = 5, enemyHealth = 10;
 }
