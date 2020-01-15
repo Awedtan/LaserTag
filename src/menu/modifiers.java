@@ -37,33 +37,63 @@ public class modifiers extends JPanel implements MouseListener {
 
     Font modifierFont = new Font("Segoe UI", Font.PLAIN, 50);
 
-    MaskFormatter numberFormatter(String format) {
-        MaskFormatter numberMask = null;
-        try {
-            numberMask = new MaskFormatter(format);
-            numberMask.setAllowsInvalid(false);
-        } catch (Exception e) {
-            System.err.println("bad formatter" + e.getMessage());
-        }
-        return numberMask;
-    }
+    // MaskFormatter numberFormatter(String format) {
+    //     MaskFormatter numberMask = null;
+    //     try {
+    //         numberMask = new MaskFormatter(format);
+    //         numberMask.setAllowsInvalid(false);
+    //     } catch (Exception e) {
+    //         System.err.println("bad formatter" + e.getMessage());
+    //     }
+    //     return numberMask;
+    // }
 
     public static void setDefault() {
         playerHealth = packy.defaultValues.playerHealth;
         playerDamage = packy.defaultValues.playerDamage;
         playerFovRange = packy.defaultValues.playerFovRange;
+        playerViewrange = packy.defaultValues.playerViewrange;
 
         playerHealthInput.setValue(packy.defaultValues.playerHealth);
         playerDamageInput.setValue(packy.defaultValues.playerDamage);
         playerFovCheck.setSelected(true);
         playerFovInput.setValue(packy.defaultValues.playerFovRange);
+        playerFovInput.setEditable(true);
+        playerFovInput.setBackground(Color.WHITE);
+        playerFovInput.setForeground(Color.BLACK);
         playerViewrangeInput.setValue(packy.defaultValues.playerViewrange);
+
+        enemyHealth = packy.defaultValues.enemyHealth;
+        enemyDamage = packy.defaultValues.enemyDamage;
+        enemyFovRange = packy.defaultValues.enemyFovRange;
+        enemyViewrange = packy.defaultValues.enemyViewrange;
 
         enemyHealthInput.setValue(packy.defaultValues.enemyHealth);
         enemyDamageInput.setValue(packy.defaultValues.enemyDamage);
         enemyFovCheck.setSelected(true);
         enemyFovInput.setValue(packy.defaultValues.enemyFovRange);
+        enemyFovInput.setEditable(true);
+        enemyFovInput.setBackground(Color.WHITE);
+        enemyFovInput.setForeground(Color.BLACK);
         enemyViewrangeInput.setValue(packy.defaultValues.enemyViewrange);
+    }
+
+    public static void parseInputs() {
+        try {
+            playerHealth = Integer.parseInt(playerHealthInput.getText().replace(",", ""));
+            playerDamage = Integer.parseInt(playerDamageInput.getText().replace(",", ""));
+            playerFovEnabled = playerFovCheck.isSelected();
+            playerFovRange = Integer.parseInt(playerFovInput.getText().replace(",", ""));
+            playerViewrange = Integer.parseInt(playerViewrangeInput.getText().replace(",", ""));
+
+            enemyHealth = Integer.parseInt(enemyHealthInput.getText().replace(",", ""));
+            enemyDamage = Integer.parseInt(enemyDamageInput.getText().replace(",", ""));
+            enemyFovEnabled = enemyFovCheck.isSelected();
+            enemyFovRange = Integer.parseInt(enemyFovInput.getText().replace(",", ""));
+            enemyViewrange = Integer.parseInt(enemyViewrangeInput.getText().replace(",", ""));
+        } catch (Exception e) {
+            //TODO: Show red text that say no no when inputs poopy (shouldn't happen anymore but better safe than sorry)
+        }
     }
 
     public modifiers() {
@@ -79,7 +109,7 @@ public class modifiers extends JPanel implements MouseListener {
         resetLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // TODO: reset all fields to default values
+                setDefault();
             }
         });
         resetLabel.setBorder(menu.defaultBorder);
@@ -104,6 +134,7 @@ public class modifiers extends JPanel implements MouseListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // TODO: save values in text field
+                parseInputs();
                 menu.switchStatePanel(body.modifiersPanel, body.playPanel);
             }
         });
@@ -120,7 +151,7 @@ public class modifiers extends JPanel implements MouseListener {
         playerHealthLabel.setBounds(50, 250, 500, 150);
         playerHealthLabel.setForeground(Color.WHITE);
 
-        playerHealthInput = new JFormattedTextField(numberFormatter("###"));
+        playerHealthInput = new JFormattedTextField();
         playerHealthInput.setFont(modifierFont);
         playerHealthInput.setBounds(500, 290, 250, 75);
         playerHealthInput.setForeground(Color.BLACK);
@@ -131,7 +162,7 @@ public class modifiers extends JPanel implements MouseListener {
         playerDamageLabel.setBounds(50, 350, 500, 150);
         playerDamageLabel.setForeground(Color.WHITE);
 
-        playerDamageInput = new JFormattedTextField(numberFormatter("###"));
+        playerDamageInput = new JFormattedTextField();
         playerDamageInput.setFont(modifierFont);
         playerDamageInput.setBounds(500, 390, 250, 75);
         playerDamageInput.setForeground(Color.BLACK);
@@ -164,7 +195,7 @@ public class modifiers extends JPanel implements MouseListener {
             }
         });
 
-        playerFovInput = new JFormattedTextField(numberFormatter("###"));
+        playerFovInput = new JFormattedTextField();
         playerFovInput.setFont(modifierFont);
         playerFovInput.setBounds(500, 490, 250, 75);
         playerFovInput.setForeground(Color.BLACK);
@@ -175,7 +206,7 @@ public class modifiers extends JPanel implements MouseListener {
         playerViewrangeLabel.setBounds(50, 550, 500, 150);
         playerViewrangeLabel.setForeground(Color.WHITE);
 
-        playerViewrangeInput = new JFormattedTextField(numberFormatter("###"));
+        playerViewrangeInput = new JFormattedTextField();
         playerViewrangeInput.setFont(modifierFont);
         playerViewrangeInput.setBounds(500, 590, 250, 75);
         playerViewrangeInput.setForeground(Color.BLACK);
@@ -187,7 +218,7 @@ public class modifiers extends JPanel implements MouseListener {
         enemyHealthLabel.setBounds(body.screenWidth / 2, 250, 500, 150);
         enemyHealthLabel.setForeground(Color.WHITE);
 
-        enemyHealthInput = new JFormattedTextField(numberFormatter("###"));
+        enemyHealthInput = new JFormattedTextField();
         enemyHealthInput.setFont(modifierFont);
         enemyHealthInput.setBounds(500 + body.screenWidth / 2, 290, 250, 75);
         enemyHealthInput.setForeground(Color.BLACK);
@@ -198,7 +229,7 @@ public class modifiers extends JPanel implements MouseListener {
         enemyDamageLabel.setBounds(body.screenWidth / 2, 350, 500, 150);
         enemyDamageLabel.setForeground(Color.WHITE);
 
-        enemyDamageInput = new JFormattedTextField(numberFormatter("###"));
+        enemyDamageInput = new JFormattedTextField();
         enemyDamageInput.setFont(modifierFont);
         enemyDamageInput.setBounds(500 + body.screenWidth / 2, 390, 250, 75);
         enemyDamageInput.setForeground(Color.BLACK);
@@ -231,7 +262,7 @@ public class modifiers extends JPanel implements MouseListener {
             }
         });
 
-        enemyFovInput = new JFormattedTextField(numberFormatter("###"));
+        enemyFovInput = new JFormattedTextField();
         enemyFovInput.setFont(modifierFont);
         enemyFovInput.setBounds(500 + body.screenWidth / 2, 490, 250, 75);
         enemyFovInput.setForeground(Color.BLACK);
@@ -243,7 +274,7 @@ public class modifiers extends JPanel implements MouseListener {
         enemyViewrangeLabel.setBounds(body.screenWidth / 2, 550, 500, 150);
         enemyViewrangeLabel.setForeground(Color.WHITE);
 
-        enemyViewrangeInput = new JFormattedTextField(numberFormatter("###"));
+        enemyViewrangeInput = new JFormattedTextField();
         enemyViewrangeInput.setFont(modifierFont);
         enemyViewrangeInput.setBounds(500 + body.screenWidth / 2, 590, 250, 75);
         enemyViewrangeInput.setForeground(Color.BLACK);
@@ -270,6 +301,8 @@ public class modifiers extends JPanel implements MouseListener {
         add(enemyFovCheck);
         add(enemyFovInput);
         add(enemyViewrangeInput);
+
+        setDefault();
     }
 
     public void paintComponent(Graphics g) {
