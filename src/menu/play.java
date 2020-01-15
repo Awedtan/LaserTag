@@ -17,6 +17,7 @@ public class play extends JPanel implements MouseListener{
 
     JSpinner enemiesInput; // TODO: adjust max size of spinner (what is our max number?)
     JComboBox<String> mapSelector;
+    JComboBox<game.MODE> gamemodeSelector;
     File mapFolder = new File("maps");
     String[] mapFilepaths = mapFolder.list();
     
@@ -38,9 +39,9 @@ public class play extends JPanel implements MouseListener{
         // TODO: figure out how to change colors for this (right now it's mostly the default look and feel)
         enemiesInput = new JSpinner(new SpinnerNumberModel(1, 1, 15, 1));
         enemiesInput.setFont(optionFont);
-        enemiesInput.setBounds(300, 300, 250, 70);
-        enemiesInput.getEditor().getComponent(0).setForeground(Color.WHITE);
-        enemiesInput.getEditor().getComponent(0).setBackground(menu.backgroundColor);
+        enemiesInput.setBounds(300, 280, 250, 100);
+        enemiesInput.getEditor().getComponent(0).setForeground(Color.BLACK);
+        enemiesInput.getEditor().getComponent(0).setBackground(Color.WHITE);
 
         mapLabel = new JLabel("Map:");
         mapLabel.setFont(optionFont);
@@ -49,9 +50,9 @@ public class play extends JPanel implements MouseListener{
 
         mapSelector = new JComboBox<String>(mapFilepaths);
         mapSelector.setFont(optionFont);
-        mapSelector.setBounds(250, 425, 600, 100);
-        mapSelector.setForeground(Color.WHITE);
-        mapSelector.setBackground(menu.backgroundColor);
+        mapSelector.setBounds(200, 425, 600, 100);
+        mapSelector.setForeground(Color.BLACK);
+        mapSelector.setBackground(Color.WHITE);
 
         modifiersLabel = new JLabel("Change Modifiers", SwingConstants.CENTER);
         modifiersLabel.setFont(optionFont);
@@ -69,6 +70,12 @@ public class play extends JPanel implements MouseListener{
         gamemodeLabel.setFont(optionFont);
         gamemodeLabel.setBounds(50, 550, 500, 120);
         gamemodeLabel.setForeground(Color.WHITE);
+
+        gamemodeSelector = new JComboBox<game.MODE>(game.MODE.values());
+        gamemodeSelector.setFont(optionFont);
+        gamemodeSelector.setBounds(400, 570, 500, 100);
+        gamemodeSelector.setForeground(Color.BLACK);
+        gamemodeSelector.setBackground(Color.WHITE);
 
         backLabel = new JLabel("< Back", SwingConstants.CENTER);
         backLabel.setFont(optionFont);
@@ -92,12 +99,12 @@ public class play extends JPanel implements MouseListener{
                 // TODO: run the game using the settings here and on the modifers page
                 try {
                     enemiesCount = Integer.parseInt(enemiesInput.getValue().toString());
+                    mapName = "maps/" + (String) mapSelector.getSelectedItem();
+                    menu.switchStatePanel(body.playPanel, body.panel);
                 } catch (Exception e2) {
                     //TODO: return error if something poopy
                 }
-                mapName = "maps/" + (String) mapSelector.getSelectedItem();
-                // body.main(new String[0]);
-                menu.switchStatePanel(body.playPanel, body.panel);
+                
             }
         });
         startLabel.setBorder(menu.defaultBorder);
@@ -109,6 +116,7 @@ public class play extends JPanel implements MouseListener{
         add(mapSelector);
         add(modifiersLabel);
         add(gamemodeLabel);
+        add(gamemodeSelector);
         add(backLabel);
         add(startLabel);
     }
