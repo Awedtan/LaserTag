@@ -65,32 +65,17 @@ public class enemy {
 		lastX[enemy] = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth())/2;
 		lastY[enemy] = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight())/2;
 		
-		if(game.mode == game.MODE.SURVIVAL) {
-			do {
+		do {
+		
+			int x = (int)(Math.random()*1920);
+			int y = (int)(Math.random()*1080);
 			
-				int x = (int)(Math.random()*1920);
-				int y = (int)(Math.random()*1080);
+			if(Math.sqrt((x-aliveX)*(x-aliveX) + (y-aliveY)*(y-aliveY)) > player.VIEWRANGE) {
 				
-				if(Math.sqrt((x-aliveX)*(x-aliveX) + (y-aliveY)*(y-aliveY)) > player.VIEWRANGE) {
-					
-					respawn(x, y, enemy);
-					break;
-				}
-			}while(true);
-		}
-		else if(game.mode == game.MODE.DM) {
-			do {
-			
-				int x = (int)(Math.random()*1920);
-				int y = (int)(Math.random()*1080);
-				
-				if(Math.sqrt((x-aliveX)*(x-aliveX) + (y-aliveY)*(y-aliveY)) > player.VIEWRANGE) {
-					
-					respawn(x, y, enemy);
-					break;
-				}
-			}while(true);
-		}
+				respawn(x, y, enemy);
+				break;
+			}
+		}while(true);
 	}
 	
 	public static void respawn(int x, int y, int enemy) {

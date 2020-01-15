@@ -7,8 +7,8 @@ import java.awt.geom.Line2D;
 public class player {
 
 	static int STARTSPEED = 4;//Default player speed
-	static final int STARTPOSX = 100;//Player start location
-	static final int STARTPOSY = 550;	
+	static int STARTPOSX = 100;//Player start location
+	static int STARTPOSY = 550;	
 	static int VIEWRANGE = 500;
 	static int FOV = 50;//In degrees, this value is half the FOV, therefore 45 = 90 FOV, 90 = 180 FOV
 	static int HEALTHMAX = 50;
@@ -32,6 +32,7 @@ public class player {
 	static boolean moveDown;
 	static boolean sprint;
 	static boolean alive = true;
+	static boolean canRespawn;
 	
 	public static void damage() {
 		health -= enemyProjectile.DAMAGE;

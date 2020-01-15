@@ -98,6 +98,8 @@ public class play extends JPanel implements MouseListener{
             public void mouseClicked(MouseEvent e) {
                 // TODO: run the game using the settings here and on the modifers page
                 try {
+                	
+                	packy.body.startTime = (int) System.currentTimeMillis();
                     enemiesCount = Integer.parseInt(enemiesInput.getValue().toString());
                     mapName = "maps/" + (String) mapSelector.getSelectedItem();
                     menu.switchStatePanel(body.playPanel, body.panel);
