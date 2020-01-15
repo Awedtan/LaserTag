@@ -5,6 +5,7 @@ import java.awt.geom.Line2D;
 
 public class enemy {
 	
+	// Default values
 	static int MAX = 15;//# of enemies
 	static int STARTSPEED = 3;//Default enemy speed
 	static int VIEWRANGE = 500;//Length of enemy vision

@@ -3,7 +3,6 @@ package menu;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 import javax.swing.text.MaskFormatter;
 
 import packy.*;
@@ -11,6 +10,9 @@ import packy.*;
 @SuppressWarnings("serial")
 public class modifiers extends JPanel implements MouseListener {
     JLabel resetLabel, backLabel, saveLabel; // TODO: add load previous options?
+
+    ImageIcon checkTrue = new ImageIcon("images/checkbox_true.png");
+    ImageIcon checkFalse = new ImageIcon("images/checkbox_false.png");
 
     // All modifier labels
     JLabel playerFovLabel, playerViewrangeLabel, playerDamageLabel, playerHealthLabel, enemyFovLabel, enemyViewrangeLabel, enemyDamageLabel, enemyHealthLabel;
@@ -47,14 +49,14 @@ public class modifiers extends JPanel implements MouseListener {
     }
 
     public modifiers() {
-        setPreferredSize(new Dimension(menu.screenWidth, menu.screenHeight));
+        setPreferredSize(new Dimension(body.screenWidth, body.screenHeight));
         setFocusable(true);
         setLayout(null);
 
         // ------------ Menu operation labels ------------ //
         resetLabel = new JLabel("Reset to defaults", SwingConstants.CENTER);
         resetLabel.setFont(play.optionFont);
-        resetLabel.setBounds(375, menu.screenHeight - 185, 500, 120);
+        resetLabel.setBounds(375, body.screenHeight - 185, 500, 120);
         resetLabel.setForeground(Color.WHITE);
         resetLabel.addMouseListener(new MouseAdapter() {
             @Override
@@ -66,7 +68,7 @@ public class modifiers extends JPanel implements MouseListener {
 
         backLabel = new JLabel("< Back", SwingConstants.CENTER);
         backLabel.setFont(play.optionFont);
-        backLabel.setBounds(50, menu.screenHeight - 185, 300, 120);
+        backLabel.setBounds(50, body.screenHeight - 185, 300, 120);
         backLabel.setForeground(Color.WHITE);
         backLabel.addMouseListener(new MouseAdapter() {
             @Override
@@ -78,7 +80,7 @@ public class modifiers extends JPanel implements MouseListener {
         
         saveLabel = new JLabel("Save", SwingConstants.CENTER);
         saveLabel.setFont(new Font("Segoe UI", Font.PLAIN, 80));
-        saveLabel.setBounds(menu.screenWidth - 300, menu.screenHeight - 200, 250, 150);
+        saveLabel.setBounds(body.screenWidth - 300, body.screenHeight - 200, 250, 150);
         saveLabel.setForeground(Color.WHITE);
         saveLabel.addMouseListener(new MouseAdapter () {
             @Override
@@ -102,9 +104,9 @@ public class modifiers extends JPanel implements MouseListener {
 
         playerHealthInput = new JFormattedTextField(numberFormatter("###"));
         playerHealthInput.setFont(modifierFont);
-        playerHealthInput.setBounds(360, 290, 250, 75);
-        playerHealthInput.setForeground(Color.WHITE);
-        playerHealthInput.setBackground(menu.backgroundColor);
+        playerHealthInput.setBounds(500, 290, 250, 75);
+        playerHealthInput.setForeground(Color.BLACK);
+        playerHealthInput.setBackground(Color.WHITE);
 
         playerDamageLabel = new JLabel("Player Damage:");
         playerDamageLabel.setFont(modifierFont);
@@ -113,21 +115,42 @@ public class modifiers extends JPanel implements MouseListener {
 
         playerDamageInput = new JFormattedTextField(numberFormatter("###"));
         playerDamageInput.setFont(modifierFont);
-        playerDamageInput.setBounds(400, 390, 250, 75);
-        playerDamageInput.setForeground(Color.WHITE);
-        playerDamageInput.setBackground(menu.backgroundColor);
+        playerDamageInput.setBounds(500, 390, 250, 75);
+        playerDamageInput.setForeground(Color.BLACK);
+        playerDamageInput.setBackground(Color.WHITE);
 
         playerFovLabel = new JLabel("Player FOV:");
         playerFovLabel.setFont(modifierFont);
         playerFovLabel.setBounds(50, 450, 500, 150);
         playerFovLabel.setForeground(Color.WHITE);
 
-        playerFovCheck = new JCheckBox();
+        playerFovCheck = new JCheckBox(checkFalse, true);
         playerFovCheck.setSelected(true);
         playerFovCheck.setFont(modifierFont);
         playerFovCheck.setForeground(Color.WHITE);
         playerFovCheck.setBackground(menu.backgroundColor);
-        playerFovCheck.setBounds(310, 470, 75, 75); // TODO: change the image to something that's actually f-ing usable
+        playerFovCheck.setBounds(400, 490, 80, 75); // TODO: change the image to something that's actually f-ing usable
+        playerFovCheck.setSelectedIcon(checkTrue);
+        playerFovCheck.setDisabledIcon(checkFalse);
+        playerFovCheck.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean selected = playerFovCheck.getModel().isSelected();
+                if (selected) {
+                    playerFovInput.setEnabled(true);
+                    playerFovInput.setBackground(Color.WHITE);
+                } else if (!selected) {
+                    playerFovInput.setEnabled(false);
+                    playerFovInput.setBackground(Color.GRAY);
+                }
+            }
+        });
+
+        playerFovInput = new JFormattedTextField(numberFormatter("###"));
+        playerFovInput.setFont(modifierFont);
+        playerFovInput.setBounds(500, 490, 250, 75);
+        playerFovInput.setForeground(Color.BLACK);
+        playerFovInput.setBackground(Color.WHITE);
 
         playerViewrangeLabel = new JLabel("Player Viewrange:");
         playerViewrangeLabel.setFont(modifierFont);
@@ -136,9 +159,9 @@ public class modifiers extends JPanel implements MouseListener {
 
         playerViewrangeInput = new JFormattedTextField(numberFormatter("###"));
         playerViewrangeInput.setFont(modifierFont);
-        playerViewrangeInput.setBounds(450, 590, 250, 75);
-        playerViewrangeInput.setForeground(Color.WHITE);
-        playerViewrangeInput.setBackground(menu.backgroundColor);
+        playerViewrangeInput.setBounds(500, 590, 250, 75);
+        playerViewrangeInput.setForeground(Color.BLACK);
+        playerViewrangeInput.setBackground(Color.WHITE);
 
         // Enemy modifiers
         enemyHealthLabel = new JLabel("Enemy Health:");
@@ -146,20 +169,67 @@ public class modifiers extends JPanel implements MouseListener {
         enemyHealthLabel.setBounds(body.screenWidth / 2, 250, 500, 150);
         enemyHealthLabel.setForeground(Color.WHITE);
 
+        enemyHealthInput = new JFormattedTextField(numberFormatter("###"));
+        enemyHealthInput.setFont(modifierFont);
+        enemyHealthInput.setBounds(500 + body.screenWidth / 2, 290, 250, 75);
+        enemyHealthInput.setForeground(Color.BLACK);
+        enemyHealthInput.setBackground(Color.WHITE);
+
         enemyDamageLabel = new JLabel("Enemy Damage:");
         enemyDamageLabel.setFont(modifierFont);
         enemyDamageLabel.setBounds(body.screenWidth / 2, 350, 500, 150);
         enemyDamageLabel.setForeground(Color.WHITE);
+
+        enemyDamageInput = new JFormattedTextField(numberFormatter("###"));
+        enemyDamageInput.setFont(modifierFont);
+        enemyDamageInput.setBounds(500 + body.screenWidth / 2, 390, 250, 75);
+        enemyDamageInput.setForeground(Color.BLACK);
+        enemyDamageInput.setBackground(Color.WHITE);
 
         enemyFovLabel = new JLabel("Enemy FOV:");
         enemyFovLabel.setFont(modifierFont);
         enemyFovLabel.setBounds(body.screenWidth / 2, 450, 500, 150);
         enemyFovLabel.setForeground(Color.WHITE);
 
+        enemyFovCheck = new JCheckBox(checkFalse, true);
+        enemyFovCheck.setSelected(true);
+        enemyFovCheck.setFont(modifierFont);
+        enemyFovCheck.setForeground(Color.WHITE);
+        enemyFovCheck.setBackground(menu.backgroundColor);
+        enemyFovCheck.setBounds(400 + body.screenWidth / 2, 490, 80, 75); // TODO: change the image to something that's actually f-ing usable
+        enemyFovCheck.setSelectedIcon(checkTrue);
+        enemyFovCheck.setDisabledIcon(checkFalse);
+        enemyFovCheck.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean selected = enemyFovCheck.getModel().isSelected();
+                if (selected) {
+                    enemyFovInput.setEnabled(true);
+                    enemyFovInput.setBackground(Color.WHITE);
+                } else if (!selected) {
+                    enemyFovInput.setEnabled(false);
+                    enemyFovInput.setBackground(Color.GRAY);
+                }
+            }
+        });
+
+        enemyFovInput = new JFormattedTextField(numberFormatter("###"));
+        enemyFovInput.setFont(modifierFont);
+        enemyFovInput.setBounds(500 + body.screenWidth / 2, 490, 250, 75);
+        enemyFovInput.setForeground(Color.BLACK);
+        enemyFovInput.setBackground(Color.WHITE);
+        // enemyFovInput.setValue();
+
         enemyViewrangeLabel = new JLabel("Enemy Viewrange:");
         enemyViewrangeLabel.setFont(modifierFont);
         enemyViewrangeLabel.setBounds(body.screenWidth / 2, 550, 500, 150);
         enemyViewrangeLabel.setForeground(Color.WHITE);
+
+        enemyViewrangeInput = new JFormattedTextField(numberFormatter("###"));
+        enemyViewrangeInput.setFont(modifierFont);
+        enemyViewrangeInput.setBounds(500 + body.screenWidth / 2, 590, 250, 75);
+        enemyViewrangeInput.setForeground(Color.BLACK);
+        enemyViewrangeInput.setBackground(Color.WHITE);
 
         add(playerHealthLabel);
         add(playerDamageLabel);
@@ -174,13 +244,20 @@ public class modifiers extends JPanel implements MouseListener {
         add(playerHealthInput);
         add(playerDamageInput);
         add(playerFovCheck);
+        add(playerFovInput);
         add(playerViewrangeInput);
+
+        add(enemyHealthInput);
+        add(enemyDamageInput);
+        add(enemyFovCheck);
+        add(enemyFovInput);
+        add(enemyViewrangeInput);
     }
 
     public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(menu.backgroundColor);
-        g.fillRect(0, 0, menu.screenWidth, menu.screenHeight);   
+        g.fillRect(0, 0, body.screenWidth, body.screenHeight);   
         
         g.drawImage(headerImage, 50, 50, 1000, 160, this);
     }
