@@ -9,7 +9,7 @@ import java.util.*;
 
 import menu.*;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "static-access", "serial" })
 public class body extends JPanel implements KeyListener, MouseListener, MouseMotionListener, Runnable{
 	//Daniel Su, Zhenyang Cai, 2D top-down shooter game
 	
@@ -33,8 +33,10 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 
 	// ------------ HUD Elements ------------ //
 	static JLabel scoreLabel, timeLabel;
-	static int startTime;
+	public static int startTime;
 	static int elapsedTime;
+	static int respawnDelay = 5;
+	static int respawnCount;
 
 	@Override
 	public void run() {
@@ -58,8 +60,6 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	
 	public void initialize() {
 		//Sets up map creation
-		
-		startTime = (int) System.currentTimeMillis();
 		
 		try {
 			
@@ -113,8 +113,20 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	public void update() {
 		//Updates object locations, checks for collisions, visibility, lots of stuff
 		
-		elapsedTime = (int) ((new Date()).getTime() - startTime)/1000;
+		if(!game.ended)
+			elapsedTime = (int) ((new Date()).getTime() - startTime)/1000;
 		timeLabel.setText("Time: " + elapsedTime);
+		
+		if(game.mode == game.mode.DM && elapsedTime >= game.timeLimit) {
+			
+			game.ended = true;
+			player.kill();
+		}
+		else if(game.mode == game.mode.SPREE && player.score >= game.killLimit) {
+			
+			game.ended = true;
+			player.kill();
+		}
 
 		if(game.wallsInitialized && playerProjectile.initialized && enemyProjectile.initialized && game.tilesInitialized) {
 			
@@ -170,10 +182,10 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 					enemyProjectile.kill(i);
 			
 			for(int i=0; i<game.numTiles; i++) 
-					if(player.checkVisible(player.model, game.tiles[i], player.VIEWRANGE, player.FOV))
+//					if(player.checkVisible(player.model, game.tiles[i], player.VIEWRANGE, player.FOV))
 						game.tileIsVisible[i] = true;
-					else
-						game.tileIsVisible[i] = false;
+//					else
+//						game.tileIsVisible[i] = false;
 			
 			for(int k=0; k<enemy.MAX; k++) 
 				if(enemy.checkVisible(enemy.enemies[k], player.model, enemy.VIEWRANGE, enemy.FOV, k) && enemyProjectile.findNext(enemyProjectile.shots) != -1 && enemy.alive[k]) 
@@ -315,11 +327,26 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		}
 		else if(!game.ended) {
 			// Draws a game over message with a background and border when the player dies in this mode TODO: make this more efficient
+			
 			g.setFont(new Font("Segoe UI", Font.PLAIN, 30));
 			FontMetrics fm = g.getFontMetrics();
-			String deathMessage = "You died! Click anywhere on the map to respawn...";
+			String deathMessage;
+			respawnCount++;
+			
+			if(respawnCount/60 >= respawnDelay) {
+				
+				player.canRespawn = true;
+				deathMessage = "Click anywhere on the map to respawn...";	
+			}
+			else {
+				
+				player.canRespawn = false;
+				deathMessage = "You died! Respawning in " + (respawnDelay - respawnCount/60) + " seconds...";
+			}
+			
 			Rectangle2D textRect = fm.getStringBounds(deathMessage, g);
 			g.setColor(Color.white);
+			
 			g.fillRect(
 				screenWidth / 2 - (int) textRect.getWidth() / 2 - 5, 
 				screenHeight / 2 - fm.getAscent() / 2 - 5, 
@@ -327,6 +354,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 				(int) textRect.getHeight() + 10
 			);
 			g.setColor(Color.BLACK);
+			
 			g.fillRect(
 				screenWidth / 2 - (int) textRect.getWidth() / 2, 
 				screenHeight / 2 - fm.getAscent() / 2, 
@@ -336,13 +364,15 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 			g.setColor(Color.white);
 			g.drawString(deathMessage, screenWidth / 2 - (int) textRect.getWidth() / 2, screenHeight / 2 + fm.getAscent() / 2);
 		}
-		else {
+		else if(game.mode == game.mode.SURVIVAL){
 			// Draws a game over message with a background and border when the player dies in this mode
+			
 			g.setFont(new Font("Segoe UI", Font.PLAIN, 30));
 			FontMetrics fm = g.getFontMetrics();
-			String permaDeathMessage = "You died! You managed to kill " + player.score + " enemies before dying...";
+			String permaDeathMessage = "GAME OVER! You survived for " + elapsedTime + " seconds and defeated " + player.score + " enemies before dying...";
 			Rectangle2D textRect = fm.getStringBounds(permaDeathMessage, g);
 			g.setColor(Color.white);
+			
 			g.fillRect(
 				screenWidth / 2 - (int) textRect.getWidth() / 2 - 5, 
 				screenHeight / 2 - fm.getAscent() / 2 - 5, 
@@ -350,6 +380,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 				(int) textRect.getHeight() + 10
 			);
 			g.setColor(Color.BLACK);
+			
 			g.fillRect(
 				screenWidth / 2 - (int) textRect.getWidth() / 2, 
 				screenHeight / 2 - fm.getAscent() / 2, 
@@ -361,6 +392,64 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 			
 			// TODO: Figure out how to draw "play again" and "exit" boxes with mouseListeners efficiently
 			
+		}
+		else if(game.mode == game.mode.DM) {
+			
+			// Draws a game over message with a background and border when the player dies in this mode
+			
+			g.setFont(new Font("Segoe UI", Font.PLAIN, 30));
+			FontMetrics fm = g.getFontMetrics();
+			String permaDeathMessage = "GAME OVER! You defeated " + player.score + " enemies before time ran out...";
+			Rectangle2D textRect = fm.getStringBounds(permaDeathMessage, g);
+			g.setColor(Color.white);
+			
+			g.fillRect(
+				screenWidth / 2 - (int) textRect.getWidth() / 2 - 5, 
+				screenHeight / 2 - fm.getAscent() / 2 - 5, 
+				(int) textRect.getWidth() + 10, 
+				(int) textRect.getHeight() + 10
+			);
+			g.setColor(Color.BLACK);
+			
+			g.fillRect(
+				screenWidth / 2 - (int) textRect.getWidth() / 2, 
+				screenHeight / 2 - fm.getAscent() / 2, 
+				(int) textRect.getWidth(), 
+				(int) textRect.getHeight()	
+			);
+			g.setColor(Color.white);
+			g.drawString(permaDeathMessage, screenWidth / 2 - (int) textRect.getWidth() / 2, screenHeight / 2 + fm.getAscent() / 2);
+			
+			// TODO: Figure out how to draw "play again" and "exit" boxes with mouseListeners efficiently
+		}
+		else if(game.mode == game.mode.SPREE) {
+			
+			// Draws a game over message with a background and border when the player dies in this mode
+			
+			g.setFont(new Font("Segoe UI", Font.PLAIN, 30));
+			FontMetrics fm = g.getFontMetrics();
+			String permaDeathMessage = "GAME OVER! You defeated " + game.killLimit + " enemies in " + elapsedTime + " seconds...";
+			Rectangle2D textRect = fm.getStringBounds(permaDeathMessage, g);
+			g.setColor(Color.white);
+			
+			g.fillRect(
+				screenWidth / 2 - (int) textRect.getWidth() / 2 - 5, 
+				screenHeight / 2 - fm.getAscent() / 2 - 5, 
+				(int) textRect.getWidth() + 10, 
+				(int) textRect.getHeight() + 10
+			);
+			g.setColor(Color.BLACK);
+			
+			g.fillRect(
+				screenWidth / 2 - (int) textRect.getWidth() / 2, 
+				screenHeight / 2 - fm.getAscent() / 2, 
+				(int) textRect.getWidth(), 
+				(int) textRect.getHeight()	
+			);
+			g.setColor(Color.white);
+			g.drawString(permaDeathMessage, screenWidth / 2 - (int) textRect.getWidth() / 2, screenHeight / 2 + fm.getAscent() / 2);
+			
+			// TODO: Figure out how to draw "play again" and "exit" boxes with mouseListeners efficiently
 		}
 
 				
@@ -385,7 +474,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 			panel.repaint();
 			player.shoot(player.centerX, player.centerY, player.angle, playerProjectile.findNext(playerProjectile.shots));
 		}
-		else if(!player.alive && !game.ended) 
+		else if(!player.alive && !game.ended && player.canRespawn) 
 			player.respawn(mousePosX, mousePosY);
 	}
 

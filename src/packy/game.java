@@ -14,9 +14,13 @@ public class game {
 	
 	public enum MODE {
 		
-		DM, // previously mode 1
-		SURVIVAL, // previously mode 0
+		DM,
+		SURVIVAL,
+		SPREE
 	}
+	
+	static int timeLimit = 60;
+	static int killLimit = 5;
 	static boolean ended;
 	
 	static File file = new File("maps/map1.txt");
