@@ -5,13 +5,13 @@ import java.awt.geom.Line2D;
 
 public class enemy {
 	
-	// Default values
-	static int MAX = 15;//# of enemies
 	static int STARTSPEED = 3;//Default enemy speed
-	static int VIEWRANGE = 450;//Length of enemy vision
-	static int SHOOTRANGE = 150;//When the distance to the player is smaller than this, enemies stop moving
-	static int FOV = 90;//Range of enemy vision, behaves like player fov
-	static int HEALTH = 10;
+	public static int MAX = 9999;//# of enemies
+	
+	public static int VIEWRANGE = 450;//Length of enemy vision
+	public static int SHOOTRANGE = 150;//When the distance to the player is smaller than this, enemies stop moving
+	public static int FOV = 90;//Range of enemy vision, behaves like player fov
+	public static int HEALTH = 10;
 	
 	static int width = 20;//Enemy dimensions
 	static int height = width;
@@ -20,8 +20,8 @@ public class enemy {
 	
 	static int[] movement = new int[]{0, 45, 90, 135, 180, 225, 270, 315, 360};
 	
-	static int[] STARTPOSX = new int[] {100, 120, 300, 350, 200, 500, 1200, 1000, 1000, 1200, 1700, 1700, 950, 1000, 1800};//<- This needs to be initialized manually for now
-	static int[] STARTPOSY = new int[] {100, 900, 400, 900, 120, 500, 350, 400, 900, 500, 900, 100, 200, 800, 900};//<- Ditto
+	static int[] STARTPOSX = new int[MAX];
+	static int[] STARTPOSY = new int[MAX];
 	static int[] centerX = new int[MAX];
 	static int [] centerY = new int[MAX];
 	static int[] wait = new int[MAX];
@@ -37,6 +37,8 @@ public class enemy {
 	
 	public static void initialize(int enemy) {
 		
+		STARTPOSX[enemy] = (int) (Math.random()*(Toolkit.getDefaultToolkit().getScreenSize().getWidth()-50)+25);
+		STARTPOSY[enemy] = (int) (Math.random() * (Toolkit.getDefaultToolkit().getScreenSize().getHeight()-50)+25);
 		enemies[enemy] = new Rectangle(STARTPOSX[enemy], STARTPOSY[enemy], width, height);
 		enemyHealth[enemy] = HEALTH; //TODO: set this to variable that can be changed in modifiers
 		lastX[enemy] = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth())/2;

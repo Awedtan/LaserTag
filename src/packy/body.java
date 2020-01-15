@@ -108,6 +108,8 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		
 		for(int i=0; i<enemy.MAX; i++)
 			enemy.initialize(i);
+		
+    	game.started = false;
 	}
 	
 	public void update() {
@@ -182,10 +184,13 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 					enemyProjectile.kill(i);
 			
 			for(int i=0; i<game.numTiles; i++) 
-//					if(player.checkVisible(player.model, game.tiles[i], player.VIEWRANGE, player.FOV))
+				if(player.FOVENABLED)
+					if(player.checkVisible(player.model, game.tiles[i], player.VIEWRANGE, player.FOV))
 						game.tileIsVisible[i] = true;
-//					else
-//						game.tileIsVisible[i] = false;
+					else
+						game.tileIsVisible[i] = false;
+				else
+					game.tileIsVisible[i] = true;
 			
 			for(int k=0; k<enemy.MAX; k++) 
 				if(enemy.checkVisible(enemy.enemies[k], player.model, enemy.VIEWRANGE, enemy.FOV, k) && enemyProjectile.findNext(enemyProjectile.shots) != -1 && enemy.alive[k]) 

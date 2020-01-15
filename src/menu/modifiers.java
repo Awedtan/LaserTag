@@ -15,23 +15,23 @@ public class modifiers extends JPanel implements MouseListener {
     ImageIcon checkFalse = new ImageIcon("images/checkbox_false.png");
 
     // All modifier labels
-    JLabel playerFovLabel, playerViewrangeLabel, playerDamageLabel, playerHealthLabel, enemyFovLabel, enemyViewrangeLabel, enemyDamageLabel, enemyHealthLabel;
+    JLabel playerFovLabel, playerViewRangeLabel, playerDamageLabel, playerHealthLabel, enemyFovLabel, enemyViewRangeLabel, enemyDamageLabel, enemyHealthLabel;
 
     // Modifier variables: player
     static boolean playerFovEnabled;
-    static int playerFovRange, playerViewrange, playerDamage, playerHealth;
+    static int playerFovRange, playerViewRange, playerDamage, playerHealth;
 
     // Modifier variables: enemy
     static boolean enemyFovEnabled;
-    static int enemyFovRange, enemyViewrange, enemyDamage, enemyHealth;
+    static int enemyFovRange, enemyViewRange, enemyDamage, enemyHealth;
 
     // Modifier inputs: player
     static JCheckBox playerFovCheck;
-    static JFormattedTextField playerFovInput, playerViewrangeInput, playerDamageInput, playerHealthInput;
+    static JFormattedTextField playerFovInput, playerViewRangeInput, playerDamageInput, playerHealthInput;
 
     // Modifier inputs: enemy
     static JCheckBox enemyFovCheck;
-    static JFormattedTextField enemyFovInput, enemyViewrangeInput, enemyDamageInput, enemyHealthInput;
+    static JFormattedTextField enemyFovInput, enemyViewRangeInput, enemyDamageInput, enemyHealthInput;
 
     Image headerImage = Toolkit.getDefaultToolkit().getImage("images/header_modifiers.png");
 
@@ -52,7 +52,7 @@ public class modifiers extends JPanel implements MouseListener {
         playerHealth = packy.defaultValues.playerHealth;
         playerDamage = packy.defaultValues.playerDamage;
         playerFovRange = packy.defaultValues.playerFovRange;
-        playerViewrange = packy.defaultValues.playerViewrange;
+        playerViewRange = packy.defaultValues.playerViewRange;
 
         playerHealthInput.setValue(packy.defaultValues.playerHealth);
         playerDamageInput.setValue(packy.defaultValues.playerDamage);
@@ -61,12 +61,12 @@ public class modifiers extends JPanel implements MouseListener {
         playerFovInput.setEditable(true);
         playerFovInput.setBackground(Color.WHITE);
         playerFovInput.setForeground(Color.BLACK);
-        playerViewrangeInput.setValue(packy.defaultValues.playerViewrange);
+        playerViewRangeInput.setValue(packy.defaultValues.playerViewRange);
 
         enemyHealth = packy.defaultValues.enemyHealth;
         enemyDamage = packy.defaultValues.enemyDamage;
         enemyFovRange = packy.defaultValues.enemyFovRange;
-        enemyViewrange = packy.defaultValues.enemyViewrange;
+        enemyViewRange = packy.defaultValues.enemyViewRange;
 
         enemyHealthInput.setValue(packy.defaultValues.enemyHealth);
         enemyDamageInput.setValue(packy.defaultValues.enemyDamage);
@@ -75,22 +75,23 @@ public class modifiers extends JPanel implements MouseListener {
         enemyFovInput.setEditable(true);
         enemyFovInput.setBackground(Color.WHITE);
         enemyFovInput.setForeground(Color.BLACK);
-        enemyViewrangeInput.setValue(packy.defaultValues.enemyViewrange);
+        enemyViewRangeInput.setValue(packy.defaultValues.enemyViewRange);
     }
 
     public static void parseInputs() {
         try {
+        	
             playerHealth = Integer.parseInt(playerHealthInput.getText().replace(",", ""));
             playerDamage = Integer.parseInt(playerDamageInput.getText().replace(",", ""));
             playerFovEnabled = playerFovCheck.isSelected();
             playerFovRange = Integer.parseInt(playerFovInput.getText().replace(",", ""));
-            playerViewrange = Integer.parseInt(playerViewrangeInput.getText().replace(",", ""));
+            playerViewRange = Integer.parseInt(playerViewRangeInput.getText().replace(",", ""));
 
             enemyHealth = Integer.parseInt(enemyHealthInput.getText().replace(",", ""));
             enemyDamage = Integer.parseInt(enemyDamageInput.getText().replace(",", ""));
             enemyFovEnabled = enemyFovCheck.isSelected();
             enemyFovRange = Integer.parseInt(enemyFovInput.getText().replace(",", ""));
-            enemyViewrange = Integer.parseInt(enemyViewrangeInput.getText().replace(",", ""));
+            enemyViewRange = Integer.parseInt(enemyViewRangeInput.getText().replace(",", ""));
         } catch (Exception e) {
             //TODO: Show red text that say no no when inputs poopy (shouldn't happen anymore but better safe than sorry)
         }
@@ -201,16 +202,16 @@ public class modifiers extends JPanel implements MouseListener {
         playerFovInput.setForeground(Color.BLACK);
         playerFovInput.setBackground(Color.WHITE);
 
-        playerViewrangeLabel = new JLabel("Player Viewrange:");
-        playerViewrangeLabel.setFont(modifierFont);
-        playerViewrangeLabel.setBounds(50, 550, 500, 150);
-        playerViewrangeLabel.setForeground(Color.WHITE);
+        playerViewRangeLabel = new JLabel("Player View Range:");
+        playerViewRangeLabel.setFont(modifierFont);
+        playerViewRangeLabel.setBounds(50, 550, 500, 150);
+        playerViewRangeLabel.setForeground(Color.WHITE);
 
-        playerViewrangeInput = new JFormattedTextField();
-        playerViewrangeInput.setFont(modifierFont);
-        playerViewrangeInput.setBounds(500, 590, 250, 75);
-        playerViewrangeInput.setForeground(Color.BLACK);
-        playerViewrangeInput.setBackground(Color.WHITE);
+        playerViewRangeInput = new JFormattedTextField();
+        playerViewRangeInput.setFont(modifierFont);
+        playerViewRangeInput.setBounds(500, 590, 250, 75);
+        playerViewRangeInput.setForeground(Color.BLACK);
+        playerViewRangeInput.setBackground(Color.WHITE);
 
         // Enemy modifiers
         enemyHealthLabel = new JLabel("Enemy Health:");
@@ -269,38 +270,38 @@ public class modifiers extends JPanel implements MouseListener {
         enemyFovInput.setBackground(Color.WHITE);
         // enemyFovInput.setValue();
 
-        enemyViewrangeLabel = new JLabel("Enemy Viewrange:");
-        enemyViewrangeLabel.setFont(modifierFont);
-        enemyViewrangeLabel.setBounds(body.screenWidth / 2, 550, 500, 150);
-        enemyViewrangeLabel.setForeground(Color.WHITE);
+        enemyViewRangeLabel = new JLabel("Enemy View Range:");
+        enemyViewRangeLabel.setFont(modifierFont);
+        enemyViewRangeLabel.setBounds(body.screenWidth / 2, 550, 500, 150);
+        enemyViewRangeLabel.setForeground(Color.WHITE);
 
-        enemyViewrangeInput = new JFormattedTextField();
-        enemyViewrangeInput.setFont(modifierFont);
-        enemyViewrangeInput.setBounds(500 + body.screenWidth / 2, 590, 250, 75);
-        enemyViewrangeInput.setForeground(Color.BLACK);
-        enemyViewrangeInput.setBackground(Color.WHITE);
+        enemyViewRangeInput = new JFormattedTextField();
+        enemyViewRangeInput.setFont(modifierFont);
+        enemyViewRangeInput.setBounds(500 + body.screenWidth / 2, 590, 250, 75);
+        enemyViewRangeInput.setForeground(Color.BLACK);
+        enemyViewRangeInput.setBackground(Color.WHITE);
 
         add(playerHealthLabel);
         add(playerDamageLabel);
         add(playerFovLabel);
-        add(playerViewrangeLabel);
+        add(playerViewRangeLabel);
         add(enemyHealthLabel);
         add(enemyDamageLabel);
         add(enemyFovLabel);
-        add(enemyViewrangeLabel);
+        add(enemyViewRangeLabel);
 
         // ------------ Modifier boxes ------------ //
         add(playerHealthInput);
         add(playerDamageInput);
         add(playerFovCheck);
         add(playerFovInput);
-        add(playerViewrangeInput);
+        add(playerViewRangeInput);
 
         add(enemyHealthInput);
         add(enemyDamageInput);
         add(enemyFovCheck);
         add(enemyFovInput);
-        add(enemyViewrangeInput);
+        add(enemyViewRangeInput);
 
         setDefault();
     }
