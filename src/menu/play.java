@@ -18,12 +18,12 @@ public class play extends JPanel implements MouseListener{
     JSpinner enemiesInput; // TODO: adjust max size of spinner (what is our max number?)
     JComboBox<String> mapSelector;
     JComboBox<game.MODE> gamemodeSelector;
-    File mapFolder = new File("maps");
-    String[] mapFilepaths = mapFolder.list();
+    static File mapFolder = new File("maps");
+    static String[] mapFilepaths = mapFolder.list();
     
     // Player-selected settings
     int enemiesCount;
-    public static String mapName;
+    public static String mapName = "maps/" + mapFilepaths[0];
     game.MODE gamemode; // TODO: use these values in the actual game
 
     public play() {
@@ -98,12 +98,12 @@ public class play extends JPanel implements MouseListener{
             public void mouseClicked(MouseEvent e) {
                 // TODO: run the game using the settings here and on the modifers page
                 try {
-                	
                 	packy.body.startTime = (int) System.currentTimeMillis();
                     enemiesCount = Integer.parseInt(enemiesInput.getValue().toString());
                     packy.enemy.MAX = enemiesCount;
-                    mapName = "maps/" + (String) mapSelector.getSelectedItem();
-                    System.out.println(mapName);
+                    mapName = "maps\\" + (String) mapSelector.getSelectedItem();
+                    packy.game.file = new File(mapName);
+                    packy.body.panel = new body();
                     menu.switchStatePanel(body.playPanel, body.panel);
                     
                     packy.player.VIEWRANGE = modifiers.playerViewRange;
@@ -116,7 +116,7 @@ public class play extends JPanel implements MouseListener{
                     packy.enemyProjectile.DAMAGE = modifiers.enemyDamage;
                     packy.enemy.FOV = modifiers.enemyFovRange;
                 } catch (Exception e2) {
-                    //TODO: return error if something bad
+                    // TODO: return error if something bad
                 }
             }
         });

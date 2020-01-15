@@ -22,7 +22,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	public static int screenHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight());
 	static int fps = 60;
 	
-	public static body panel = new body();
+	public static body panel;
 	public static JFrame frame;
 
 	// Menu elements

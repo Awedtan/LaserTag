@@ -135,12 +135,4 @@ public class game {
 		
 		return true;
 	}
-
-	public static void endGame(game.MODE mode, Graphics g) {
-		if (mode == MODE.DM ) {
-
-		} else if (mode == MODE.SURVIVAL) {
-
-		}
-	}
 }

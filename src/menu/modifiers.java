@@ -3,7 +3,6 @@ package menu;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.text.MaskFormatter;
 
 import packy.*;
 
@@ -37,17 +36,6 @@ public class modifiers extends JPanel implements MouseListener {
 
     Font modifierFont = new Font("Segoe UI", Font.PLAIN, 50);
 
-    // MaskFormatter numberFormatter(String format) {
-    //     MaskFormatter numberMask = null;
-    //     try {
-    //         numberMask = new MaskFormatter(format);
-    //         numberMask.setAllowsInvalid(false);
-    //     } catch (Exception e) {
-    //         System.err.println("bad formatter" + e.getMessage());
-    //     }
-    //     return numberMask;
-    // }
-
     public static void setDefault() {
         playerHealth = packy.defaultValues.playerHealth;
         playerDamage = packy.defaultValues.playerDamage;
@@ -70,7 +58,7 @@ public class modifiers extends JPanel implements MouseListener {
 
         enemyHealthInput.setValue(packy.defaultValues.enemyHealth);
         enemyDamageInput.setValue(packy.defaultValues.enemyDamage);
-        enemyFovCheck.setSelected(true);
+        // enemyFovCheck.setSelected(true);
         enemyFovInput.setValue(packy.defaultValues.enemyFovRange);
         enemyFovInput.setEditable(true);
         enemyFovInput.setBackground(Color.WHITE);
@@ -89,7 +77,7 @@ public class modifiers extends JPanel implements MouseListener {
 
             enemyHealth = Integer.parseInt(enemyHealthInput.getText().replace(",", ""));
             enemyDamage = Integer.parseInt(enemyDamageInput.getText().replace(",", ""));
-            enemyFovEnabled = enemyFovCheck.isSelected();
+            // enemyFovEnabled = enemyFovCheck.isSelected();
             enemyFovRange = Integer.parseInt(enemyFovInput.getText().replace(",", ""));
             enemyViewRange = Integer.parseInt(enemyViewRangeInput.getText().replace(",", ""));
         } catch (Exception e) {
@@ -241,27 +229,27 @@ public class modifiers extends JPanel implements MouseListener {
         enemyFovLabel.setBounds(body.screenWidth / 2, 450, 500, 150);
         enemyFovLabel.setForeground(Color.WHITE);
 
-        enemyFovCheck = new JCheckBox(checkFalse, true);
-        enemyFovCheck.setSelected(true);
-        enemyFovCheck.setFont(modifierFont);
-        enemyFovCheck.setForeground(Color.WHITE);
-        enemyFovCheck.setBackground(menu.backgroundColor);
-        enemyFovCheck.setBounds(400 + body.screenWidth / 2, 490, 80, 75); // TODO: change the image to something that's actually f-ing usable
-        enemyFovCheck.setSelectedIcon(checkTrue);
-        enemyFovCheck.setDisabledIcon(checkFalse);
-        enemyFovCheck.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                boolean selected = enemyFovCheck.getModel().isSelected();
-                if (selected) {
-                    enemyFovInput.setEnabled(true);
-                    enemyFovInput.setBackground(Color.WHITE);
-                } else if (!selected) {
-                    enemyFovInput.setEnabled(false);
-                    enemyFovInput.setBackground(Color.GRAY);
-                }
-            }
-        });
+        // enemyFovCheck = new JCheckBox(checkFalse, true);
+        // enemyFovCheck.setSelected(true);
+        // enemyFovCheck.setFont(modifierFont);
+        // enemyFovCheck.setForeground(Color.WHITE);
+        // enemyFovCheck.setBackground(menu.backgroundColor);
+        // enemyFovCheck.setBounds(400 + body.screenWidth / 2, 490, 80, 75);
+        // enemyFovCheck.setSelectedIcon(checkTrue);
+        // enemyFovCheck.setDisabledIcon(checkFalse);
+        // enemyFovCheck.addActionListener(new ActionListener() {
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+        //         boolean selected = enemyFovCheck.getModel().isSelected();
+        //         if (selected) {
+        //             enemyFovInput.setEnabled(true);
+        //             enemyFovInput.setBackground(Color.WHITE);
+        //         } else if (!selected) {
+        //             enemyFovInput.setEnabled(false);
+        //             enemyFovInput.setBackground(Color.GRAY);
+        //         }
+        //     }
+        // });
 
         enemyFovInput = new JFormattedTextField();
         enemyFovInput.setFont(modifierFont);
@@ -299,7 +287,7 @@ public class modifiers extends JPanel implements MouseListener {
 
         add(enemyHealthInput);
         add(enemyDamageInput);
-        add(enemyFovCheck);
+        // add(enemyFovCheck);
         add(enemyFovInput);
         add(enemyViewRangeInput);
 
