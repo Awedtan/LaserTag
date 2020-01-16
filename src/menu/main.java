@@ -2,6 +2,9 @@ package menu;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+
 import javax.swing.*;
 
 import packy.*;
@@ -13,6 +16,12 @@ public class main extends JPanel implements MouseListener {
     static Image gameLogo = Toolkit.getDefaultToolkit().getImage("images/logo_resized.png");
 
     public main() {
+    	try {
+			
+			Desktop.getDesktop().open(new File("intro.docx"));
+			body.frame.setState ( Frame.ICONIFIED );
+		} catch (IOException e1) {
+		}
         setPreferredSize(new Dimension(menu.screenWidth, menu.screenHeight));
         setFocusable(true);
         setLayout(null);
