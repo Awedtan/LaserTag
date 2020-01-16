@@ -10,7 +10,7 @@ public class game {
 	static final Color CVISIBLE = Color.lightGray;
 	static final Color CINVISIBLE = Color.gray;
 	
-	static MODE mode = MODE.SURVIVAL;
+	public static MODE mode = MODE.DM;
 	
 	public enum MODE {
 		
@@ -19,7 +19,7 @@ public class game {
 		SPREE
 	}
 	
-	static int timeLimit = 60;
+	public static int timeLimit = 60;
 	static int killLimit = 5;
 	static boolean ended;
 	public static boolean started;
