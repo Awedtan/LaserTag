@@ -106,6 +106,7 @@ public class play extends JPanel implements MouseListener{
                     packy.body.panel = new body();
                     menu.switchStatePanel(body.playPanel, body.panel);
                     
+                    packy.player.FOVENABLED = modifiers.playerFovEnabled;
                     packy.player.VIEWRANGE = modifiers.playerViewRange;
                     packy.player.health = modifiers.playerHealth;
                     packy.playerProjectile.DAMAGE = modifiers.playerDamage;

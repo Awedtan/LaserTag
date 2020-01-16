@@ -17,11 +17,10 @@ public class modifiers extends JPanel implements MouseListener {
     JLabel playerFovLabel, playerViewRangeLabel, playerDamageLabel, playerHealthLabel, enemyFovLabel, enemyViewRangeLabel, enemyDamageLabel, enemyHealthLabel;
 
     // Modifier variables: player
-    static boolean playerFovEnabled;
+    static boolean playerFovEnabled = true;
     static int playerFovRange, playerViewRange, playerDamage, playerHealth;
 
     // Modifier variables: enemy
-    static boolean enemyFovEnabled;
     static int enemyFovRange, enemyViewRange, enemyDamage, enemyHealth;
 
     // Modifier inputs: player
