@@ -76,6 +76,7 @@ public class player {
 	
 	public static void respawn(int x, int y) {
 		
+		body.respawnCount = 0;
 		model.x = x;
 		model.y = y;
 		health = HEALTHMAX;

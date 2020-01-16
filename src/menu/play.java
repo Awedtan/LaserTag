@@ -7,15 +7,16 @@ import java.io.File;
 import javax.swing.*;
 
 import packy.*;
+import packy.game.MODE;
 
 @SuppressWarnings("serial")
 public class play extends JPanel implements MouseListener{
-    JLabel titleLabel, enemiesLabel, mapLabel, modifiersLabel, gamemodeLabel, backLabel, startLabel;
+    JLabel titleLabel, enemiesLabel, mapLabel, modifiersLabel, gamemodeLabel, backLabel, startLabel, timeLabel;
     
     Image headerImage = Toolkit.getDefaultToolkit().getImage("images/header_play.png");
     static Font optionFont = new Font("Segoe UI", Font.PLAIN, 60);
 
-    JSpinner enemiesInput; // TODO: adjust max size of spinner (what is our max number?)
+    JSpinner enemiesInput, timeInput; // TODO: adjust max size of spinner (what is our max number?)
     JComboBox<String> mapSelector;
     JComboBox<game.MODE> gamemodeSelector;
     static File mapFolder = new File("maps");
@@ -37,7 +38,7 @@ public class play extends JPanel implements MouseListener{
         enemiesLabel.setForeground(Color.WHITE);
 
         // TODO: figure out how to change colors for this (right now it's mostly the default look and feel)
-        enemiesInput = new JSpinner(new SpinnerNumberModel(1, 1, packy.enemy.MAX, 1));
+        enemiesInput = new JSpinner(new SpinnerNumberModel(15, 1, packy.enemy.MAX, 1));
         enemiesInput.setFont(optionFont);
         enemiesInput.setBounds(300, 280, 250, 100);
         enemiesInput.getEditor().getComponent(0).setForeground(Color.BLACK);
@@ -76,6 +77,35 @@ public class play extends JPanel implements MouseListener{
         gamemodeSelector.setBounds(400, 570, 500, 100);
         gamemodeSelector.setForeground(Color.BLACK);
         gamemodeSelector.setBackground(Color.WHITE);
+        
+        timeLabel = new JLabel("Time Limit:");
+    	timeLabel.setFont(optionFont);
+    	timeLabel.setBounds(50, 700, 500, 150);
+    	timeLabel.setForeground(Color.WHITE);
+
+    	timeInput = new JSpinner(new SpinnerNumberModel(60, 10, 3600, 10));
+    	timeInput.setFont(optionFont);
+    	timeInput.setBounds(400, 725, 300, 100);
+        timeInput.getEditor().getComponent(0).setForeground(Color.BLACK);
+        timeInput.getEditor().getComponent(0).setBackground(Color.WHITE);
+        
+        gamemodeSelector.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+
+                JComboBox comboBox = (JComboBox) event.getSource();
+                
+                if(comboBox.getSelectedItem().toString().equals("DM")){
+                	
+                	timeLabel.setVisible(true);
+                    timeInput.setVisible(true);
+                }
+                else {
+                	
+                	timeLabel.setVisible(false);
+                    timeInput.setVisible(false);
+                }
+            }
+        });
 
         backLabel = new JLabel("< Back", SwingConstants.CENTER);
         backLabel.setFont(optionFont);
@@ -98,6 +128,9 @@ public class play extends JPanel implements MouseListener{
             public void mouseClicked(MouseEvent e) {
                 // TODO: run the game using the settings here and on the modifers page
                 try {
+                	
+                	game.timeLimit = Integer.parseInt(timeInput.getValue().toString());
+                	game.mode = (MODE) gamemodeSelector.getSelectedItem();
                 	packy.body.startTime = (int) System.currentTimeMillis();
                     enemiesCount = Integer.parseInt(enemiesInput.getValue().toString());
                     packy.enemy.MAX = enemiesCount;
@@ -133,6 +166,8 @@ public class play extends JPanel implements MouseListener{
         add(gamemodeSelector);
         add(backLabel);
         add(startLabel);
+        add(timeLabel);
+        add(timeInput);
     }
 
     public void paintComponent(Graphics g) {
