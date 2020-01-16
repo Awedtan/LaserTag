@@ -280,187 +280,186 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	
 	public void paintComponent(Graphics g) {
 		//Draws all graphics
-		
-		super.paintComponent(g);
-		game.drawVisible(g);
-		
-		for(int i=0; i<playerProjectile.shots.length; i++) {
-			Graphics gLaser = g.create();
-			playerProjectile.rotate(gLaser,  i);
-			playerProjectile.move(gLaser, i);
-			gLaser.dispose();
-		}
-
-
-
-		for(int i=0; i<enemyProjectile.shots.length; i++) {
-
-			Graphics gLaser = g.create();
-			enemyProjectile.rotate(gLaser,  i);
-			enemyProjectile.move(gLaser, i);
-			gLaser.dispose();
-		}
-		
-		playerProjectile.initialized = true;
-		enemyProjectile.initialized = true;
-		
-		game.drawWalls(g);
-		
-		for(int i=0; i<enemy.MAX; i++) {
-			if(enemy.alive[i]) {
+		try {
+			
+			super.paintComponent(g);
+			game.drawVisible(g);
+			
+			for(int i=0; i<playerProjectile.shots.length; i++) {
 				
-				Graphics gEnemy = g.create();
-				enemy.rotate(gEnemy, i);
-				enemy.draw(gEnemy, i);
-				gEnemy.dispose();
+				Graphics gLaser = g.create();
+				playerProjectile.rotate(gLaser,  i);
+				playerProjectile.move(gLaser, i);
+				gLaser.dispose();
 			}
-		}
-		
-		game.drawInvisible(g);
-		
-		Graphics gPlayer = g.create();
-		player.rotate(gPlayer);
-		player.draw(gPlayer);
-		gPlayer.dispose();
-		
-		game.drawWalls(g);
-		
-		if(player.alive) {
-			
-			g.setColor(Color.black);
-			g.drawString(Integer.toString(player.health), player.model.x, player.model.y - player.model.height);
-		}
-		else if(!game.ended) {
-			// Draws a game over message with a background and border when the player dies in this mode TODO: make this more efficient
-			
-			g.setFont(new Font("Segoe UI", Font.PLAIN, 30));
-			FontMetrics fm = g.getFontMetrics();
-			String deathMessage;
-			respawnCount++;
-			
-			if(respawnCount/60 >= respawnDelay) {
-				
-				player.canRespawn = true;
-				deathMessage = "Click anywhere on the map to respawn...";	
-			}
-			else {
-				
-				player.canRespawn = false;
-				deathMessage = "You died! Respawning in " + (respawnDelay - respawnCount/60) + " seconds...";
+	
+			for(int i=0; i<enemyProjectile.shots.length; i++) {
+	
+				Graphics gLaser = g.create();
+				enemyProjectile.rotate(gLaser,  i);
+				enemyProjectile.move(gLaser, i);
+				gLaser.dispose();
 			}
 			
-			Rectangle2D textRect = fm.getStringBounds(deathMessage, g);
-			g.setColor(Color.white);
+			playerProjectile.initialized = true;
+			enemyProjectile.initialized = true;
 			
-			g.fillRect(
-				screenWidth / 2 - (int) textRect.getWidth() / 2 - 5, 
-				screenHeight / 2 - fm.getAscent() / 2 - 5, 
-				(int) textRect.getWidth() + 10, 
-				(int) textRect.getHeight() + 10
-			);
-			g.setColor(Color.BLACK);
+			game.drawWalls(g);
 			
-			g.fillRect(
-				screenWidth / 2 - (int) textRect.getWidth() / 2, 
-				screenHeight / 2 - fm.getAscent() / 2, 
-				(int) textRect.getWidth(), 
-				(int) textRect.getHeight()	
-			);
-			g.setColor(Color.white);
-			g.drawString(deathMessage, screenWidth / 2 - (int) textRect.getWidth() / 2, screenHeight / 2 + fm.getAscent() / 2);
-		}
-		else if(game.mode == game.mode.SURVIVAL){
-			// Draws a game over message with a background and border when the player dies in this mode
+			for(int i=0; i<enemy.MAX; i++) 
+				if(enemy.alive[i]) {
+					
+					Graphics gEnemy = g.create();
+					enemy.rotate(gEnemy, i);
+					enemy.draw(gEnemy, i);
+					gEnemy.dispose();
+				}
 			
-			g.setFont(new Font("Segoe UI", Font.PLAIN, 30));
-			FontMetrics fm = g.getFontMetrics();
-			String permaDeathMessage = "GAME OVER! You survived for " + elapsedTime + " seconds and defeated " + player.score + " enemies before dying...";
-			Rectangle2D textRect = fm.getStringBounds(permaDeathMessage, g);
-			g.setColor(Color.white);
+			game.drawInvisible(g);
 			
-			g.fillRect(
-				screenWidth / 2 - (int) textRect.getWidth() / 2 - 5, 
-				screenHeight / 2 - fm.getAscent() / 2 - 5, 
-				(int) textRect.getWidth() + 10, 
-				(int) textRect.getHeight() + 10
-			);
-			g.setColor(Color.BLACK);
+			Graphics gPlayer = g.create();
+			player.rotate(gPlayer);
+			player.draw(gPlayer);
+			gPlayer.dispose();
 			
-			g.fillRect(
-				screenWidth / 2 - (int) textRect.getWidth() / 2, 
-				screenHeight / 2 - fm.getAscent() / 2, 
-				(int) textRect.getWidth(), 
-				(int) textRect.getHeight()	
-			);
-			g.setColor(Color.white);
-			g.drawString(permaDeathMessage, screenWidth / 2 - (int) textRect.getWidth() / 2, screenHeight / 2 + fm.getAscent() / 2);
+			game.drawWalls(g);
 			
-			// TODO: Figure out how to draw "play again" and "exit" boxes with mouseListeners efficiently
-			
-		}
-		else if(game.mode == game.mode.DM) {
-			
-			// Draws a game over message with a background and border when the player dies in this mode
-			
-			g.setFont(new Font("Segoe UI", Font.PLAIN, 30));
-			FontMetrics fm = g.getFontMetrics();
-			String permaDeathMessage = "GAME OVER! You defeated " + player.score + " enemies before time ran out...";
-			Rectangle2D textRect = fm.getStringBounds(permaDeathMessage, g);
-			g.setColor(Color.white);
-			
-			g.fillRect(
-				screenWidth / 2 - (int) textRect.getWidth() / 2 - 5, 
-				screenHeight / 2 - fm.getAscent() / 2 - 5, 
-				(int) textRect.getWidth() + 10, 
-				(int) textRect.getHeight() + 10
-			);
-			g.setColor(Color.BLACK);
-			
-			g.fillRect(
-				screenWidth / 2 - (int) textRect.getWidth() / 2, 
-				screenHeight / 2 - fm.getAscent() / 2, 
-				(int) textRect.getWidth(), 
-				(int) textRect.getHeight()	
-			);
-			g.setColor(Color.white);
-			g.drawString(permaDeathMessage, screenWidth / 2 - (int) textRect.getWidth() / 2, screenHeight / 2 + fm.getAscent() / 2);
-			
-			// TODO: Figure out how to draw "play again" and "exit" boxes with mouseListeners efficiently
-		}
-		else if(game.mode == game.mode.SPREE) {
-			
-			// Draws a game over message with a background and border when the player dies in this mode
-			
-			g.setFont(new Font("Segoe UI", Font.PLAIN, 30));
-			FontMetrics fm = g.getFontMetrics();
-			String permaDeathMessage = "GAME OVER! You defeated " + game.killLimit + " enemies in " + elapsedTime + " seconds...";
-			Rectangle2D textRect = fm.getStringBounds(permaDeathMessage, g);
-			g.setColor(Color.white);
-			
-			g.fillRect(
-				screenWidth / 2 - (int) textRect.getWidth() / 2 - 5, 
-				screenHeight / 2 - fm.getAscent() / 2 - 5, 
-				(int) textRect.getWidth() + 10, 
-				(int) textRect.getHeight() + 10
-			);
-			g.setColor(Color.BLACK);
-			
-			g.fillRect(
-				screenWidth / 2 - (int) textRect.getWidth() / 2, 
-				screenHeight / 2 - fm.getAscent() / 2, 
-				(int) textRect.getWidth(), 
-				(int) textRect.getHeight()	
-			);
-			g.setColor(Color.white);
-			g.drawString(permaDeathMessage, screenWidth / 2 - (int) textRect.getWidth() / 2, screenHeight / 2 + fm.getAscent() / 2);
-			
-			// TODO: Figure out how to draw "play again" and "exit" boxes with mouseListeners efficiently
-		}
-
+			if(player.alive) {
 				
-		
-		game.cWall = game.CWALL;
-		player.color = Color.blue;
+				g.setColor(Color.black);
+				g.drawString(Integer.toString(player.health), player.model.x, player.model.y - player.model.height);
+			}
+			else if(!game.ended) {
+				// Draws a game over message with a background and border when the player dies in this mode TODO: make this more efficient
+				
+				g.setFont(new Font("Segoe UI", Font.PLAIN, 30));
+				FontMetrics fm = g.getFontMetrics();
+				String deathMessage;
+				respawnCount++;
+				
+				if(respawnCount/60 >= respawnDelay) {
+					
+					player.canRespawn = true;
+					deathMessage = "Click anywhere on the map to respawn...";	
+				}
+				else {
+					
+					player.canRespawn = false;
+					deathMessage = "You died! Respawning in " + (respawnDelay - respawnCount/60) + " seconds...";
+				}
+				
+				Rectangle2D textRect = fm.getStringBounds(deathMessage, g);
+				g.setColor(Color.white);
+				
+				g.fillRect(
+					screenWidth / 2 - (int) textRect.getWidth() / 2 - 5, 
+					screenHeight / 2 - fm.getAscent() / 2 - 5, 
+					(int) textRect.getWidth() + 10, 
+					(int) textRect.getHeight() + 10
+				);
+				g.setColor(Color.BLACK);
+				
+				g.fillRect(
+					screenWidth / 2 - (int) textRect.getWidth() / 2, 
+					screenHeight / 2 - fm.getAscent() / 2, 
+					(int) textRect.getWidth(), 
+					(int) textRect.getHeight()	
+				);
+				g.setColor(Color.white);
+				g.drawString(deathMessage, screenWidth / 2 - (int) textRect.getWidth() / 2, screenHeight / 2 + fm.getAscent() / 2);
+			}
+			else if(game.mode == game.mode.SURVIVAL){
+				// Draws a game over message with a background and border when the player dies in this mode
+				
+				g.setFont(new Font("Segoe UI", Font.PLAIN, 30));
+				FontMetrics fm = g.getFontMetrics();
+				String permaDeathMessage = "GAME OVER! You survived for " + elapsedTime + " seconds and defeated " + player.score + " enemies before dying...";
+				Rectangle2D textRect = fm.getStringBounds(permaDeathMessage, g);
+				g.setColor(Color.white);
+				
+				g.fillRect(
+					screenWidth / 2 - (int) textRect.getWidth() / 2 - 5, 
+					screenHeight / 2 - fm.getAscent() / 2 - 5, 
+					(int) textRect.getWidth() + 10, 
+					(int) textRect.getHeight() + 10
+				);
+				g.setColor(Color.BLACK);
+				
+				g.fillRect(
+					screenWidth / 2 - (int) textRect.getWidth() / 2, 
+					screenHeight / 2 - fm.getAscent() / 2, 
+					(int) textRect.getWidth(), 
+					(int) textRect.getHeight()	
+				);
+				g.setColor(Color.white);
+				g.drawString(permaDeathMessage, screenWidth / 2 - (int) textRect.getWidth() / 2, screenHeight / 2 + fm.getAscent() / 2);
+				
+				// TODO: Figure out how to draw "play again" and "exit" boxes with mouseListeners efficiently
+				
+			}
+			else if(game.mode == game.mode.DM) {
+				
+				// Draws a game over message with a background and border when the player dies in this mode
+				
+				g.setFont(new Font("Segoe UI", Font.PLAIN, 30));
+				FontMetrics fm = g.getFontMetrics();
+				String permaDeathMessage = "GAME OVER! You defeated " + player.score + " enemies before time ran out...";
+				Rectangle2D textRect = fm.getStringBounds(permaDeathMessage, g);
+				g.setColor(Color.white);
+				
+				g.fillRect(
+					screenWidth / 2 - (int) textRect.getWidth() / 2 - 5, 
+					screenHeight / 2 - fm.getAscent() / 2 - 5, 
+					(int) textRect.getWidth() + 10, 
+					(int) textRect.getHeight() + 10
+				);
+				g.setColor(Color.BLACK);
+				
+				g.fillRect(
+					screenWidth / 2 - (int) textRect.getWidth() / 2, 
+					screenHeight / 2 - fm.getAscent() / 2, 
+					(int) textRect.getWidth(), 
+					(int) textRect.getHeight()	
+				);
+				g.setColor(Color.white);
+				g.drawString(permaDeathMessage, screenWidth / 2 - (int) textRect.getWidth() / 2, screenHeight / 2 + fm.getAscent() / 2);
+				
+				// TODO: Figure out how to draw "play again" and "exit" boxes with mouseListeners efficiently
+			}
+			else if(game.mode == game.mode.SPREE) {
+				
+				// Draws a game over message with a background and border when the player dies in this mode
+				
+				g.setFont(new Font("Segoe UI", Font.PLAIN, 30));
+				FontMetrics fm = g.getFontMetrics();
+				String permaDeathMessage = "GAME OVER! You defeated " + game.killLimit + " enemies in " + elapsedTime + " seconds...";
+				Rectangle2D textRect = fm.getStringBounds(permaDeathMessage, g);
+				g.setColor(Color.white);
+				
+				g.fillRect(
+					screenWidth / 2 - (int) textRect.getWidth() / 2 - 5, 
+					screenHeight / 2 - fm.getAscent() / 2 - 5, 
+					(int) textRect.getWidth() + 10, 
+					(int) textRect.getHeight() + 10
+				);
+				g.setColor(Color.BLACK);
+				
+				g.fillRect(
+					screenWidth / 2 - (int) textRect.getWidth() / 2, 
+					screenHeight / 2 - fm.getAscent() / 2, 
+					(int) textRect.getWidth(), 
+					(int) textRect.getHeight()	
+				);
+				g.setColor(Color.white);
+				g.drawString(permaDeathMessage, screenWidth / 2 - (int) textRect.getWidth() / 2, screenHeight / 2 + fm.getAscent() / 2);
+				
+				// TODO: Figure out how to draw "play again" and "exit" boxes with mouseListeners efficiently
+			}
+	
+			game.cWall = game.CWALL;
+			player.color = Color.blue;
+		}catch(Exception e) {
+		}
 	}
 	
 	@Override

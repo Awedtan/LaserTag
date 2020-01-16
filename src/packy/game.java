@@ -101,12 +101,12 @@ public class game {
 		
 		tilesInitialized = true;
 		
-		for(int i=0; i<tiles.length; i++) {
+		for(int i=0; i<tiles.length; i++) 
 			if(tileIsVisible[i]) {
+				
 				g2.setColor(cVisible);
 				g2.fill(tiles[i]);
 			}
-		}
 	}
 	
 	public static void drawInvisible(Graphics g) {
