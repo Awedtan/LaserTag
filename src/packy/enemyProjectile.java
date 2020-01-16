@@ -75,7 +75,8 @@ public class enemyProjectile {
 		else if(shots[shot].intersects(player.model) && alive[shot]) {
 			
 				kill(shot);
-				player.hit();
+				if(!game.ended)
+					player.hit();
 		}
 	}
 }

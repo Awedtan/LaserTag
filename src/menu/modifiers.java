@@ -109,6 +109,7 @@ public class modifiers extends JPanel implements MouseListener {
         backLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+            	parseInputs();
                 menu.switchStatePanel(body.modifiersPanel, body.playPanel);
             }
         });
