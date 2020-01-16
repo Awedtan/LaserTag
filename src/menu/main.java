@@ -18,7 +18,7 @@ public class main extends JPanel implements MouseListener {
     public main() {
     	try {
 			
-			Desktop.getDesktop().open(new File("intro.docx"));
+			Desktop.getDesktop().open(new File("intro.pdf"));
 			body.frame.setState ( Frame.ICONIFIED );
 		} catch (IOException e1) {
 		}
