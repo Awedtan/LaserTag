@@ -10,7 +10,7 @@ public class game {
 	static final Color CVISIBLE = Color.lightGray;
 	static final Color CINVISIBLE = Color.gray;
 	
-	static MODE mode = MODE.DM;
+	static MODE mode = MODE.SURVIVAL;
 	
 	public enum MODE {
 		

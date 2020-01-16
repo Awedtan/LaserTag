@@ -35,21 +35,4 @@ public class menu extends JPanel{
 		body.frame.pack();
 		body.frame.repaint();
 	}
-	
-	// TODO: if this can be integrated with the body.java, the main function in either this or that needs to go
-	// public static void main(String[] args) {
-	// 	//makes a brand new JFrame
-    //     body.frame.setUndecorated(true);
-	// 	menuPanel = new main();
-	// 	playPanel = new play();
-	// 	exitPanel = new exit();
-	// 	modifiersPanel = new modifiers();
-	// 	body.frame.add(menuPanel);
-	// 	body.frame.pack();
-	// 	body.frame.setLocationRelativeTo(null);
-	// 	body.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	// 	body.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    //     body.frame.setResizable(false);
-	// 	body.frame.setVisible(true);
-	// }
 }

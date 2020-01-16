@@ -395,7 +395,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 				g.drawString(permaDeathMessage, screenWidth / 2 - (int) textRect.getWidth() / 2, screenHeight / 2 + fm.getAscent() / 2);
 				
 				// TODO: Figure out how to draw "play again" and "exit" boxes with mouseListeners efficiently
-				
+				gameOver();
 			}
 			else if(game.mode == game.mode.DM) {
 				
@@ -425,6 +425,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 				g.drawString(permaDeathMessage, screenWidth / 2 - (int) textRect.getWidth() / 2, screenHeight / 2 + fm.getAscent() / 2);
 				
 				// TODO: Figure out how to draw "play again" and "exit" boxes with mouseListeners efficiently
+				gameOver();
 			}
 			else if(game.mode == game.mode.SPREE) {
 				
@@ -454,12 +455,48 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 				g.drawString(permaDeathMessage, screenWidth / 2 - (int) textRect.getWidth() / 2, screenHeight / 2 + fm.getAscent() / 2);
 				
 				// TODO: Figure out how to draw "play again" and "exit" boxes with mouseListeners efficiently
+				gameOver();
 			}
 	
 			game.cWall = game.CWALL;
 			player.color = Color.blue;
 		}catch(Exception e) {
 		}
+	}
+
+	public static void gameOver() {
+		JLabel playAgain = new JLabel("Play Again", SwingConstants.CENTER);
+		playAgain.setFont(new Font("Segoe UI", Font.PLAIN, 30));
+		playAgain.setBounds(screenWidth / 2 - 300, screenHeight / 2 + 100, 250, 50);
+		playAgain.setForeground(Color.WHITE);
+		playAgain.setOpaque(true);
+		playAgain.setBackground(Color.BLACK);
+		playAgain.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+		playAgain.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO: if the game exits, dispose and restart everything again
+				
+			}
+		});
+
+		JLabel exitGame = new JLabel("Exit Game", SwingConstants.CENTER);
+		exitGame.setFont(new Font("Segoe UI", Font.PLAIN, 30));
+		exitGame.setBounds(screenWidth / 2 +  50, screenHeight / 2 + 100, 250, 50);
+		exitGame.setForeground(Color.WHITE);
+		exitGame.setOpaque(true);
+		exitGame.setBackground(Color.BLACK);
+		exitGame.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+		exitGame.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO: if the game exits, dispose and also restart everything
+				menu.switchStatePanel(body.panel, body.playPanel);
+			}
+		});
+
+		panel.add(playAgain);
+		panel.add(exitGame);
 	}
 	
 	@Override
