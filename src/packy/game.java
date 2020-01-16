@@ -20,7 +20,7 @@ public class game {
 	}
 	
 	public static int timeLimit = 60;
-	static int killLimit = 5;
+	public static int killLimit = 5;
 	static boolean ended;
 	public static boolean started;
 	

@@ -129,6 +129,7 @@ public class play extends JPanel implements MouseListener{
                 // TODO: run the game using the settings here and on the modifers page
                 try {
                 	
+                	game.killLimit = Integer.parseInt(enemiesInput.getValue().toString());
                 	game.timeLimit = Integer.parseInt(timeInput.getValue().toString());
                 	game.mode = (MODE) gamemodeSelector.getSelectedItem();
                 	packy.body.startTime = (int) System.currentTimeMillis();
