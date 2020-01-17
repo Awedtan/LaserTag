@@ -33,8 +33,20 @@ public class player {
 	static boolean moveUp;
 	static boolean moveDown;
 	static boolean sprint;
-	static boolean alive = true;
+	public static boolean alive = true;
 	static boolean canRespawn;
+	
+	public static void reset() {
+
+		score = 0;
+		moveLeft = false;
+		moveRight = false;
+		moveUp = false;
+		moveDown = false;
+		sprint = false;
+		canRespawn = true;
+		alive = true;
+	}
 	
 	public static void damage() {
 		health -= enemyProjectile.DAMAGE;
@@ -182,7 +194,7 @@ public class player {
 	
 	public static void checkCollision(Rectangle rect) {
 		//Checks for player collision with rectangles
-		
+
 		if(model.intersects(rect)) {
 
 			double left1 = model.getX();

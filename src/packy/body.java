@@ -18,9 +18,9 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	static int mousePosX;//Mouse cursor coordinates
 	static int mousePosY;
 	// Sets screenWidth and screenHeight to the dimensions of the screen
-	public static int screenWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth());//Screen dimensions
-	public static int screenHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight());
-	static int fps = 60;
+	final public static int screenWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth());//Screen dimensions
+	final public static int screenHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight());
+	final static int fps = 60;
 	
 	public static body panel;
 	public static JFrame frame;
@@ -38,6 +38,14 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	static int respawnDelay = 5;
 	static int respawnCount;
 
+	public static void reset() {
+		
+		startTime = 0;
+		elapsedTime = 0;
+		respawnDelay = 5;
+		respawnCount = 0;
+	}
+	
 	@Override
 	public void run() {
 		//Runs first and forever
@@ -46,7 +54,9 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		
 		while(true) {
 			
-			update();
+			if(!game.ended)
+				update();
+			
 			this.repaint();
 			
 			try {
@@ -473,7 +483,6 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		playAgain.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO: if the game exits, dispose and restart everything again
 				
 			}
 		});
@@ -489,9 +498,19 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO: if the game exits, dispose and also restart everything
+				
 				panel.remove(scoreLabel);
 				panel.remove(timeLabel);
 				menu.switchStatePanel(body.panel, body.playPanel);
+				
+				for(int i=0; i<enemy.MAX; i++)
+					enemy.kill(i);
+				
+				player.respawn(player.STARTPOSX, player.STARTPOSY);
+				
+				game.reset();
+				body.reset();
+				player.reset();
 			}
 		});
 
@@ -537,7 +556,6 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		//TODO: Fix this
 		if(playerProjectile.findNext(playerProjectile.shots) != -1) {
 			mousePosX = e.getX();
 			mousePosY = e.getY();

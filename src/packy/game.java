@@ -20,10 +20,10 @@ public class game {
 	}
 	
 	public static int timeLimit = 60;
-	public static int killLimit = 5;
-	public static boolean ended;
+	public static int killLimit = 15;
+	public static boolean ended = true;
 	
-	public static File file = new File("maps/map1.txt");
+	public static File file = new File("maps/arena.txt");
 	static Scanner input;
 	
 	static char[][] map;//The dimensions should be common divisors of 1920 and 1080
@@ -46,6 +46,32 @@ public class game {
 	static boolean[] tileIsVisible;
 	static int numTiles = 0;
 	static Rectangle[] tiles;
+	
+	public static void reset() {
+		
+		 timeLimit = 60;
+		 killLimit = 15;
+		 ended = true;
+		
+		 file = new File("maps/arena.txt");
+		
+		 numCols = 0;
+		 numRows = 0;
+		 tileWidth = 0;
+		 tileHeight = 0;
+		
+		 cWall = CWALL;
+		 cVisible = CVISIBLE;
+		 cInvisible = CINVISIBLE;
+		
+		 wallsInitialized = false;
+		 walls = new Rectangle[0];
+		 numWalls = 0;
+		
+		 tilesInitialized = false;
+		 tiles = new Rectangle[0];
+		 numTiles = 0;
+	}
 	
 	public static void drawWalls(Graphics g) {
 		//Draws walls
@@ -74,8 +100,6 @@ public class game {
 			g2.setColor(cWall);
 			g2.fill(walls[i]);
 		}
-		
-		
 	}
 	
 	public static void drawVisible(Graphics g) {
