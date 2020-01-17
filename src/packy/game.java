@@ -22,7 +22,6 @@ public class game {
 	public static int timeLimit = 60;
 	public static int killLimit = 5;
 	public static boolean ended;
-	public static boolean started;
 	
 	public static File file = new File("maps/map1.txt");
 	static Scanner input;

@@ -108,9 +108,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		
 		for(int i=0; i<enemy.MAX; i++)
 			enemy.initialize(i);
-		
-    	game.started = false; // What does this do?
-	}
+		}
 	
 	public void update() {
 		//Updates object locations, checks for collisions, visibility, lots of stuff
