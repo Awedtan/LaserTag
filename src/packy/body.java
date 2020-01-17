@@ -58,7 +58,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		}
 	}
 	
-	public void initialize() {
+	public static void initialize() {
 		//Sets up map creation
 		
 		try {
@@ -109,7 +109,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		for(int i=0; i<enemy.MAX; i++)
 			enemy.initialize(i);
 		
-    	game.started = false;
+    	game.started = false; // What does this do?
 	}
 	
 	public void update() {
@@ -491,6 +491,8 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO: if the game exits, dispose and also restart everything
+				panel.remove(scoreLabel);
+				panel.remove(timeLabel);
 				menu.switchStatePanel(body.panel, body.playPanel);
 			}
 		});

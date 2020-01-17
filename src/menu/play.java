@@ -9,7 +9,7 @@ import javax.swing.*;
 import packy.*;
 import packy.game.MODE;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "rawtypes"})
 public class play extends JPanel implements MouseListener{
     JLabel titleLabel, enemiesLabel, mapLabel, modifiersLabel, gamemodeLabel, backLabel, startLabel, timeLabel;
     
