@@ -32,7 +32,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	public static modifiers modifiersPanel;
 
 	// ------------ HUD Elements ------------ //
-	static JLabel scoreLabel, timeLabel;
+	static JLabel scoreLabel, timeLabel, playAgain, exitGame;
 	public static int startTime;
 	static int elapsedTime;
 	static int respawnDelay = 5;
@@ -473,7 +473,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	}
 
 	public static void gameOver() {
-		JLabel playAgain = new JLabel("Play Again", SwingConstants.CENTER);
+		playAgain = new JLabel("Play Again", SwingConstants.CENTER);
 		playAgain.setFont(new Font("Segoe UI", Font.PLAIN, 30));
 		playAgain.setBounds(screenWidth / 2 - 300, screenHeight / 2 + 100, 250, 50);
 		playAgain.setForeground(Color.WHITE);
@@ -483,11 +483,22 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		playAgain.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				// TODO: make this thing work properly instead of loading you into an empty map
+				for(int i=0; i<enemy.MAX; i++)
+					enemy.kill(i);
 				
+				player.respawn(player.STARTPOSX, player.STARTPOSY);
+
+				panel.remove(playAgain);
+				panel.remove(exitGame);
+				
+				game.reset();
+				body.reset();
+				player.reset();
 			}
 		});
 
-		JLabel exitGame = new JLabel("Exit Game", SwingConstants.CENTER);
+		exitGame = new JLabel("Exit Game", SwingConstants.CENTER);
 		exitGame.setFont(new Font("Segoe UI", Font.PLAIN, 30));
 		exitGame.setBounds(screenWidth / 2 +  50, screenHeight / 2 + 100, 250, 50);
 		exitGame.setForeground(Color.WHITE);
@@ -501,7 +512,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 				
 				panel.remove(scoreLabel);
 				panel.remove(timeLabel);
-				menu.switchStatePanel(body.panel, body.playPanel);
+				menu.switchStatePanel(panel, playPanel);
 				
 				for(int i=0; i<enemy.MAX; i++)
 					enemy.kill(i);
