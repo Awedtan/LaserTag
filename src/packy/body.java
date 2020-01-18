@@ -37,7 +37,9 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	static int elapsedTime;
 	static int respawnDelay = 5;
 	static int respawnCount;
-
+	
+	public static boolean run = true;
+	
 	public static void reset() {
 		
 		startTime = 0;
@@ -52,7 +54,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		
 		initialize();
 		
-		while(true) {
+		while(run) {
 			
 			if(!game.ended)
 				update();
@@ -480,6 +482,8 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// Resets all of the enemies and player, and switches the game back to the play menu
+				
+				run = false;
 				
 				panel.remove(scoreLabel);
 				panel.remove(timeLabel);
