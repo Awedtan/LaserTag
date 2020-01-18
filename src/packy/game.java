@@ -23,7 +23,7 @@ public class game {
 	public static int killLimit = 15;
 	public static boolean ended = true;
 	
-	public static File file = new File("maps/arena.txt");
+	public static File file = new File("maps/arena");
 	static Scanner input;
 	
 	static char[][] map;//The dimensions should be common divisors of 1920 and 1080

@@ -133,24 +133,24 @@ public class play extends JPanel implements MouseListener{
                 	game.killLimit = Integer.parseInt(enemiesInput.getValue().toString());
                 	game.timeLimit = Integer.parseInt(timeInput.getValue().toString());
                 	game.mode = (MODE) gamemodeSelector.getSelectedItem();
-                	packy.body.startTime = (int) System.currentTimeMillis();
+                	body.startTime = (int) System.currentTimeMillis();
                     enemiesCount = Integer.parseInt(enemiesInput.getValue().toString());
-                    packy.enemy.MAX = enemiesCount;
+                    enemy.MAX = enemiesCount;
                     mapName = "maps\\" + (String) mapSelector.getSelectedItem();
-                    packy.game.file = new File(mapName);
-                    packy.body.panel = new body();
+                    game.file = new File(mapName);
+                    body.panel = new body();
                     menu.switchStatePanel(body.playPanel, body.panel);
                     body.run = true;
-                    packy.player.FOVENABLED = modifiers.playerFovEnabled;
-                    packy.player.VIEWRANGE = modifiers.playerViewRange;
-                    packy.player.health = modifiers.playerHealth;
-                    packy.playerProjectile.DAMAGE = modifiers.playerDamage;
-                    packy.player.FOV = modifiers.playerFovRange;
+                    player.FOVENABLED = modifiers.playerFovEnabled;
+                    player.VIEWRANGE = modifiers.playerViewRange;
+                    player.health = modifiers.playerHealth;
+                    playerProjectile.DAMAGE = modifiers.playerDamage;
+                    player.FOV = modifiers.playerFovRange;
                     
-                    packy.enemy.VIEWRANGE = modifiers.enemyViewRange;
-                    packy.enemy.HEALTH = modifiers.enemyHealth;
-                    packy.enemyProjectile.DAMAGE = modifiers.enemyDamage;
-                    packy.enemy.FOV = modifiers.enemyFovRange;
+                    enemy.VIEWRANGE = modifiers.enemyViewRange;
+                    enemy.HEALTH = modifiers.enemyHealth;
+                    enemyProjectile.DAMAGE = modifiers.enemyDamage;
+                    enemy.FOV = modifiers.enemyFovRange;
                 } catch (Exception e2) {
                 }
             }
