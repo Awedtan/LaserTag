@@ -37,9 +37,10 @@ https://github.com/Awedtan/LaserTag/issues/44
 - Moving rectangles in the game is just really short and rapid teleportation, so projectiles and other rectangles can skip right through other rectangles if they are "moving" fast enough or the wall is thin enough
 
 #### Steps to reproduce the behavior:
-1. Set projectile speeds to a high value (eg. 50)
-2. Shoot towards a couple walls
-3. Shoot at a couple enemies
+1. Disable player FOV
+2. Set projectile speeds to a high value (eg. 50)
+3. Shoot towards a couple walls
+4. Shoot at a couple enemies
 
 #### Expected behaviour
 - Projectiles should stop at walls and hit enemies every time without fail
