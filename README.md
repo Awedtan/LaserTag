@@ -1,5 +1,5 @@
 # LaserTag
-
+### For more information please visit https://github.com/Awedtan/LaserTag
 ### List of useful commands:
 - git status - Gives information on the differences between a local copy and the remote repo
 - git add . - Adds all changed files
@@ -92,9 +92,15 @@ https://github.com/Awedtan/LaserTag/issues/66
 ### A button that would immediately start a new game without exiting to the menu first
 - Was much harder to make than we first thought
 
+### Holding down the mouse buttons for automatic fire
+- Didn't get to it
+
+### Making projectiles originate from the actual gun rectangles
+- Didn't get to it, looks okay enough already
 
 # Implemented but not planned features
 ### Multiple game modes
 - We knew that we wanted multiple game modes, just didn't actually come up with any at the time
 ### The timer label
 ### The score label
+- These two are tied to the multiple game modes
