@@ -53,7 +53,7 @@ public class game {
 		 killLimit = 15;
 		 ended = true;
 		
-		 file = new File("maps/arena.txt");
+		 file = new File("maps/arena");
 		
 		 numCols = 0;
 		 numRows = 0;

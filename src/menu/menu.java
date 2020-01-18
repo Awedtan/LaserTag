@@ -9,10 +9,6 @@ import packy.*;
 
 @SuppressWarnings("serial")
 public class menu extends JPanel{
-	
-	// TODO: right now this runs as an isolated menu, figure out how to integrate it with the actual game (and also add game menu to that)
-	// use my knowledge, i beg you: https://www.youtube.com/watch?v=FZWX5WoGW00
-
 	//the necessary variables
 	static int screenWidth = body.screenWidth;
     static int screenHeight = body.screenHeight;

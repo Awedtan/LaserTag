@@ -16,7 +16,7 @@ public class play extends JPanel implements MouseListener{
     Image headerImage = Toolkit.getDefaultToolkit().getImage("images/header_play.png");
     static Font optionFont = new Font("Segoe UI", Font.PLAIN, 60);
 
-    JSpinner enemiesInput, timeInput; // TODO: adjust max size of spinner (what is our max number?)
+    JSpinner enemiesInput, timeInput;
     JComboBox<String> mapSelector;
     JComboBox<game.MODE> gamemodeSelector;
     static File mapFolder = new File("maps");
@@ -25,7 +25,7 @@ public class play extends JPanel implements MouseListener{
     // Player-selected settings
     int enemiesCount;
     public static String mapName = "maps/" + mapFilepaths[0];
-    game.MODE gamemode; // TODO: use these values in the actual game
+    game.MODE gamemode;
 
     public play() {
         setPreferredSize(new Dimension(menu.screenWidth, menu.screenHeight));
@@ -37,7 +37,6 @@ public class play extends JPanel implements MouseListener{
         enemiesLabel.setBounds(50, 250, 250, 150);
         enemiesLabel.setForeground(Color.WHITE);
 
-        // TODO: figure out how to change colors for this (right now it's mostly the default look and feel)
         enemiesInput = new JSpinner(new SpinnerNumberModel(15, 1, packy.enemy.MAX, 1));
         enemiesInput.setFont(optionFont);
         enemiesInput.setBounds(300, 280, 250, 100);
@@ -126,7 +125,7 @@ public class play extends JPanel implements MouseListener{
         startLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // TODO: run the game using the settings here and on the modifers page
+                // Runs the game using the settings given on this menu + the modifiers menu
                 try {
                 	
                 	player.alive = true;
@@ -153,13 +152,12 @@ public class play extends JPanel implements MouseListener{
                     packy.enemyProjectile.DAMAGE = modifiers.enemyDamage;
                     packy.enemy.FOV = modifiers.enemyFovRange;
                 } catch (Exception e2) {
-                    // TODO: return error if something bad
                 }
             }
         });
         startLabel.setBorder(menu.defaultBorder);
 
-        // add(titleLabel);
+        // Adds all the labels to the panel
         add(enemiesLabel);
         add(enemiesInput);
         add(mapLabel);

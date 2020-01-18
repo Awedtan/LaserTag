@@ -17,7 +17,7 @@ public class main extends JPanel implements MouseListener {
 
     public main() {
     	try {
-			
+			// Opens a little intro packet for the player to read
 			Desktop.getDesktop().open(new File("intro.pdf"));
 			body.frame.setState ( Frame.ICONIFIED );
 		} catch (IOException e1) {

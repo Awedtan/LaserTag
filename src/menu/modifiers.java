@@ -8,7 +8,7 @@ import packy.*;
 
 @SuppressWarnings("serial")
 public class modifiers extends JPanel implements MouseListener {
-    JLabel resetLabel, backLabel, saveLabel; // TODO: add load previous options?
+    JLabel resetLabel, backLabel, saveLabel;
 
     ImageIcon checkTrue = new ImageIcon("images/checkbox_true.png");
     ImageIcon checkFalse = new ImageIcon("images/checkbox_false.png");
@@ -80,7 +80,6 @@ public class modifiers extends JPanel implements MouseListener {
             enemyFovRange = Integer.parseInt(enemyFovInput.getText().replace(",", ""));
             enemyViewRange = Integer.parseInt(enemyViewRangeInput.getText().replace(",", ""));
         } catch (Exception e) {
-            //TODO: Show red text that say no no when inputs poopy (shouldn't happen anymore but better safe than sorry)
         }
     }
 
@@ -122,7 +121,6 @@ public class modifiers extends JPanel implements MouseListener {
         saveLabel.addMouseListener(new MouseAdapter () {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // TODO: save values in text field
                 parseInputs();
                 menu.switchStatePanel(body.modifiersPanel, body.playPanel);
             }

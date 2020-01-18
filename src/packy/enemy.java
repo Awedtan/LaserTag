@@ -40,7 +40,7 @@ public class enemy {
 		STARTPOSX[enemy] = (int) (Math.random()*(Toolkit.getDefaultToolkit().getScreenSize().getWidth()-50)+25);
 		STARTPOSY[enemy] = (int) (Math.random() * (Toolkit.getDefaultToolkit().getScreenSize().getHeight()-50)+25);
 		enemies[enemy] = new Rectangle(STARTPOSX[enemy], STARTPOSY[enemy], width, height);
-		enemyHealth[enemy] = HEALTH; //TODO: set this to variable that can be changed in modifiers
+		enemyHealth[enemy] = HEALTH;
 		lastX[enemy] = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth())/2;
 		lastY[enemy] = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight())/2;
 		alive[enemy] = true;
@@ -300,7 +300,7 @@ public class enemy {
 	
 	public static void rotate(Graphics g, int enemy) {
 		//Rotates the enemy model towards the player model
-		
+
 		centerY[enemy] = (height/2) + enemies[enemy].y;
 		centerX[enemy] = (width/2) + enemies[enemy].x;
 		

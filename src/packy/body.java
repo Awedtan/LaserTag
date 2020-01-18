@@ -31,7 +31,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	public static exit exitPanel;
 	public static modifiers modifiersPanel;
 
-	// ------------ HUD Elements ------------ //
+	// HUD Elements
 	static JLabel scoreLabel, timeLabel, exitGame;
 	public static int startTime;
 	static int elapsedTime;
@@ -209,6 +209,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	
 	public body() {
 		//Sets up the game window and other methods
+		System.out.println("yeet");
 		setLayout(null);
 		setPreferredSize(new Dimension(screenWidth, screenHeight));
 		setBackground(new Color(200, 200, 200));
@@ -335,7 +336,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 				g.drawString(Integer.toString(player.health), player.model.x, player.model.y - player.model.height);
 			}
 			else if(!game.ended) {
-				// Draws a game over message with a background and border when the player dies in this mode TODO: make this more efficient
+				// Draws a game over message with a background and border when the player dies in this mode
 				
 				g.setFont(new Font("Segoe UI", Font.PLAIN, 30));
 				FontMetrics fm = g.getFontMetrics();
@@ -399,7 +400,6 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 				g.setColor(Color.white);
 				g.drawString(permaDeathMessage, screenWidth / 2 - (int) textRect.getWidth() / 2, screenHeight / 2 + fm.getAscent() / 2);
 				
-				// TODO: Figure out how to draw "play again" and "exit" boxes with mouseListeners efficiently
 				gameOver();
 			}
 			else if(game.mode == game.mode.DM) {
@@ -429,7 +429,6 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 				g.setColor(Color.white);
 				g.drawString(permaDeathMessage, screenWidth / 2 - (int) textRect.getWidth() / 2, screenHeight / 2 + fm.getAscent() / 2);
 				
-				// TODO: Figure out how to draw "play again" and "exit" boxes with mouseListeners efficiently
 				gameOver();
 			}
 			else if(game.mode == game.mode.SPREE) {
@@ -459,7 +458,6 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 				g.setColor(Color.white);
 				g.drawString(permaDeathMessage, screenWidth / 2 - (int) textRect.getWidth() / 2, screenHeight / 2 + fm.getAscent() / 2);
 				
-				// TODO: Figure out how to draw "play again" and "exit" boxes with mouseListeners efficiently
 				gameOver();
 			}
 	
@@ -470,6 +468,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	}
 
 	public static void gameOver() {
+		// Creates a JLabel that brings the player back to the play menu
 		exitGame = new JLabel("Return to Menu", SwingConstants.CENTER);
 		exitGame.setFont(new Font("Segoe UI", Font.PLAIN, 30));
 		exitGame.setBounds(screenWidth / 2 - 125, screenHeight / 2 + 100, 250, 50);
@@ -480,7 +479,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 		exitGame.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO: if the game exits, dispose and also restart everything
+				// Resets all of the enemies and player, and switches the game back to the play menu
 				
 				panel.remove(scoreLabel);
 				panel.remove(timeLabel);
@@ -552,43 +551,12 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		//Player movement keys
-
-		// if(e.getKeyCode() == KeyEvent.VK_A) 
-		// 	player.moveLeft = true;
-		
-		// else if(e.getKeyCode() == KeyEvent.VK_D) 
-		// 	player.moveRight = true;
-		
-		// else if(e.getKeyCode() == KeyEvent.VK_W) 
-		// 	player.moveUp = true;
-		
-		// else if(e.getKeyCode() == KeyEvent.VK_S) 
-		// 	player.moveDown = true;
-				
-		// if(e.getKeyCode() == KeyEvent.VK_SHIFT)
-		// 	player.sprint = true;
 		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		//Stopping player movement
 		
-		// if(e.getKeyCode() == KeyEvent.VK_A) 
-		// 	player.moveLeft = false;
-		
-		// else if(e.getKeyCode() == KeyEvent.VK_D)
-		// 	player.moveRight = false;
-		
-		// else if(e.getKeyCode() == KeyEvent.VK_W) 
-		// 	player.moveUp = false;
-		
-		// else if(e.getKeyCode() == KeyEvent.VK_S) 
-		// 	player.moveDown = false;
-		
-		// if(e.getKeyCode() == KeyEvent.VK_SHIFT)
-		// 	player.sprint = false;
 	}
 	
 	public static void main(String[] args) {
