@@ -32,7 +32,7 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	public static modifiers modifiersPanel;
 
 	// ------------ HUD Elements ------------ //
-	static JLabel scoreLabel, timeLabel, playAgain, exitGame;
+	static JLabel scoreLabel, timeLabel, exitGame;
 	public static int startTime;
 	static int elapsedTime;
 	static int respawnDelay = 5;
@@ -218,7 +218,6 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 			@Override
 			public void keyPressed(KeyEvent e) {
 				//Player movement keys
-
 				if(e.getKeyCode() == KeyEvent.VK_A) 
 					player.moveLeft = true;
 				
@@ -233,13 +232,11 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 						
 				if(e.getKeyCode() == KeyEvent.VK_SHIFT)
 					player.sprint = true;
-				
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
 				//Stopping player movement
-				
 				if(e.getKeyCode() == KeyEvent.VK_A) 
 					player.moveLeft = false;
 				
@@ -473,34 +470,9 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	}
 
 	public static void gameOver() {
-		playAgain = new JLabel("Play Again", SwingConstants.CENTER);
-		playAgain.setFont(new Font("Segoe UI", Font.PLAIN, 30));
-		playAgain.setBounds(screenWidth / 2 - 300, screenHeight / 2 + 100, 250, 50);
-		playAgain.setForeground(Color.WHITE);
-		playAgain.setOpaque(true);
-		playAgain.setBackground(Color.BLACK);
-		playAgain.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
-		playAgain.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO: make this thing work properly instead of loading you into an empty map
-				for(int i=0; i<enemy.MAX; i++)
-					enemy.kill(i);
-				
-				player.respawn(player.STARTPOSX, player.STARTPOSY);
-
-				panel.remove(playAgain);
-				panel.remove(exitGame);
-				
-				game.reset();
-				body.reset();
-				player.reset();
-			}
-		});
-
-		exitGame = new JLabel("Exit Game", SwingConstants.CENTER);
+		exitGame = new JLabel("Return to Menu", SwingConstants.CENTER);
 		exitGame.setFont(new Font("Segoe UI", Font.PLAIN, 30));
-		exitGame.setBounds(screenWidth / 2 +  50, screenHeight / 2 + 100, 250, 50);
+		exitGame.setBounds(screenWidth / 2 - 125, screenHeight / 2 + 100, 250, 50);
 		exitGame.setForeground(Color.WHITE);
 		exitGame.setOpaque(true);
 		exitGame.setBackground(Color.BLACK);
@@ -525,7 +497,6 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 			}
 		});
 
-		panel.add(playAgain);
 		panel.add(exitGame);
 	}
 	
@@ -583,20 +554,20 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	public void keyPressed(KeyEvent e) {
 		//Player movement keys
 
-		if(e.getKeyCode() == KeyEvent.VK_A) 
-			player.moveLeft = true;
+		// if(e.getKeyCode() == KeyEvent.VK_A) 
+		// 	player.moveLeft = true;
 		
-		else if(e.getKeyCode() == KeyEvent.VK_D) 
-			player.moveRight = true;
+		// else if(e.getKeyCode() == KeyEvent.VK_D) 
+		// 	player.moveRight = true;
 		
-		else if(e.getKeyCode() == KeyEvent.VK_W) 
-			player.moveUp = true;
+		// else if(e.getKeyCode() == KeyEvent.VK_W) 
+		// 	player.moveUp = true;
 		
-		else if(e.getKeyCode() == KeyEvent.VK_S) 
-			player.moveDown = true;
+		// else if(e.getKeyCode() == KeyEvent.VK_S) 
+		// 	player.moveDown = true;
 				
-		if(e.getKeyCode() == KeyEvent.VK_SHIFT)
-			player.sprint = true;
+		// if(e.getKeyCode() == KeyEvent.VK_SHIFT)
+		// 	player.sprint = true;
 		
 	}
 
@@ -604,20 +575,20 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	public void keyReleased(KeyEvent e) {
 		//Stopping player movement
 		
-		if(e.getKeyCode() == KeyEvent.VK_A) 
-			player.moveLeft = false;
+		// if(e.getKeyCode() == KeyEvent.VK_A) 
+		// 	player.moveLeft = false;
 		
-		else if(e.getKeyCode() == KeyEvent.VK_D)
-			player.moveRight = false;
+		// else if(e.getKeyCode() == KeyEvent.VK_D)
+		// 	player.moveRight = false;
 		
-		else if(e.getKeyCode() == KeyEvent.VK_W) 
-			player.moveUp = false;
+		// else if(e.getKeyCode() == KeyEvent.VK_W) 
+		// 	player.moveUp = false;
 		
-		else if(e.getKeyCode() == KeyEvent.VK_S) 
-			player.moveDown = false;
+		// else if(e.getKeyCode() == KeyEvent.VK_S) 
+		// 	player.moveDown = false;
 		
-		if(e.getKeyCode() == KeyEvent.VK_SHIFT)
-			player.sprint = false;
+		// if(e.getKeyCode() == KeyEvent.VK_SHIFT)
+		// 	player.sprint = false;
 	}
 	
 	public static void main(String[] args) {
