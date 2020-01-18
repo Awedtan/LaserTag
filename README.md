@@ -1,6 +1,6 @@
 # LaserTag
 
-List of useful commands:
+### List of useful commands:
 - git status - Gives information on the differences between a local copy and the remote repo
 - git add . - Adds all changed files
 - git commit -m "name of commit" - Puts all added files into a commit
@@ -25,7 +25,7 @@ https://github.com/Awedtan/LaserTag/issues/27
 #### Steps to reproduce the behavior:
 1. Just move the mouse around
 #### Expected behaviour
-- Tiles in front of the player model should always be visible, tiles behind the player model should never
+- Tiles in front of the player model should always be visible, tiles behind the player model should never be
 
 
 ### Rectangles skipping through other rectangles
@@ -48,8 +48,8 @@ https://github.com/Awedtan/LaserTag/issues/47
 2. Shoot towards a couple walls
 
 #### Expected behaviour
-- Projecti
-les should only disappear when actually colliding with a wall or an entity
+- Projectiles should only disappear when actually colliding with a wall or an entity
+
 
 ### Game menus look weird on resolutions other than 1920x1080
 https://github.com/Awedtan/LaserTag/issues/66
@@ -63,5 +63,38 @@ https://github.com/Awedtan/LaserTag/issues/66
 
 
 ### Sometimes starting a new game will give null exception errors?
-- Honestly its seems random and I don't really know what may be causing it nor how to trigger it reliably
+- Honestly it feels random and I don't really know what may be causing it nor how to trigger it reliably
 
+
+# Special instructions
+- Please run the game at 1920x1080 and with Windows display scaling set to 100%
+- Running any of the .java files should work fine, but just in case only run the body.java file
+- The program will open a pdf file every time you run it
+- There is no sound, so no speakers needed
+
+
+# Planned but not implemented features
+### Health bar
+- The number on top of your player model is representative of your health instead
+
+### Fancier graphics
+- We did give projectiles their own sprites, but everything else is all just rectangles
+
+### Pause menu
+- We didn't get around to doing this, pretty low priority
+
+### Save file of highscores
+- Also didn't get around to it
+
+### Sound effects
+- Didn't get to it
+
+### A button that would immediately start a new game without exiting to the menu first
+- Was much harder to make than we first thought
+
+
+# Implemented but not planned features
+### Multiple game modes
+- We knew that we wanted multiple game modes, just didn't actually come up with any at the time
+### The timer label
+### The score label
