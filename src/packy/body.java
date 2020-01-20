@@ -211,7 +211,6 @@ public class body extends JPanel implements KeyListener, MouseListener, MouseMot
 	
 	public body() {
 		//Sets up the game window and other methods
-		System.out.println("yeet");
 		setLayout(null);
 		setPreferredSize(new Dimension(screenWidth, screenHeight));
 		setBackground(new Color(200, 200, 200));

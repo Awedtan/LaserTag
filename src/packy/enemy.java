@@ -37,8 +37,8 @@ public class enemy {
 	
 	public static void initialize(int enemy) {
 		
-		STARTPOSX[enemy] = (int) (Math.random()*(Toolkit.getDefaultToolkit().getScreenSize().getWidth()-50)+25);
-		STARTPOSY[enemy] = (int) (Math.random() * (Toolkit.getDefaultToolkit().getScreenSize().getHeight()-50)+25);
+		STARTPOSX[enemy] = (int) (Math.random()*(Toolkit.getDefaultToolkit().getScreenSize().getWidth()-100)+50);
+		STARTPOSY[enemy] = (int) (Math.random() * (Toolkit.getDefaultToolkit().getScreenSize().getHeight()-100)+50);
 		enemies[enemy] = new Rectangle(STARTPOSX[enemy], STARTPOSY[enemy], width, height);
 		enemyHealth[enemy] = HEALTH;
 		lastX[enemy] = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth())/2;
